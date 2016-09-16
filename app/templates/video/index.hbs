@@ -1,0 +1,6 @@
+<h2>Available Videos</h2>
+{{#each model as |video|}}
+  {{#link-to 'video.display' video.id}}
+    {{video.name}}
+  {{/link-to}}
+{{/each}}

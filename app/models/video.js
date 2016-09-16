@@ -9,8 +9,8 @@ var Video = DS.Model.extend({
   date: DS.attr('date'),
   latitude: DS.attr('number'),
   longitude: DS.attr('number'),
-  person_in: DS.attr('string'),
-  person_out: DS.attr('string'),
+  peopleIn: DS.attr('string'),
+  peopleOut: DS.attr('string'),
   guests: DS.attr('string'),
   camera: DS.attr('string')
 });
@@ -21,16 +21,16 @@ Video.reopenClass({
     {
       id: 'abisko',
       name: 'Abisko',
-      description: '',
+      description: 'This is a description.',
       country: 'Sweden',
-      path: '/data/videos/abisko.webm',
+      path: '/assets/videos/abisko.mp4',
       date: '2013-01-01',
-      latitude: 1.0,
-      longitude: 2.0,
-      person_in: 'Anna',
-      person_out: 'Stefan',
+      latitude: 68.3578789,
+      longitude: 18.7779219,
+      peopleIn: 'Anna',
+      peopleOut: 'Stefan',
       guests: '',
-      camera: 'old'
+      camera: 'Sony Cybershot'
     }
   ]
 });
