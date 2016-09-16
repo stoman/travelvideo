@@ -3,10 +3,6 @@
   <h3>{{path.name}}</h3>
   <p>
     Year: {{path.year}},
-    Locations: {{#each path.videos as |video|}} {{video.name}} {{/each}},
-    <a {{action 'setActivePath' path}}>choose</a>
+    Locations: {{#each path.videos as |video|}} {{video.name}} {{/each}}
   </p>
 {{/each}}
-
-<h2>Active Path</h2>
-{{activePath.name}}

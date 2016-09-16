@@ -11,11 +11,6 @@ var Path = DS.Model.extend({
 Path.reopenClass({
   FIXTURES: [
     {
-      id: 'random',
-      name: 'Random Videos',
-      year: '2013 - now'
-    },
-    {
       id: 'interrail',
       name: 'Interrail',
       year: '2013',
