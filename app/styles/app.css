@@ -13,8 +13,13 @@ body {
 
 .content {
   position: absolute;
-  width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 75px;
   z-index: 2;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .box {
@@ -49,11 +54,50 @@ body {
   width: 190px;
 }
 
-.impressum {
+#menu {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: 5px;
+  left: 5px;
   z-index: 2;
+}
+
+#menu a {
+  width: 150px;
+  height: 29px;
+  padding: 15px 0;
+  margin: 3px;
+  font-weight: bold;
+  color: #000000;
+  font-size: 29px;
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
+  text-decoration: none;
+}
+
+#menu a:nth-child(1) {
+  background-image: url('/assets/stamp1.png');
+  transform: rotate(1deg);
+}
+
+#menu a:nth-child(2) {
+  background-image: url('/assets/stamp2.png');
+  transform: rotate(-3deg);
+}
+
+#menu a:nth-child(3) {
+  background-image: url('/assets/stamp3.png');
+  transform: rotate(0deg);
+}
+
+#menu a:nth-child(4) {
+  background-image: url('/assets/stamp4.png');
+  transform: rotate(2deg);
+}
+
+#menu a:nth-child(5) {
+  background-image: url('/assets/stamp5.png');
+  transform: rotate(-1deg);
 }
 
 .marker {
