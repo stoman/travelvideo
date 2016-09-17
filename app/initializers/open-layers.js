@@ -20,8 +20,15 @@ export function initialize() {
 
             //create open layers map object
             let map = new ol.Map({
+
+              //predefined variables
               target: 'map',
+              view: view,
+
+              //load tiles while flying to new places
               loadTilesWhileAnimating: true,
+
+              //load tiles
               layers: [
                 //stamen map
                 new ol.layer.Tile({
@@ -40,7 +47,10 @@ export function initialize() {
                   source: new ol.source.OSM()
                 })*/
               ],
-              view: view
+
+              //no controls or interactions in most routes
+              controls: [],
+              interactions: []
             });
 
             //make map and view available for other components
