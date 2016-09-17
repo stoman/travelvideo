@@ -1,0 +1,7 @@
+//  This config extends default openlayers build configs (unless "extend": false):
+//    https://github.com/openlayers/ol3/blob/master/config/ol.json
+
+{
+  "extend": true,
+  "exports": ["*"]
+}

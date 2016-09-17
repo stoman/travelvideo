@@ -1,8 +1,10 @@
-<h2>Select a Path</h2>
-{{#each model as |path|}}
-  <h3>{{path.name}}</h3>
-  <p>
-    Year: {{path.year}},
-    Locations: {{#each path.videos as |video|}} {{video.name}} {{/each}}
-  </p>
-{{/each}}
+<div class="box">
+  <h2>Select a Path</h2>
+  {{#each model as |path|}}
+    <h3>{{path.name}}</h3>
+    <p>
+      Year: {{path.year}},
+      Locations: {{#each path.videos as |video|}} {{video.name}} {{/each}}
+    </p>
+  {{/each}}
+</div>

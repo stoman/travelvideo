@@ -1,0 +1,67 @@
+body {
+  overflow: hidden;
+}
+
+#map {
+  position: absolute;
+  left: 0;
+  right: -80%;
+  top: 0;
+  bottom: -50%;
+  z-index: 1;
+}
+
+.content {
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+}
+
+.box {
+  position: absolute;
+  left: 0;
+  right: 15px;
+  background-color: #ffffff;
+  padding: 1px 20px 20px 20px;
+  border-radius: 10px;
+}
+
+
+.videodetail {
+  position: absolute;
+  left: 10px;
+  width: 100%;
+  top: 10px;
+}
+
+.videodetail video {
+  position: absolute;
+  width: 50%;
+  top: 50px;
+  transform: rotate(-3deg);
+}
+
+.videodetail .box {
+  position: relative;
+  left: 51%;
+  width: 190px;
+}
+
+.impressum {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.marker {
+  position: absolute;
+  left: -23px;
+  top: 5px;
+  font-weight: bold;
+}
+
+.marker img {
+  position: absolute;
+  top: -51px;
+}
