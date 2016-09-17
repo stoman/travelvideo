@@ -22,10 +22,12 @@ body {
   left: 0;
   right: 15px;
   background-color: #ffffff;
+  background-image: url('/assets/paper.jpg');
+  background-repeat: repeat;
   padding: 1px 20px 20px 20px;
   border-radius: 10px;
+  border: 4px solid #ffffff;
 }
-
 
 .videodetail {
   position: absolute;

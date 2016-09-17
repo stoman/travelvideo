@@ -15,7 +15,7 @@ export function initialize() {
             //create open layers view object
             let view = new ol.View({
               center: ol.proj.fromLonLat([11.57, 48.13]),//Munich
-              zoom: 8
+              zoom: 7
             });
 
             //create open layers map object
