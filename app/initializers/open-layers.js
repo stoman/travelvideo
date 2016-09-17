@@ -53,10 +53,10 @@ export function initialize(application) {
                 //create marker object
                 let marker = document.createElement('div');
                 marker.classList.add('marker');
+                marker.appendChild(document.createTextNode(video._data.name));
                 let icon = document.createElement('img');
                 icon.setAttribute('src', '/assets/marker.png');
                 marker.appendChild(icon);
-                marker.appendChild(document.createTextNode(video._data.name));
                 //add marker as overlay
                 map.addOverlay(new ol.Overlay({
                   position: ol.proj.fromLonLat([

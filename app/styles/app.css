@@ -59,9 +59,10 @@ body {
   left: -23px;
   top: 5px;
   font-weight: bold;
+  text-align: center;
 }
 
 .marker img {
-  position: absolute;
-  top: -51px;
+  position: relative;
+  top: -65px;
 }
