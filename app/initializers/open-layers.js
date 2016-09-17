@@ -2,7 +2,7 @@
 
 import Ember from 'ember';
 
-export function initialize(application) {
+export function initialize() {
   //modify the didTransition action of all routes
   Ember.Route.reopen({
     actions: {
@@ -57,6 +57,7 @@ export function initialize(application) {
                 let icon = document.createElement('img');
                 icon.setAttribute('src', '/assets/marker.png');
                 marker.appendChild(icon);
+
                 //add marker as overlay
                 map.addOverlay(new ol.Overlay({
                   position: ol.proj.fromLonLat([
