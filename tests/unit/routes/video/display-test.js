@@ -1,8 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('route:video/display', 'Unit | Route | video/display', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
 });
 
 test('it exists', function(assert) {

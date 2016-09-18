@@ -22,3 +22,52 @@ test('it renders', function(assert) {
 
   assert.equal(this.$().text().trim(), 'template block text');
 });
+
+test('it displays a video', function(assert) {
+  //create fake video
+  let data = {
+    id: 'testid',
+    name: 'testname',
+    description: 'testdescription',
+    country: 'testcountry',
+    path: '/test/path.mp4',
+    date: '2013-01-01',
+    latitude: 3.14,
+    longitude: -2.7,
+    peopleIn: 'testera',
+    peopleOut: 'testerb',
+    guests: 'testerc',
+    camera: 'testcamera'
+  };
+  this.set('video', data);
+
+  //render component
+  this.render(hbs`{{video-listing video=video}}`);
+
+  //check that all important properties are displayed
+  assert.ok(
+    this.$().text().includes(data.name),
+    'should render video name'
+  );
+  assert.ok(
+    this.$().text().includes(data.description),
+    'should render video description'
+  );
+  assert.ok(
+    this.$().text().includes(data.country),
+    'should render video country'
+  );
+  assert.equal(
+    this.$('video').attr('src'),
+    data.path,
+    'should render video with correct path'
+  );
+  assert.ok(
+    this.$().text().includes(data.guests),
+    'should render video guests'
+  );
+  assert.ok(
+    this.$().text().includes(data.camera),
+    'should render video camera'
+  );
+});

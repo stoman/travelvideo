@@ -45,3 +45,19 @@ test('map hint can be hidden', function(assert) {
     assert.equal(find('.map-hint').length, 0, 'hint should stay invisible after navigation');
   });
 });
+
+test('map route should enable controls of map', function(assert) {
+  visit('/map');
+
+  andThen(function() {
+    assert.ok(find('.ol-control').length, 'map should have controls');
+  });
+});
+
+test('other routes should disable controls of map', function(assert) {
+  visit('/');
+
+  andThen(function() {
+    assert.equal(find('.ol-control').length, 0, 'map should not have controls');
+  });
+});
