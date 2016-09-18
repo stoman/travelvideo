@@ -11,6 +11,21 @@ body {
   z-index: 1;
 }
 
+#marker-container {
+  visibility: hidden;
+}
+
+.marker {
+  position: absolute;
+  left: -40px;
+  top: 5px;
+  font-weight: bold;
+  text-align: center;
+  visibility: visible;
+  text-decoration: none;
+  color: #000000;
+}
+
 #content {
   position: absolute;
   left: 5px;
@@ -98,19 +113,6 @@ body {
 #menu a:nth-child(5) {
   background-image: url('/assets/stamp5.png');
   transform: rotate(-1deg);
-}
-
-.marker {
-  position: absolute;
-  left: -23px;
-  top: 5px;
-  font-weight: bold;
-  text-align: center;
-}
-
-.marker img {
-  position: relative;
-  top: -65px;
 }
 
 .map-hint {

@@ -15,7 +15,7 @@ export function initialize() {
             //create open layers view object
             let view = new ol.View({
               center: ol.proj.fromLonLat([11.57, 48.13]),//Munich
-              zoom: 7
+              zoom: 4
             });
 
             //create open layers map object
@@ -60,22 +60,22 @@ export function initialize() {
             //add markers for videos
             this.store.findAll('video').then(function(videos) {
               videos.get('content').forEach(function(video) {
-                //create marker object
-                let marker = document.createElement('div');
-                marker.classList.add('marker');
-                marker.appendChild(document.createTextNode(video._data.name));
-                let icon = document.createElement('img');
-                icon.setAttribute('src', '/assets/marker.png');
-                marker.appendChild(icon);
-
                 //add marker as overlay
                 map.addOverlay(new ol.Overlay({
                   position: ol.proj.fromLonLat([
                     video._data.longitude,
                     video._data.latitude
                   ]),
-                  element: marker
+                  element: document.querySelector('#marker-container .' + video.id + ' .marker')
                 }));
+
+                //add onclick event to trigger the link. This hack is neccessary
+                //since open layers removes all onclick events from the marker while
+                //moving it around.
+                document.querySelector('#map .' + video.id).onclick = function() {
+                  document.querySelector('#marker-container .' + video.id + ' a').click();
+                  return false;
+                };
               });
             });
           }
@@ -94,23 +94,27 @@ export function initialize() {
       let map = this.controllerFor('application').get('backgroundMap');
       let view = this.controllerFor('application').get('backgroundView');
 
-      //set up flying animation
-      let duration = 2000;
-      let start = +new Date();
+      //move to new location
       let pan = ol.animation.pan({
-        duration: duration,
-        source: view.getCenter(),
-        start: start
+        duration: 5000,
+        source: view.getCenter()
       });
-      let bounce = ol.animation.bounce({
-        duration: duration,
-        resolution: 4 * view.getResolution(),
-        start: start
-      });
-      map.beforeRender(pan, bounce);
-
-      //move to actual location
+      map.beforeRender(pan);
       view.setCenter(ol.proj.fromLonLat([lon, lat]));
+
+      //zoom to new level
+      let zoom = ol.animation.zoom({
+        duration: 5000,
+        resolution: map.getView().getResolution(),
+      });
+      map.beforeRender(zoom);
+      view.setZoom(7);
+    },
+
+    //add videos for markers to controller
+    setupController(controller, model) {
+      this._super(controller, model);
+      this.controllerFor('application').set('videosForMarkers', this.store.findAll('video'));
     }
   });
 }
