@@ -1,0 +1,65 @@
+@import 'application';
+@import 'map';
+@import 'components/video-listing';
+
+body {
+  overflow: hidden;
+}
+
+.box {
+  position: absolute;
+  left: 0;
+  right: 15px;
+  background-color: #ffffff;
+  background-image: url('/assets/paper.jpg');
+  background-repeat: repeat;
+  padding: 1px 20px 20px 20px;
+  border-radius: 10px;
+  border: 4px solid #ffffff;
+}
+
+#menu {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  z-index: 2;
+
+  a {
+    width: 150px;
+    height: 29px;
+    padding: 15px 0;
+    margin: 3px;
+    font-weight: bold;
+    color: #000000;
+    font-size: 29px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    text-decoration: none;
+  }
+  
+  a:nth-child(1) {
+    background-image: url('/assets/stamp1.png');
+    transform: rotate(1deg);
+  }
+
+  a:nth-child(2) {
+    background-image: url('/assets/stamp2.png');
+    transform: rotate(-3deg);
+  }
+
+  a:nth-child(3) {
+    background-image: url('/assets/stamp3.png');
+    transform: rotate(0deg);
+  }
+
+  a:nth-child(4) {
+    background-image: url('/assets/stamp4.png');
+    transform: rotate(2deg);
+  }
+
+  a:nth-child(5) {
+    background-image: url('/assets/stamp5.png');
+    transform: rotate(-1deg);
+  }
+}

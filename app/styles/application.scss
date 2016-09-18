@@ -1,0 +1,23 @@
+#map {
+  position: absolute;
+  left: 0;
+  right: -80%;
+  top: 0;
+  bottom: -50%;
+  z-index: 1;
+}
+
+#marker-container {
+  visibility: hidden;
+}
+
+#content {
+  position: absolute;
+  left: 5px;
+  right: 5px;
+  top: 5px;
+  bottom: 75px;
+  z-index: 2;
+  overflow-x: hidden;
+  overflow-y: auto;
+}

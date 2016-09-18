@@ -1,0 +1,19 @@
+.videodetail {
+  position: absolute;
+  left: 10px;
+  width: 100%;
+  top: 10px;
+
+  video {
+    position: absolute;
+    width: 50%;
+    top: 50px;
+    transform: rotate(-3deg);
+  }
+
+  .box {
+    position: relative;
+    left: 51%;
+    width: 190px;
+  }
+}

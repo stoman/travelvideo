@@ -1,0 +1,29 @@
+.marker {
+  position: absolute;
+  left: -40px;
+  top: 5px;
+  font-weight: bold;
+  text-align: center;
+  visibility: visible;
+  text-decoration: none;
+  color: #000000;
+}
+
+.map-hint {
+  visibility: visible;
+  position: absolute;
+  left: 50px;
+  width: 230px;
+  top: 0;
+  height: 90px;
+
+  .close {
+    position: absolute;
+    right: -1px;
+    top: -3px;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: #ffffff;
+    padding: 5px;
+  }
+}
