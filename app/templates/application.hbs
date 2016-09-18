@@ -1,17 +1,5 @@
 <div id="map"></div>
 
-<div id="marker-container">
-  {{#each videosForMarkers as |video|}}
-    <div class="{{video.id}}">
-      {{#link-to 'video.display' video.id}}{{/link-to}}
-      <a href="/video/{{video.id}}" class="marker {{video.id}}">
-        <img src="/assets/marker.png" />
-        <span>{{video.name}}</span>
-      </a>
-    </div>
-  {{/each}}
-</div>
-
 <div id="content">
   {{outlet}}
 </div>

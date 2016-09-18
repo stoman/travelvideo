@@ -1,12 +1,16 @@
 .marker {
   position: absolute;
-  left: -40px;
+  left: -23px;
   top: 5px;
   font-weight: bold;
   text-align: center;
-  visibility: visible;
   text-decoration: none;
   color: #000000;
+
+  img {
+    position: relative;
+    top: -65px;
+  }
 }
 
 .map-hint {
