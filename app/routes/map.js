@@ -18,7 +18,7 @@ export default Ember.Route.extend({
       });
 
       //hide content container above the map
-      document.getElementById('content').style.display = 'none';
+      document.getElementById('content').style.visibility = 'hidden';
     },
 
     //leaving the route
@@ -37,7 +37,7 @@ export default Ember.Route.extend({
       });
 
       //show content container
-      document.getElementById('content').style.display = 'block';
+      document.getElementById('content').style.visibility = 'visible';
     }
   }
 });

@@ -1,1 +1,8 @@
-{{outlet}}
+{{#if hintVisible}}
+  <div class="box map-hint">
+    <a {{action 'hideHint'}} class="close">x</a>
+    <p>
+      In map mode you can drag around the map and find places around the world linked with videos.
+    </p>
+  </div>
+{{/if}}
