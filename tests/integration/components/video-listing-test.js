@@ -46,15 +46,15 @@ test('it displays a video', function(assert) {
 
   //check that all important properties are displayed
   assert.ok(
-    this.$().text().includes(data.name),
+    this.$().text().indexOf(data.name) !== -1,
     'should render video name'
   );
   assert.ok(
-    this.$().text().includes(data.description),
+    this.$().text().indexOf(data.description) !== -1,
     'should render video description'
   );
   assert.ok(
-    this.$().text().includes(data.country),
+    this.$().text().indexOf(data.country) !== -1,
     'should render video country'
   );
   assert.equal(
@@ -63,11 +63,11 @@ test('it displays a video', function(assert) {
     'should render video with correct path'
   );
   assert.ok(
-    this.$().text().includes(data.guests),
+    this.$().text().indexOf(data.guests) !== -1,
     'should render video guests'
   );
   assert.ok(
-    this.$().text().includes(data.camera),
+    this.$().text().indexOf(data.camera) !== -1,
     'should render video camera'
   );
 });
