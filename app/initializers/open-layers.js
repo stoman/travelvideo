@@ -60,7 +60,7 @@ export function initialize() {
             this.controllerFor('application').set('backgroundView', view);
 
             //add markers for videos
-            this.store.findAll('video').then(function(videos) {
+            this.store.query('video', {}).then(function(videos) {
               videos.forEach(function(video) {
                 //create marker object
                 let marker = document.createElement('div');
