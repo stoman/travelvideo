@@ -19,7 +19,7 @@ export default FixtureAdapter.extend({
   // * sortBy: the name of a key to sort by in ascending order or the
   //   string `random`
   // * limit: the maximum number of results to return
-  queryFixtures(fixtures, query, typeClass) {
+  queryFixtures(fixtures, query/*, typeClass*/) {
     //setup variables
     let ret = Array();
     if(typeof query !== 'object') {
@@ -53,7 +53,7 @@ export default FixtureAdapter.extend({
         throw "query.sortBy needs to be a string";
       }
       if(query.sortBy === 'random') {
-        ret = ret.sort((a, b) => 0.5 - Math.random());
+        ret = ret.sort(() => 0.5 - Math.random());
       }
       else {
         ret = ret.sort((a, b) => a[query.sortBy] >= b[query.sortBy]);
@@ -66,7 +66,7 @@ export default FixtureAdapter.extend({
         throw "query.limit needs to be a number";
       }
       if(query.limit < 0) {
-        throw "query.limit should be positive"
+        throw "query.limit should be positive";
       }
       if(query.limit < ret.length) {
         ret = ret.slice(0, query.limit);
