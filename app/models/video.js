@@ -31,6 +31,48 @@ Video.reopenClass({
       peopleOut: 'Stefan',
       guests: '',
       camera: 'Sony Cybershot'
+    },
+	{
+      id: 'reykjavik',
+      name: 'Reykjavík',
+      description: '',
+      country: 'Iceland',
+      path: '/assets/videos/reykjavik.mp4',
+      date: '2016-08-26',
+      latitude: 0.0,
+      longitude: 0.0,
+      peopleIn: 'Anna',
+      peopleOut: 'Stefan',
+      guests: '',
+      camera: 'Sony Alpha 6000'
+    },
+	{
+      id: 'gullfoss',
+      name: 'Gullfoss',
+      description: '',
+      country: 'Iceland',
+      path: '/assets/videos/gullfoss.mp4',
+      date: '2016-08-28',
+      latitude: 0.0,
+      longitude: 0.0,
+      peopleIn: 'Stefan',
+      peopleOut: 'Anna',
+      guests: '',
+      camera: 'Sony Alpha 6000'
+    },
+	{
+      id: 'landmannahellir',
+      name: 'Landmannahellir',
+      description: '',
+      country: 'Iceland',
+      path: '/assets/videos/landmannahellir.mp4',
+      date: '2016-08-29',
+      latitude: 0.0,
+      longitude: 0.0,
+      peopleIn: 'Anna',
+      peopleOut: 'Stefan',
+      guests: '',
+      camera: 'Sony Alpha 6000'
     }
   ]
 });
