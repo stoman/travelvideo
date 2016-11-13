@@ -13,6 +13,9 @@ Router.map(function() {
     this.route('display', { path: '/:videoId'});
   });
   this.route('map');
+  this.route('random', function() {
+    this.route('display', { path: '/:videoId'});
+  });
 });
 
 export default Router;
