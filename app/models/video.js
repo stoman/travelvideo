@@ -47,6 +47,20 @@ Video.reopenClass({
       camera: 'Sony Cybershot'
     },
     {
+      id: 'siracusa',
+      name: 'Siracusa',
+      description: 'Sicily',
+      country: 'Italy',
+      path: '/assets/videos/siracusa.mp4',
+      date: '2015-07-30',
+      latitude: 0.0,
+      longitude: 0.0,
+      peopleIn: 'Noemi, Anna',
+      peopleOut: 'Stefan',
+      guests: '',
+      camera: 'Sony Cybershot'
+    },
+    {
       id: 'etna',
       name: 'Etna',
       description: 'Sicily',
