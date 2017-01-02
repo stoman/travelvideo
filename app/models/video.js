@@ -61,6 +61,48 @@ Video.reopenClass({
       camera: 'Sony Cybershot'
     },
     {
+      id: 'puerto_del_rosario',
+      name: 'Puerto del Rosario',
+      description: 'Fuerteventura',
+      country: 'Spain',
+      path: '/assets/videos/puerto_del_rosario.mp4',
+      date: '2016-02-18',
+      latitude: 0.0,
+      longitude: 0.0,
+      peopleIn: 'Anna',
+      peopleOut: 'Stefan',
+      guests: '',
+      camera: 'Sony Cybershot'
+    },
+    {
+      id: 'santa_cruz',
+      name: 'Santa Cruz',
+      description: 'Tenerife',
+      country: 'Spain',
+      path: '/assets/videos/santa_cruz.mp4',
+      date: '2016-02-19',
+      latitude: 0.0,
+      longitude: 0.0,
+      peopleIn: 'Bine, Stefan',
+      peopleOut: 'Anna',
+      guests: '',
+      camera: 'Sony Cybershot'
+    },
+    {
+      id: 'las_palmas',
+      name: 'Las Palmas',
+      description: 'Gran Canaria',
+      country: 'Spain',
+      path: '/assets/videos/las_palmas.mp4',
+      date: '2016-02-20',
+      latitude: 0.0,
+      longitude: 0.0,
+      peopleIn: 'Anna',
+      peopleOut: 'Bine, Stefan',
+      guests: 'Uwe',
+      camera: 'Sony Cybershot'
+    },
+    {
       id: 'reykjavik',
       name: 'Reykjavík',
       description: '',
