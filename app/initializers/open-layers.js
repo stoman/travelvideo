@@ -60,12 +60,12 @@ export function initialize() {
             this.controllerFor('application').set('backgroundView', view);
 
             //add markers for videos
-            this.store.findAll('video').then(function(videos) {
-              videos.get('content').forEach(function(video) {
+            this.store.query('video', {}).then(function(videos) {
+              videos.forEach(function(video) {
                 //create marker object
                 let marker = document.createElement('div');
                 marker.classList.add('marker');
-                marker.appendChild(document.createTextNode(video._data.name));
+                marker.appendChild(document.createTextNode(video.get('name')));
                 let icon = document.createElement('img');
                 icon.setAttribute('src', '/assets/marker.png');
                 marker.appendChild(icon);
@@ -73,8 +73,8 @@ export function initialize() {
                 //add marker as overlay
                 map.addOverlay(new ol.Overlay({
                   position: ol.proj.fromLonLat([
-                    video._data.longitude,
-                    video._data.latitude
+                    video.get('longitude'),
+                    video.get('latitude')
                   ]),
                   element: marker
                 }));
