@@ -149,7 +149,7 @@ Video.reopenClass({
       name: 'Kirkjubæjarklaustur',
       description: '',
       country: 'Iceland',
-      path: '/assets/videos/kirkjubaejarklaustur.mp4'
+      path: '/assets/videos/kirkjubaejarklaustur.mp4',
       date: '2016-08-30',
       latitude: 0.0,
       longitude: 0.0,
