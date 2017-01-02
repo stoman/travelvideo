@@ -33,6 +33,34 @@ Video.reopenClass({
       camera: 'Sony Cybershot'
     },
     {
+      id: 'taormina',
+      name: 'Taormina',
+      description: 'Sicily',
+      country: 'Italy',
+      path: '/assets/videos/taormina.mp4',
+      date: '2015-07-26',
+      latitude: 0.0,
+      longitude: 0.0,
+      peopleIn: 'Stefan',
+      peopleOut: 'Anna',
+      guests: '',
+      camera: 'Sony Cybershot'
+    },
+    {
+      id: 'etna',
+      name: 'Etna',
+      description: 'Sicily',
+      country: 'Italy',
+      path: '/assets/videos/etna.mp4',
+      date: '2015-07-31',
+      latitude: 0.0,
+      longitude: 0.0,
+      peopleIn: 'Stefan',
+      peopleOut: 'Noemi, Anna',
+      guests: '',
+      camera: 'Sony Cybershot'
+    },
+    {
       id: 'funchal',
       name: 'Funchal',
       description: 'Madeira',
@@ -149,7 +177,7 @@ Video.reopenClass({
       name: 'Kirkjubæjarklaustur',
       description: '',
       country: 'Iceland',
-      path: '/assets/videos/kirkjubaejarklaustur.mp4'
+      path: '/assets/videos/kirkjubaejarklaustur.mp4',
       date: '2016-08-30',
       latitude: 0.0,
       longitude: 0.0,
