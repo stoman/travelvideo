@@ -82,8 +82,8 @@ export function initialize() {
                   element: marker
                 }));
 
-                //onlick event: go oto video detail page
-                marker.onclick = function() {
+                //onlick event: go to video detail page
+                icon.onclick = function() {
                   route.transitionTo('video.display', video.id);
                 };
               });
