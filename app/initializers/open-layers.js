@@ -63,12 +63,15 @@ export function initialize() {
             this.store.query('video', {}).then(function(videos) {
               videos.forEach(function(video) {
                 //create marker object
-                let marker = document.createElement('div');
-                marker.classList.add('marker');
-                marker.appendChild(document.createTextNode(video.get('name')));
+                let label = document.createElement('div');
+                label.appendChild(document.createTextNode(video.get('name')));
+                label.classList.add('label');
                 let icon = document.createElement('img');
                 icon.setAttribute('src', '/assets/marker.png');
+                let marker = document.createElement('div');
+                marker.classList.add('marker');
                 marker.appendChild(icon);
+                marker.appendChild(label);
 
                 //add marker as overlay
                 map.addOverlay(new ol.Overlay({
