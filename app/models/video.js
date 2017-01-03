@@ -37,6 +37,22 @@ Video.reopenClass({
       camera: 'Sony Cybershot'
     },
     {
+      id: 'stockholm_arlanda',
+      name: 'Stockholm Arlanda',
+      description: '',
+      country: 'Sweden',
+      path: 'stockholm_arlanda.mp4',
+      date: '2013-08-16',
+      latitude: 0.0,
+      longitude: 0.0,
+      peopleIn: 'Stefan',
+      peopleOut: 'Anna',
+      peopleStart: 'Anna',
+      peopleEnd: 'Stefan',
+      guests: '',
+      camera: 'Sony Cybershot'
+    },
+    {
       id: 'abisko',
       name: 'Abisko',
       description: '',
@@ -129,6 +145,22 @@ Video.reopenClass({
       peopleOut: 'Anna',
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
+      guests: '',
+      camera: 'Sony Cybershot'
+    },
+    {
+      id: 'stockholm',
+      name: 'Stockholm',
+      description: '',
+      country: 'Sweden',
+      path: 'stockholm.mp4',
+      date: '2013-08-28',
+      latitude: 0.0,
+      longitude: 0.0,
+      peopleIn: 'Anna',
+      peopleOut: 'Stefan',
+      peopleStart: 'Stefan',
+      peopleEnd: 'Anna',
       guests: '',
       camera: 'Sony Cybershot'
     },
@@ -241,6 +273,22 @@ Video.reopenClass({
       peopleOut: 'Anna',
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
+      guests: '',
+      camera: 'Sony Cybershot'
+    },
+    {
+      id: 'zagreb',
+      name: 'Zagreb',
+      description: '',
+      country: 'Croatia',
+      path: 'zagreb.mp4',
+      date: '2013-09-13',
+      latitude: 0.0,
+      longitude: 0.0,
+      peopleIn: 'Anna',
+      peopleOut: 'Stefan',
+      peopleStart: 'Stefan',
+      peopleEnd: 'Anna',
       guests: '',
       camera: 'Sony Cybershot'
     },
