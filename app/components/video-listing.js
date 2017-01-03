@@ -23,7 +23,7 @@ export default Ember.Component.extend({
     window.setTimeout(function() {
       for(let videoTag of this.$('video')) {
         videoTag.play();
-      };
+      }
     }, 5000);
   }
 });
