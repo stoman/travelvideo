@@ -14,7 +14,7 @@ Path.reopenClass({
       id: 'interrail',
       name: 'Interrail',
       year: '2013',
-      videos: ['abisko']
+      videos: ['munich_airport', 'stockholm_arlanda', 'abisko', 'narvik', 'lulea', 'kemi', 'oulu', 'helsinki', 'stockholm', 'skopje', 'sofia', 'belgrad', 'bar', 'dubrovnik', 'mostar', 'split', 'zagreb', 'ljubljana', 'salzburg', 'dahoam']
     },
     {
       id: 'china',
