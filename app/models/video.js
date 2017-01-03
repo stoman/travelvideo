@@ -11,6 +11,8 @@ var Video = DS.Model.extend({
   longitude: DS.attr('number'),
   peopleIn: DS.attr('string'),
   peopleOut: DS.attr('string'),
+  peopleStart: DS.attr('string'),
+  peopleEnd: DS.attr('string'),
   guests: DS.attr('string'),
   camera: DS.attr('string')
 });
