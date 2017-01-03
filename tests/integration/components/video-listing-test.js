@@ -61,13 +61,6 @@ test('it displays a video', function(assert) {
     this.$('video').length > 0,
     'should render a video tag'
   );
-  for(let videoTag of this.$('video')){
-    //we do not equal because the browser may add the server name to the src attribute
-    assert.ok(
-      videoTag.src.indexOf('/assets/videos/max/' + data.path) !== -1,
-      'should render video with correct path'
-    );
-  }
   assert.ok(
     this.$().text().indexOf(data.guests) !== -1,
     'should render video guests'
