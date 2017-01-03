@@ -167,8 +167,8 @@ Video.reopenClass({
       date: '2016-08-28',
       latitude: 64.325054,
       longitude: -20.124635,
-      peopleIn: 'Stefan',
-      peopleOut: 'Anna',
+      peopleIn: 'Anna',
+      peopleOut: 'Stefan',
       guests: '',
       camera: 'Sony Alpha 6000'
     },
@@ -181,8 +181,8 @@ Video.reopenClass({
       date: '2016-08-29',
       latitude: 64.052209,
       longitude: -19.229349,
-      peopleIn: 'Anna',
-      peopleOut: 'Stefan',
+      peopleIn: 'Stefan',
+      peopleOut: 'Anna',
       guests: '',
       camera: 'Sony Alpha 6000'
     },

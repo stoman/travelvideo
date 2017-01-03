@@ -30,7 +30,7 @@ test('it displays a video', function(assert) {
     name: 'testname',
     description: 'testdescription',
     country: 'testcountry',
-    path: '/test/path.mp4',
+    path: 'path.mp4',
     date: '2013-01-01',
     latitude: 3.14,
     longitude: -2.7,
@@ -59,7 +59,7 @@ test('it displays a video', function(assert) {
   );
   assert.equal(
     this.$('video').attr('src'),
-    data.path,
+    '/assets/videos/max/' + data.path,
     'should render video with correct path'
   );
   assert.ok(

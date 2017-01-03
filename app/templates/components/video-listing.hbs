@@ -1,10 +1,6 @@
 {{#if video}}
   <div class="videodetail">
-    <video controls>
-      <source src="/assets/videos/720p/{{video.path}}">
-      <source src="/assets/videos/480p/{{video.path}}">
-      <source src="/assets/videos/max/{{video.path}}">
-      <source src="/assets/videos/raw/{{video.path}}">
+    <video src="/assets/videos/{{videoQuality}}/{{video.path}}" onended={{action "videoEnded"}}>
       Your browser does not support HTML5 videos. Please update.
     </video>
 
@@ -18,7 +14,7 @@
       <p>Latitude: {{video.latitude}}</p>
       <p>Longitude: {{video.longitude}}</p>
       {{#if video.guests}}
-        <p>Camera: {{video.guests}}</p>
+        <p>Guests: {{video.guests}}</p>
       {{/if}}
       {{#if video.camera}}
         <p>Camera: {{video.camera}}</p>
