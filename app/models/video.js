@@ -30,9 +30,9 @@ Video.reopenClass({
       latitude: 48.352944,
       longitude: 11.798017,
       peopleIn: 'Stefan',
-      peopleOut: 'Anna',
+      peopleOut: 'Stefan',
       peopleStart: 'Anna',
-      peopleEnd: 'Stefan',
+      peopleEnd: 'Anna',
       guests: '',
       camera: 'Sony Cybershot'
     },

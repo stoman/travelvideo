@@ -53,7 +53,12 @@ export default FixtureAdapter.extend({
         throw "query.sortBy needs to be a string";
       }
       if(query.sortBy === 'random') {
-        ret = ret.sort(() => 0.5 - Math.random());
+        for(let i = ret.length - 1; i > 0; i--) {
+          let j = Math.floor(Math.random() * (i + 1));
+          let temp = ret[i];
+          ret[i] = ret[j];
+          ret[j] = temp;
+        }
       }
       else {
         ret = ret.sort((a, b) => a[query.sortBy] >= b[query.sortBy]);
