@@ -1,10 +1,9 @@
 <div class="box">
   <h2>Select a Path</h2>
   {{#each model as |path|}}
-    <h3>{{path.name}}</h3>
+    <h3>{{path.name}} {{path.year}}</h3>
     <p>
-      Year: {{path.year}},
-      Locations: {{#each path.videos as |video|}} {{video.name}} {{/each}}
+      {{#each path.videos as |video index|}} {{if index "-"}} {{#link-to 'video.display' video.id}}{{video.name}}{{/link-to}} {{/each}}
     </p>
   {{/each}}
 </div>
