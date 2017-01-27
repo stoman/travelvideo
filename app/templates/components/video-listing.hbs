@@ -1,8 +1,14 @@
 {{#if video}}
   <div class="videodetail">
-    <video src="/assets/videos/{{videoQuality}}/{{video.path}}" onended={{action "videoEnded"}}>
-      Your browser does not support HTML5 videos. Please update.
-    </video>
+    {{#if controls}}
+      <video src="/assets/videos/{{videoQuality}}/{{video.path}}" onended={{action "videoEnded"}} controls>
+        Your browser does not support HTML5 videos. Please update.
+      </video>
+    {{else}}
+      <video src="/assets/videos/{{videoQuality}}/{{video.path}}" onended={{action "videoEnded"}}>
+        Your browser does not support HTML5 videos. Please update.
+      </video>
+    {{/if}}
 
     <div class="box">
       <h2>{{video.name}}</h2>

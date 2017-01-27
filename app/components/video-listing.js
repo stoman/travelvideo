@@ -4,6 +4,10 @@ export default Ember.Component.extend({
   //model data
   video: null,
 
+  //settings
+  autoplay: false,
+  controls: false,
+
   //compute video quality
   videoQuality: 'max',
 
@@ -20,10 +24,12 @@ export default Ember.Component.extend({
 
   //after rendering start video
   didRender() {
-    window.setTimeout(function() {
-      for(let videoTag of this.$('video')) {
-        videoTag.play();
-      }
-    }, 5000);
+    if(this.autoplay) {
+        window.setTimeout(function() {
+        for(let videoTag of this.$('video')) {
+          videoTag.play();
+        }
+      }, 5000);
+    }
   }
 });
