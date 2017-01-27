@@ -1,6 +1,6 @@
 .marker {
   position: absolute;
-  left: -99px;
+  left: -100px;
   top: -48px;
   width: 200px;
   font-weight: bold;
@@ -26,4 +26,59 @@
     background-color: #ffffff;
     padding: 5px;
   }
+}
+
+#map.zoom-0 .marker {
+  .label {
+    display: none;
+  }
+  img {
+    width: 20px;
+  }
+  top: -20px;
+}
+#map.zoom-1 .marker {
+  .label {
+    display: none;
+  }
+  img {
+    width: 20px;
+  }
+  top: -20px;
+}
+#map.zoom-2 .marker {
+  .label {
+    display: none;
+  }
+  img {
+    width: 20px;
+  }
+  top: -20px;
+}
+#map.zoom-3 .marker {
+  .label {
+    display: none;
+  }
+  img {
+    width: 20px;
+  }
+  top: -20px;
+}
+#map.zoom-4 .marker {
+  .label {
+    display: none;
+  }
+  img {
+    width: 30px;
+  }
+  top: -30px;
+}
+#map.zoom-5 .marker {
+  .label {
+    display: none;
+  }
+  img {
+    width: 40px;
+  }
+  top: -40px;
 }

@@ -17,7 +17,9 @@ export function initialize() {
             //create open layers view object
             let view = new ol.View({
               center: ol.proj.fromLonLat([11.57, 48.13]),//Munich
-              zoom: 4
+              zoom: 4,
+              minZoom: 2,
+              maxZoom: 9
             });
 
             //create open layers map object
@@ -37,13 +39,13 @@ export function initialize() {
                   source: new ol.source.Stamen({
                     layer: 'watercolor'
                   })
-                })
+                }),
                 //labels for stamen map
-                /*new ol.layer.Tile({
+                new ol.layer.Tile({
                   source: new ol.source.Stamen({
                     layer: 'terrain-labels'
                   })
-                })*/
+                })
                 //OSM tiles
                 /*new ol.layer.Tile({
                   source: new ol.source.OSM()
@@ -123,6 +125,12 @@ export function initialize() {
                   stroke: new ol.style.Stroke({ color: '#e74c3c', width: 5})
                 })
               }));
+            });
+
+            //set zoom level to map object
+            map.on('moveend', function(event) {
+              console.log(document.querySelector('#map').className);
+              document.querySelector('#map').className = 'zoom-' + map.getView().getZoom();
             });
           }
           //fire a custom afterMapCreation event to allow routes to move the map
