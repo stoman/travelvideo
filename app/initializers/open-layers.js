@@ -37,13 +37,13 @@ export function initialize() {
                   source: new ol.source.Stamen({
                     layer: 'watercolor'
                   })
-                }),
+                })
                 //labels for stamen map
-                new ol.layer.Tile({
+                /*new ol.layer.Tile({
                   source: new ol.source.Stamen({
                     layer: 'terrain-labels'
                   })
-                })
+                })*/
                 //OSM tiles
                 /*new ol.layer.Tile({
                   source: new ol.source.OSM()
@@ -87,6 +87,42 @@ export function initialize() {
                   route.transitionTo('video.display', video.id);
                 };
               });
+            });
+
+            //add paths to map
+            this.store.query('path', {}).then(function(paths) {
+
+              //set up features
+              let path_features = [];
+              paths.forEach(function(path) {
+
+                //compute a list of points
+                let points = [];
+                path.get('videos').forEach(function(video) {
+                  points.push(ol.proj.fromLonLat([
+                    video.get('longitude'),
+                    video.get('latitude')
+                  ]));
+                });
+
+                //close cycle
+                points.push(points[0]);
+
+                //create feature
+                path_features.push(new ol.Feature({
+                  geometry: new ol.geom.LineString(points)
+                }));
+              });
+
+              //add paths as a new layer
+              map.addLayer(new ol.layer.Vector({
+                source: new ol.source.Vector({
+                  features: path_features
+                }),
+                style: new ol.style.Style({
+                  stroke: new ol.style.Stroke({ color: '#e74c3c', width: 5})
+                })
+              }));
             });
           }
           //fire a custom afterMapCreation event to allow routes to move the map
