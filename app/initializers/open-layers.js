@@ -128,7 +128,7 @@ export function initialize() {
             });
 
             //set zoom level to map object
-            map.on('moveend', function(event) {
+            map.on('moveend', function(/*event*/) {
               console.log(document.querySelector('#map').className);
               document.querySelector('#map').className = 'zoom-' + map.getView().getZoom();
             });
