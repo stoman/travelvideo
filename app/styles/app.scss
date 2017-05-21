@@ -63,3 +63,9 @@ body {
     transform: rotate(-1deg);
   }
 }
+
+.four-columns {
+  -webkit-column-count: 4;
+  -moz-column-count: 4;
+  column-count: 4;
+}
