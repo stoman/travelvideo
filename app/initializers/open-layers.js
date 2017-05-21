@@ -98,8 +98,8 @@ export function initialize() {
               let trip_features = [];
               trips.forEach(function(trip) {
 
-                //compute a list of points
-                let points = [];
+                //compute a list of points, always start at home
+                let points = [ol.proj.fromLonLat([11.500945, 48.144391])];
                 trip.get('videos').forEach(function(video) {
                   points.push(ol.proj.fromLonLat([
                     video.get('longitude'),

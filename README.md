@@ -1,5 +1,7 @@
 # Travelvideo
 
+[![Build Status](https://travis-ci.org/stoman/travelvideo.svg?branch=master)](https://travis-ci.org/stoman/travelvideo)
+
 This is the code for the website located at [https://travel.stoman.de](https://travel.stoman.de). This repository contains all the code, but due to file sizes not the actual videos. You can view the website at the URL given above or build the website yourself as described below.
 
 ## Prerequisites

@@ -6,6 +6,12 @@ body {
   overflow: hidden;
 }
 
+a, a:link, a:active, a:visited, a:hover {
+  color: #000066;
+  text-decoaration: underline;
+  font-weight: bold;
+}
+
 .box {
   position: absolute;
   left: 0;
@@ -68,4 +74,9 @@ body {
   -webkit-column-count: 4;
   -moz-column-count: 4;
   column-count: 4;
+}
+
+.four-columns > div {
+  display: inline-block;
+  width: 100%;
 }

@@ -1,5 +1,9 @@
 {{#video-listing video=model.video onEnd=(action "videoEnded") autoplay=true}}
-  <p>Last video on trip: {{#link-to 'trip.display' model.trip.id model.lastVideo.id}}{{model.lastVideo.name}}{{/link-to}}</p>
-  <p>Next video on trip: {{#link-to 'trip.display' model.trip.id model.nextVideo.id}}{{model.nextVideo.name}}{{/link-to}}</p>
+  {{#if model.lastVideo}}
+    <p>Last video on trip: {{#link-to 'trip.display' model.trip.id model.lastVideo.id}}{{model.lastVideo.name}}{{/link-to}}</p>
+  {{/if}}
+  {{#if model.nextVideo}}
+    <p>Next video on trip: {{#link-to 'trip.display' model.trip.id model.nextVideo.id}}{{model.nextVideo.name}}{{/link-to}}</p>
+  {{/if}}
   <p>{{#link-to 'video.display' model.video.id}}Stop at this video.{{/link-to}}</p>
 {{/video-listing}}

@@ -2,7 +2,7 @@
   <h2>Available Videos</h2>
   <div class="four-columns">
     {{#each model as |countryitem|}}
-      <div style="display: inline-block; width: 100%;">
+      <div>
         <h3>{{countryitem.country}}</h3>
         {{#each countryitem.videos as |video|}}
           {{#link-to 'video.display' video.id}}

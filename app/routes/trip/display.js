@@ -14,8 +14,12 @@ export default Ember.Route.extend({
         //search trip for last and next video
         for(let i = 0; i < trip.get('videos.length'); i++) {
           if(trip.get('videos').objectAt(i).get('id') === params.videoId) {
-            ret['nextVideo'] = trip.get('videos').objectAt((i + 1) % trip.get('videos.length'));
-            ret['lastVideo'] = trip.get('videos').objectAt((i - 1 + trip.get('videos.length')) % trip.get('videos.length'));
+            if(i < trip.get('videos.length') - 1) {
+              ret['nextVideo'] = trip.get('videos').objectAt(i + 1);
+            }
+            if(i > 0) {
+              ret['lastVideo'] = trip.get('videos').objectAt(i - 1);
+            }
           }
         }
         //resolve promise => return
