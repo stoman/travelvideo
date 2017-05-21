@@ -1,9 +1,0 @@
-<div class="box">
-  <h2>Select a Path</h2>
-  {{#each model as |path|}}
-    <h3>{{path.name}} {{path.year}}</h3>
-    <p>
-      {{#each path.videos as |video index|}} {{if index "-"}} {{#link-to 'path.display' path.id video.id}}{{video.name}}{{/link-to}} {{/each}}
-    </p>
-  {{/each}}
-</div>

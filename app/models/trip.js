@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 
-var Path = DS.Model.extend({
+var Trip = DS.Model.extend({
   //attributes
   name: DS.attr('string'),
   year: DS.attr('string'),
@@ -8,7 +8,7 @@ var Path = DS.Model.extend({
 });
 
 //fixtures: add more data here
-Path.reopenClass({
+Trip.reopenClass({
   FIXTURES: [
     {
       id: 'interrail',
@@ -43,4 +43,4 @@ Path.reopenClass({
   ]
 });
 
-export default Path;
+export default Trip;

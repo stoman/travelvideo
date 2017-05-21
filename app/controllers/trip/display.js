@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
   actions: {
     //video ended? go to next video
     videoEnded() {
-      this.transitionToRoute('path.display', this.get('model.path.id'), this.get('model.nextVideo.id'));
+      this.transitionToRoute('trip.display', this.get('model.trip.id'), this.get('model.nextVideo.id'));
     }
   }
 });

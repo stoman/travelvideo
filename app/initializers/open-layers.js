@@ -91,16 +91,16 @@ export function initialize() {
               });
             });
 
-            //add paths to map
-            this.store.query('path', {}).then(function(paths) {
+            //add trips to map
+            this.store.query('trip', {}).then(function(trips) {
 
               //set up features
-              let path_features = [];
-              paths.forEach(function(path) {
+              let trip_features = [];
+              trips.forEach(function(trip) {
 
                 //compute a list of points
                 let points = [];
-                path.get('videos').forEach(function(video) {
+                trip.get('videos').forEach(function(video) {
                   points.push(ol.proj.fromLonLat([
                     video.get('longitude'),
                     video.get('latitude')
@@ -111,15 +111,15 @@ export function initialize() {
                 points.push(points[0]);
 
                 //create feature
-                path_features.push(new ol.Feature({
+                trip_features.push(new ol.Feature({
                   geometry: new ol.geom.LineString(points)
                 }));
               });
 
-              //add paths as a new layer
+              //add trips as a new layer
               map.addLayer(new ol.layer.Vector({
                 source: new ol.source.Vector({
-                  features: path_features
+                  features: trip_features
                 }),
                 style: new ol.style.Style({
                   stroke: new ol.style.Stroke({ color: '#e74c3c', width: 5})
@@ -129,7 +129,6 @@ export function initialize() {
 
             //set zoom level to map object
             map.on('moveend', function(/*event*/) {
-              console.log(document.querySelector('#map').className);
               document.querySelector('#map').className = 'zoom-' + map.getView().getZoom();
             });
           }

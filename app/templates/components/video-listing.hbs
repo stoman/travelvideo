@@ -28,8 +28,8 @@
       {{yield}}
       <p>View this video as: <ul>
         <li>{{#link-to 'video.display' video.id}}singleton video{{/link-to}}</li>
-        {{#each video.paths as |path|}}
-          <li>{{#link-to 'path.display' path.id video.id}}part of the trip {{path.name}} {{path.year}}{{/link-to}}</li>
+        {{#each video.trips as |trip|}}
+          <li>{{#link-to 'trip.display' trip.id video.id}}part of the trip {{trip.name}} {{trip.year}}{{/link-to}}</li>
         {{/each}}
       </ul></p>
     </div>

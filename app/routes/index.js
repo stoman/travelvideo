@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  //redirect the index route to the paths route
+  //redirect the index route to the trips route
   beforeModel() {
   	this._super(...arguments);
-    this.replaceWith('path');
+    this.replaceWith('trip');
   }
 });

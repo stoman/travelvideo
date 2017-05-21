@@ -15,7 +15,7 @@ var Video = DS.Model.extend({
   peopleEnd: DS.attr('string'),
   guests: DS.attr('string'),
   camera: DS.attr('string'),
-  paths: DS.hasMany('path')
+  trips: DS.hasMany('trip')
 });
 
 //fixtures: add more data here

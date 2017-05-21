@@ -3,19 +3,19 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   model(params) {
     let self = this;
-    //find path, then work with it
+    //find trip, then work with it
     return new Ember.RSVP.Promise(function(resolve/*, reject*/) {
-      self.store.findRecord('path', params.pathId).then(function(path) {
+      self.store.findRecord('trip', params.tripId).then(function(trip) {
         //find video
         let ret = {
           video: self.store.findRecord('video', params.videoId),
-          path: path
+          trip: trip
         };
-        //search path for last and next video
-        for(let i = 0; i < path.get('videos.length'); i++) {
-          if(path.get('videos').objectAt(i).get('id') === params.videoId) {
-            ret['nextVideo'] = path.get('videos').objectAt((i + 1) % path.get('videos.length'));
-            ret['lastVideo'] = path.get('videos').objectAt((i - 1 + path.get('videos.length')) % path.get('videos.length'));
+        //search trip for last and next video
+        for(let i = 0; i < trip.get('videos.length'); i++) {
+          if(trip.get('videos').objectAt(i).get('id') === params.videoId) {
+            ret['nextVideo'] = trip.get('videos').objectAt((i + 1) % trip.get('videos.length'));
+            ret['lastVideo'] = trip.get('videos').objectAt((i - 1 + trip.get('videos.length')) % trip.get('videos.length'));
           }
         }
         //resolve promise => return
