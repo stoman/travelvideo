@@ -26,10 +26,9 @@
         <p>Camera: {{video.camera}}</p>
       {{/if}}
       {{yield}}
-      <p>View this video as: <ul>
-        <li>{{#link-to 'video.display' video.id}}singleton video{{/link-to}}</li>
+      <p>This video is part of the trips: <ul>
         {{#each video.trips as |trip|}}
-          <li>{{#link-to 'trip.display' trip.id video.id}}part of the trip {{trip.name}} {{trip.year}}{{/link-to}}</li>
+          <li>{{trip.name}} {{trip.year}} ({{#link-to 'trip.start' trip.id}}full trip{{/link-to}}, {{#link-to 'trip.display' trip.id video.id}}start at {{video.name}}{{/link-to}})</li>
         {{/each}}
       </ul></p>
     </div>

@@ -1,9 +1,9 @@
 <div class="box">
   <h2>Select a Trip</h2>
   {{#each model as |trip|}}
-    <h3>{{trip.name}} {{trip.year}}</h3>
     <p>
-      {{#each trip.videos as |video index|}} {{if index "-"}} {{#link-to 'trip.display' trip.id video.id}}{{video.name}}{{/link-to}} {{/each}}
+      {{#link-to 'trip.start' trip.id}}{{trip.name}} {{trip.year}}{{/link-to}}
+      ({{#each trip.videos as |video index|}} {{if index "-"}} {{video.name}} {{/each}})
     </p>
   {{/each}}
 </div>
