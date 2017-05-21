@@ -2,6 +2,8 @@ import FixtureAdapter from 'ember-data-fixture-adapter';
 
 //all data in this application is static and therefore loeaded from fixtures
 export default FixtureAdapter.extend({
+  simulateRemoteResponse: false,
+  
   //the following two functions add the functionality of the commit
   //https://github.com/emberjs/ember-data-fixture-adapter/commit/ce93a14bfc4e4db1df67180b4646d0875dd79411
   //by bmac that is not contained in the npm repository yet

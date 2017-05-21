@@ -1,11 +1,11 @@
 {{#if video}}
   <div class="videodetail">
     {{#if controls}}
-      <video src="/assets/videos/{{videoQuality}}/{{video.path}}" onended={{action "videoEnded"}} controls>
+      <video src="/assets/videos/{{videoQuality}}/{{video.filename}}" onended={{action "videoEnded"}} controls>
         Your browser does not support HTML5 videos. Please update.
       </video>
     {{else}}
-      <video src="/assets/videos/{{videoQuality}}/{{video.path}}" onended={{action "videoEnded"}}>
+      <video src="/assets/videos/{{videoQuality}}/{{video.filename}}" onended={{action "videoEnded"}}>
         Your browser does not support HTML5 videos. Please update.
       </video>
     {{/if}}
@@ -25,7 +25,13 @@
       {{#if video.camera}}
         <p>Camera: {{video.camera}}</p>
       {{/if}}
+      {{yield}}
+      <p>View this video as: <ul>
+        <li>{{#link-to 'video.display' video.id}}singleton video{{/link-to}}</li>
+        {{#each video.paths as |path|}}
+          <li>{{#link-to 'path.display' path.id video.id}}part of the trip {{path.name}} {{path.year}}{{/link-to}}</li>
+        {{/each}}
+      </ul></p>
     </div>
   </div>
 {{/if}}
-{{yield}}
