@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('route:paths', 'Unit | Route | paths', {
+moduleFor('route:trip/index', 'Unit | Route | trip/index', {
 });
 
 test('it exists', function(assert) {

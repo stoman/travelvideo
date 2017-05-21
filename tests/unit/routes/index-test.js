@@ -8,10 +8,10 @@ test('it exists', function(assert) {
   assert.ok(route);
 });
 
-test('should transition to paths route', function(assert) {
+test('should transition to trip route', function(assert) {
   let route = this.subject({
     replaceWith(routeName) {
-      assert.equal(routeName, 'paths', 'replace with route name paths');
+      assert.equal(routeName, 'trip', 'replace with route name trip');
     }
   });
   route.beforeModel();

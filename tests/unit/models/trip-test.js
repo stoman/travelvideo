@@ -2,7 +2,7 @@
 
 import { moduleForModel, test } from 'ember-qunit';
 
-moduleForModel('path', 'Unit | Model | path', {
+moduleForModel('trip', 'Unit | Model | trip', {
   needs: ['model:video']
 });
 
@@ -13,8 +13,8 @@ test('it exists', function(assert) {
 });
 
 test('should have some videos', function(assert) {
-  const Path = this.store().modelFor('path');
-  const relationship = Ember.get(Path, 'relationshipsByName').get('videos');
+  const Trip = this.store().modelFor('trip');
+  const relationship = Ember.get(Trip, 'relationshipsByName').get('videos');
 
   assert.equal(relationship.key, 'videos', 'has relationship with video');
   assert.equal(relationship.kind, 'hasMany', 'kind of relationship is hasMany');
@@ -22,7 +22,7 @@ test('should have some videos', function(assert) {
 
 test('should have fixtures', function(assert) {
   assert.ok(
-    Ember.get(this.store().modelFor('path'), 'FIXTURES').length > 0,
+    Ember.get(this.store().modelFor('trip'), 'FIXTURES').length > 0,
     'should have fixtures'
   );
 });

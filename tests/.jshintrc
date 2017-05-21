@@ -20,7 +20,7 @@
     "DS",
     "andThen",
     "currentURL",
-    "currentPath",
+    "currentTrip",
     "currentRouteName"
   ],
   "node": false,

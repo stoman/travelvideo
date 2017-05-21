@@ -6,7 +6,7 @@ moduleForAcceptance('Acceptance | navigation');
 test('visiting /, checking redirect', function(assert) {
   visit('/');
   andThen(function() {
-    assert.equal(currentURL(), '/paths', 'should redirect to paths');
+    assert.equal(currentURL(), '/trip', 'should redirect to trip');
   });
 });
 
@@ -18,10 +18,10 @@ test('front page should link to the about page', function (assert) {
   });
 });
 
-test('front page should link to path overview', function (assert) {
+test('front page should link to trip overview', function (assert) {
   visit('/');
-  click('a:contains("paths")');
+  click('a:contains("trip")');
   andThen(function () {
-    assert.equal(currentURL(), '/paths', 'should navigate to paths');
+    assert.equal(currentURL(), '/trip', 'should navigate to trips');
   });
 });
