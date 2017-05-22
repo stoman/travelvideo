@@ -1,6 +1,9 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('controller:map', 'Unit | Controller | map', {
+  needs: [
+    'service:metrics',
+  ]
 });
 
 test('it exists', function(assert) {
