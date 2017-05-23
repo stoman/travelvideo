@@ -5,5 +5,5 @@
   {{#if model.nextVideo}}
     <p>Next video on trip: {{#link-to 'trip.display' model.trip.id model.nextVideo.id}}{{model.nextVideo.name}}{{/link-to}}</p>
   {{/if}}
-  <p>{{#link-to 'video.display' model.video.id}}Stop at this video.{{/link-to}}</p>
+  <p><a href="#" {{action 'stopTrip'}}>Stop at this video.</a></p>
 {{/video-listing}}

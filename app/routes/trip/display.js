@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  metrics: Ember.inject.service(),
+  
   model(params) {
     let self = this;
     //find trip, then work with it
@@ -35,6 +37,48 @@ export default Ember.Route.extend({
         this.currentModel.video.get('longitude'),
         this.currentModel.video.get('latitude')
       );
+    },
+
+    //log events
+    didTransition() {
+      Ember.run.scheduleOnce('afterRender', this, () => {
+        Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
+          category: 'video',
+          action: 'view',
+          label: this.currentModel.video.get('id')
+        });
+        Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
+          category: 'video',
+          action: 'view-trip',
+          label: this.currentModel.video.get('id')
+        });
+        Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
+          category: 'trip',
+          action: 'view-video',
+          label: this.currentModel.trip.get('id')
+        });
+      });
+      return true;
+    },
+
+    //action for stopping the trip
+    stopTrip() {
+      //log event
+      Ember.run.scheduleOnce('afterRender', this, () => {
+        Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
+          category: 'video',
+          action: 'stop-trip',
+          label: this.currentModel.video.get('id')
+        });
+        Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
+          category: 'trip',
+          action: 'stop-at-video',
+          label: this.currentModel.trip.get('id')
+        });
+      });
+
+      //redirect to video page
+      this.transitionTo('video.display', this.currentModel.video.get('id'));
     }
   }
 });

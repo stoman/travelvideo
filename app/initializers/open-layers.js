@@ -5,6 +5,8 @@ import Ember from 'ember';
 export function initialize() {
   //modify the didTransition action of all routes
   Ember.Route.reopen({
+    metrics: Ember.inject.service(),
+
     actions: {
       didTransition() {
         const route = this;
@@ -129,7 +131,28 @@ export function initialize() {
 
             //set zoom level to map object
             map.on('moveend', function(/*event*/) {
-              document.querySelector('#map').className = 'zoom-' + map.getView().getZoom();
+              if(document.querySelector('#map')) {
+                //update css class
+                document.querySelector('#map').className = 'zoom-' + map.getView().getZoom();
+
+                //fire analytics events
+                let center = ol.proj.toLonLat(map.getView().getCenter());
+                Ember.get(route, 'metrics').trackEvent('GoogleAnalytics', {
+                  category: 'map-movement',
+                  action: 'zoom',
+                  value: map.getView().getZoom()
+                });
+                Ember.get(route, 'metrics').trackEvent('GoogleAnalytics', {
+                  category: 'map-movement',
+                  action: 'longitude',
+                  value: center[0]
+                });
+                Ember.get(route, 'metrics').trackEvent('GoogleAnalytics', {
+                  category: 'map-movement',
+                  action: 'latitude',
+                  value: center[1]
+                });
+              }
             });
           }
           //fire a custom afterMapCreation event to allow routes to move the map
