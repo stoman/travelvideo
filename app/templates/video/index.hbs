@@ -1,16 +1,14 @@
-<div class="box">
+<div class="box videos">
   <h2>Available Videos</h2>
-  <div class="four-columns">
-    {{#each model as |countryitem|}}
-      <div>
-        <h3>{{countryitem.country}}</h3>
-        {{#each countryitem.videos as |video|}}
-          {{#link-to 'video.display' video.id}}
-            {{video.name}} ({{moment-format video.date 'DD.MM.YYYY'}})
-          {{/link-to}}
-          <br />
-        {{/each}}
-      </div>
-    {{/each}}
-  </div>
+  {{#each model as |countryitem|}}
+    <div>
+      <h3>{{countryitem.country}}</h3>
+      {{#each countryitem.videos as |video|}}
+        {{#link-to 'video.display' video.id}}
+          {{video.name}} ({{moment-format video.date 'DD.MM.YYYY'}})
+        {{/link-to}}
+        <br />
+      {{/each}}
+    </div>
+  {{/each}}
 </div>

@@ -1,5 +1,7 @@
+@import 'about';
 @import 'application';
 @import 'map';
+@import 'videos';
 @import 'components/video-listing';
 
 body {
@@ -22,6 +24,7 @@ a, a:link, a:active, a:visited, a:hover {
   padding: 1px 20px 20px 20px;
   border-radius: 10px;
   border: 4px solid #ffffff;
+  max-width: 1000px;
 }
 
 #menu {
@@ -68,15 +71,4 @@ a, a:link, a:active, a:visited, a:hover {
     background-image: url('/assets/stamp5.png');
     transform: rotate(-1deg);
   }
-}
-
-.four-columns {
-  -webkit-column-count: 4;
-  -moz-column-count: 4;
-  column-count: 4;
-}
-
-.four-columns > div {
-  display: inline-block;
-  width: 100%;
 }
