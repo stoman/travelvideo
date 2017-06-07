@@ -1,0 +1,13 @@
+<div class="box">
+  <h2>{{model.name}} {{model.year}}</h2>
+  <p>
+    Videos: 
+    {{#each model.videos as |video index|}}
+      {{if index "-"}}
+      {{#link-to 'trip.display' model.id video.id}}{{video.name}}{{/link-to}}
+    {{/each}}
+    {{#unless model.finished}}
+      - and more to come...
+    {{/unless}}
+  </p>
+</div>

@@ -20,7 +20,7 @@ export default Ember.Controller.extend({
         });
 
         //redirect to trip index page
-        this.transitionToRoute('trip.index');
+        this.transitionToRoute('trip.overview', this.get('model.trip.id'));
       }
     }
   }

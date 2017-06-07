@@ -110,7 +110,9 @@ export function initialize() {
                 });
 
                 //close cycle
-                points.push(points[0]);
+                if(trip.get('finished')) {
+                  points.push(points[0]);
+                }
 
                 //create feature
                 trip_features.push(new ol.Feature({

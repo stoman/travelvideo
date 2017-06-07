@@ -25,6 +25,7 @@ Router.map(function() {
   this.route('about');
   this.route('trip', function() {
     this.route('start', { path: '/start/:tripId'});
+    this.route('overview', { path: '/:tripId'});
     this.route('display', { path: '/:tripId/:videoId'});
   });
   this.route('video', function() {

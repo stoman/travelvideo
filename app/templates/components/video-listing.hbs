@@ -28,7 +28,7 @@
       {{yield}}
       <p>This video is part of the trips: <ul>
         {{#each video.trips as |trip|}}
-          <li>{{trip.name}} {{trip.year}} ({{#link-to 'trip.start' trip.id}}full trip{{/link-to}}, {{#link-to 'trip.display' trip.id video.id}}start at {{video.name}}{{/link-to}})</li>
+          <li>{{#link-to 'trip.overview' trip.id}}{{trip.name}} {{trip.year}}{{/link-to}} ({{#link-to 'trip.start' trip.id}}start full trip{{/link-to}}, {{#link-to 'trip.display' trip.id video.id}}start at {{video.name}}{{/link-to}})</li>
         {{/each}}
       </ul></p>
     </div>

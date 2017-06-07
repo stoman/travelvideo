@@ -2,8 +2,8 @@
   <h2>Select a Trip</h2>
   {{#each model as |trip|}}
     <p>
-      {{#link-to 'trip.start' trip.id}}{{trip.name}} {{trip.year}}{{/link-to}}
-      ({{#each trip.videos as |video index|}} {{if index "-"}} {{video.name}} {{/each}})
+      {{#link-to 'trip.overview' trip.id}}{{trip.name}} {{trip.year}}{{/link-to}}
+      ({{#each trip.videos as |video index|}} {{if index "-"}} {{video.name}} {{/each}} {{#unless trip.finished}} - and more to come... {{/unless}})
     </p>
   {{/each}}
 </div>
