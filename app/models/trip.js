@@ -22,7 +22,7 @@ Trip.reopenClass({
       id: 'china',
       name: 'China',
       year: '2014',
-      videos: ['dubai','peking', 'peking2', 'zhangjiajie', 'zhangjiajie_nationalpark', 'guilin', 'tiantouzhai', 'tiantouzhai2', 'yangshuo', 'xingping', 'lijiang', 'tiger_leaping_gorge', 'hongkong'],
+      videos: ['dubai','peking', 'peking_olympic_park', 'zhangjiajie_tianmen_mountain', 'zhangjiajie_nationalpark', 'guilin', 'tiantouzhai', 'tiantouzhai2', 'yangshuo', 'xingping', 'lijiang', 'tiger_leaping_gorge', 'hongkong'],
       finished: true
     },
     {
@@ -44,6 +44,13 @@ Trip.reopenClass({
       name: 'Iceland',
       year: '2016',
       videos: ['reykjavik', 'gullfoss', 'landmannahellir', 'kirkjubaejarklaustur', 'joekulsarlon', 'seydisfjoerdur', 'asbyrgi', 'hverfjall', 'drangsnes', 'porskafjoerdur'],
+      finished: true
+    },
+    {
+      id: 'world_trip',
+      name: 'World Trip',
+      year: '2017',
+      videos: ['dania_beach', 'miami_beach', 'miami', 'quito'],
       finished: false
     }
   ]
