@@ -38,18 +38,11 @@ export default Ember.Route.extend({
 
       Ember.run.scheduleOnce('afterRender', this, () => {
 
-        //create open layers view object
-        let view = new ol.View({
-          center: ol.proj.fromLonLat([0.0, 0.0]),
-          zoom: 1
-        });
-
         //create open layers map object
         let map = new ol.Map({
 
           //predefined variables
           target: 'overview-map',
-          view: view,
 
           //load tiles
           layers: [
@@ -82,7 +75,7 @@ export default Ember.Route.extend({
           }
 
           //add line to map as a new layer
-          map.addLayer(new ol.layer.Vector({
+          let lineLayer = new ol.layer.Vector({
             source: new ol.source.Vector({
               features: [new ol.Feature({
                 geometry: new ol.geom.LineString(points)
@@ -91,7 +84,11 @@ export default Ember.Route.extend({
             style: new ol.style.Style({
               stroke: new ol.style.Stroke({color: '#e74c3c', width: 5})
             })
-          }));
+          });
+          map.addLayer(lineLayer);
+
+          //zoom map to line
+          map.getView().fit(lineLayer.getSource().getExtent(), map.getSize());
         });
       });
 
