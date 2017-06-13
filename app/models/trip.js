@@ -47,8 +47,8 @@ Trip.reopenClass({
       finished: true
     },
     {
-      id: 'world_trip',
-      name: 'World Trip',
+      id: 'world',
+      name: 'Around the World',
       year: '2017',
       videos: ['dania_beach', 'miami_beach', 'miami', 'quito', 'mitad_del_mundo', 'cuyabeno', 'tortuga_bay', 'genovesa', 'bartolome', 'floreana', 'espanola'],
       finished: false

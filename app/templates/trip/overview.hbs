@@ -1,13 +1,21 @@
 <div class="box">
+  <div id="overview-map"></div>
   <h2>{{model.name}} {{model.year}}</h2>
   <p>
-    Videos: 
-    {{#each model.videos as |video index|}}
-      {{if index "-"}}
-      {{#link-to 'trip.display' model.id video.id}}{{video.name}}{{/link-to}}
-    {{/each}}
-    {{#unless model.finished}}
-      - and more to come...
-    {{/unless}}
+    Itinerary:
+    <ul>
+      {{#each model.videosWithOffsets as |videoWithOffset index|}}
+        {{#if videoWithOffset.offset}}
+          <li>{{videoWithOffset.offset}} without video</li>
+        {{/if}}
+        <li>{{#link-to 'trip.display' model.id videoWithOffset.video.id}}{{videoWithOffset.video.name}} ({{videoWithOffset.video.country}}){{/link-to}}</li>
+      {{/each}}
+      {{#unless model.finished}}
+        <li>and more to come...</li>
+      {{/unless}}
+    </ul>
+  </p>
+  <p class="action">
+    {{#link-to 'trip.start' model.id}}Watch all the videos of this trip!{{/link-to}}
   </p>
 </div>
