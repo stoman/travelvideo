@@ -186,7 +186,7 @@ export function initialize() {
         resolution: map.getView().getResolution(),
       });
       map.beforeRender(zoom);
-      view.setZoom(7);
+      view.setZoom(8);
     }
   });
 }
