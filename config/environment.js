@@ -32,7 +32,11 @@ module.exports = function(environment) {
           sendHitTask: environment !== 'development'
         }
       }
-    ]
+    ],
+
+    disqus: {
+      shortname: 'travelstoman'
+    }
   };
 
   if (environment === 'development') {

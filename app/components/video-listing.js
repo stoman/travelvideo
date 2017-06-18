@@ -3,6 +3,12 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   //model data
   video: null,
+  disqusIdentifier: Ember.computed('video', function() {
+    return 'video-' + this.get('video.id');
+  }),
+  disqusTitle: Ember.computed('video', function() {
+    return 'Video ' + this.get('video.name');
+  }),
 
   //settings
   autoplay: false,

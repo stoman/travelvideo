@@ -10,6 +10,10 @@ export default Ember.Route.extend({
     return new Ember.RSVP.Promise(function(resolve/*, reject*/) {
       self.store.findRecord('trip', params.tripId).then(function(trip) {
 
+        //disqus variables
+        trip.set('disqusIdentifier', 'trip-' + trip.get('id'));
+        trip.set('disqusTitle', 'Trip ' + trip.get('name') + ' ' + trip.get('year'));
+
         //compute offsets
         trip.get('videos').then(function(videos) {
           let videosWithOffsets = [];
