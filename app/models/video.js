@@ -1092,6 +1092,22 @@ Video.reopenClass({
       peopleEnd: 'Anna',
       guests: 'Lady Liberty',
       camera: 'Sony Alpha 6000'
+    },
+    {
+      id: 'lehel',
+      name: 'München Lehel',
+      description: 'In Munich we stayed the most time with Saskia and Basti at Lehel.',
+      country: 'Germany',
+      filename: 'lehel.mp4',
+      date: '2017-07-16',
+      latitude: 0.0,
+      longitude: 0.0,
+      peopleIn: 'Stefan',
+      peopleOut: 'Anna',
+      peopleStart: 'Anna',
+      peopleEnd: 'Stefan',
+      guests: 'Basti, Saskia',
+      camera: 'Sony Alpha 6000'
     }
   ]
 });
