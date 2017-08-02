@@ -21,7 +21,7 @@ export function initialize() {
               center: ol.proj.fromLonLat([11.57, 48.13]),//Munich
               zoom: 4,
               minZoom: 2,
-              maxZoom: 11
+              maxZoom: 12
             });
 
             //create open layers map object
