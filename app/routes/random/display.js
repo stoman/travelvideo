@@ -12,7 +12,8 @@ export default Ember.Route.extend({
     afterMapCreation() {
       this.moveBackgroundMap(
         this.currentModel.get('longitude'),
-        this.currentModel.get('latitude')
+        this.currentModel.get('latitude'),
+        this.currentModel.get('preferredZoom')
       );
     },
 

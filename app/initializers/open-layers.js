@@ -166,8 +166,8 @@ export function initialize() {
       afterMapCreation() {}
     },
 
-    //move the background map to given coordinates
-    moveBackgroundMap(lon, lat) {
+    //move the background map to given coordinates and zoom level
+    moveBackgroundMap(lon, lat, zoomLevel) {
       //get open layers map and view objects
       let map = this.controllerFor('application').get('backgroundMap');
       let view = this.controllerFor('application').get('backgroundView');
@@ -186,7 +186,7 @@ export function initialize() {
         resolution: map.getView().getResolution(),
       });
       map.beforeRender(zoom);
-      view.setZoom(8);
+      view.setZoom(zoomLevel);
     }
   });
 }

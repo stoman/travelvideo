@@ -15,7 +15,8 @@ var Video = DS.Model.extend({
   peopleEnd: DS.attr('string'),
   guests: DS.attr('string'),
   camera: DS.attr('string'),
-  trips: DS.hasMany('trip')
+  trips: DS.hasMany('trip'),
+  preferredZoom: DS.attr('number')
 });
 
 //fixtures: add more data here
@@ -35,7 +36,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'stockholm_arlanda',
@@ -51,7 +53,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'abisko',
@@ -67,7 +70,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'narvik',
@@ -83,7 +87,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'lulea',
@@ -99,7 +104,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'kemi',
@@ -115,7 +121,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'oulu',
@@ -131,7 +138,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'helsinki',
@@ -147,7 +155,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'stockholm',
@@ -163,7 +172,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'skopje',
@@ -179,7 +189,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'sofia',
@@ -195,7 +206,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'belgrad',
@@ -211,7 +223,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'bar',
@@ -227,7 +240,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'dubrovnik',
@@ -243,7 +257,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'mostar',
@@ -259,7 +274,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'split',
@@ -275,7 +291,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'zagreb',
@@ -291,7 +308,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'ljubljana',
@@ -307,7 +325,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'salzburg',
@@ -323,7 +342,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'dahoam',
@@ -339,7 +359,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'dubai',
@@ -355,7 +376,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'peking',
@@ -371,7 +393,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'peking_olympic_park',
@@ -387,7 +410,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'zhangjiajie_tianmen_mountain',
@@ -403,7 +427,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'zhangjiajie_nationalpark',
@@ -419,7 +444,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'guilin',
@@ -435,7 +461,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'tiantouzhai',
@@ -451,7 +478,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna, Anna-Maria, Jasmin',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'tiantouzhai2',
@@ -467,7 +495,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'yangshuo',
@@ -483,7 +512,8 @@ Video.reopenClass({
       peopleStart: 'Anna, Anna-Maria, Jasmin',
       peopleEnd: 'Jasmin, Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'xingping',
@@ -499,7 +529,8 @@ Video.reopenClass({
       peopleStart: 'Jasmin, Stefan',
       peopleEnd: 'Anna, Anna-Maria',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'lijiang',
@@ -515,7 +546,8 @@ Video.reopenClass({
       peopleStart: 'Anna, Anna-Maria',
       peopleEnd: 'Anna-Maria, Stefan',
       guests: 'Chinese girl',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'tiger_leaping_gorge',
@@ -531,7 +563,8 @@ Video.reopenClass({
       peopleStart: 'Anna-Maria, Stefan',
       peopleEnd: 'Anna',
       guests: 'Fiona, C.',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'hongkong',
@@ -547,7 +580,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'taormina',
@@ -563,7 +597,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'siracusa',
@@ -579,7 +614,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Noemi, Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'etna',
@@ -595,7 +631,8 @@ Video.reopenClass({
       peopleStart: 'Noemi, Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'funchal',
@@ -611,7 +648,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Bine, Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'famara',
@@ -627,7 +665,8 @@ Video.reopenClass({
       peopleStart: 'Bine, Anna',
       peopleEnd: 'Stefan',
       guests: 'Uwe',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'puerto_del_rosario',
@@ -643,7 +682,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'santa_cruz',
@@ -659,7 +699,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Bine, Stefan',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'las_palmas',
@@ -675,7 +716,8 @@ Video.reopenClass({
       peopleStart: 'Bine, Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Cybershot'
+      camera: 'Sony Cybershot',
+      preferredZoom: 8
     },
     {
       id: 'reykjavik',
@@ -691,7 +733,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'gullfoss',
@@ -707,7 +750,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'landmannahellir',
@@ -723,7 +767,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'kirkjubaejarklaustur',
@@ -739,7 +784,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'joekulsarlon',
@@ -755,7 +801,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'seydisfjoerdur',
@@ -771,7 +818,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'asbyrgi',
@@ -787,7 +835,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'hverfjall',
@@ -803,7 +852,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'drangsnes',
@@ -819,7 +869,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'porskafjoerdur',
@@ -835,7 +886,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'dania_beach',
@@ -851,7 +903,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'miami_beach',
@@ -867,7 +920,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'miami',
@@ -883,7 +937,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'quito',
@@ -899,7 +954,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'mitad_del_mundo',
@@ -915,7 +971,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'cuyabeno',
@@ -931,7 +988,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: 'Claudia',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'tortuga_bay',
@@ -947,7 +1005,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'genovesa',
@@ -963,7 +1022,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'bartolome',
@@ -979,7 +1039,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'floreana',
@@ -995,7 +1056,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'espanola',
@@ -1011,7 +1073,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'pasochoa',
@@ -1027,7 +1090,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'mindo',
@@ -1043,7 +1107,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '3 butterflies',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'teleferiqo',
@@ -1059,7 +1124,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'new_york',
@@ -1075,7 +1141,8 @@ Video.reopenClass({
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     },
     {
       id: 'new_york_liberty_island',
@@ -1091,7 +1158,8 @@ Video.reopenClass({
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: 'Lady Liberty',
-      camera: 'Sony Alpha 6000'
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     }
   ]
 });
