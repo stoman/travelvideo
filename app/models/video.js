@@ -904,7 +904,7 @@ Video.reopenClass({
       peopleEnd: 'Stefan',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 9
     },
     {
       id: 'miami_beach',
@@ -921,7 +921,7 @@ Video.reopenClass({
       peopleEnd: 'Stefan',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 11
     },
     {
       id: 'miami',
@@ -938,7 +938,7 @@ Video.reopenClass({
       peopleEnd: 'Anna',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 11
     },
     {
       id: 'quito',
@@ -955,7 +955,7 @@ Video.reopenClass({
       peopleEnd: 'Anna',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 11
     },
     {
       id: 'mitad_del_mundo',
@@ -972,7 +972,7 @@ Video.reopenClass({
       peopleEnd: 'Stefan',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 10
     },
     {
       id: 'cuyabeno',
@@ -989,7 +989,7 @@ Video.reopenClass({
       peopleEnd: 'Anna',
       guests: 'Claudia',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 7
     },
     {
       id: 'tortuga_bay',
@@ -1091,7 +1091,7 @@ Video.reopenClass({
       peopleEnd: 'Anna',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 9
     },
     {
       id: 'mindo',
@@ -1108,7 +1108,7 @@ Video.reopenClass({
       peopleEnd: 'Stefan',
       guests: '3 butterflies',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 10
     },
     {
       id: 'teleferiqo',
@@ -1125,7 +1125,7 @@ Video.reopenClass({
       peopleEnd: 'Anna',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 11
     },
     {
       id: 'new_york',
@@ -1142,7 +1142,7 @@ Video.reopenClass({
       peopleEnd: 'Stefan',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 11
     },
     {
       id: 'new_york_liberty_island',
@@ -1159,7 +1159,7 @@ Video.reopenClass({
       peopleEnd: 'Anna',
       guests: 'Lady Liberty',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 11
     }
   ]
 });
