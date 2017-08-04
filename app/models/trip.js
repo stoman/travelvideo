@@ -50,7 +50,7 @@ Trip.reopenClass({
       id: 'world',
       name: 'Around the World',
       year: '2017',
-      videos: ['dania_beach', 'miami_beach', 'miami', 'quito', 'mitad_del_mundo', 'cuyabeno', 'tortuga_bay', 'genovesa', 'bartolome', 'floreana', 'espanola', 'pasochoa', 'mindo', 'teleferiqo', 'new_york', 'new_york_liberty_island', 'lehel'],
+      videos: ['dania_beach', 'miami_beach', 'miami', 'quito', 'mitad_del_mundo', 'cuyabeno', 'tortuga_bay', 'genovesa', 'bartolome', 'floreana', 'espanola', 'pasochoa', 'mindo', 'teleferiqo', 'new_york', 'new_york_liberty_island', 'lehel', 'osaka', 'nara', 'kyoto', 'hiroshima', 'mt_misen', 'himeji', 'murodo', 'matsumoto', 'tokyo'],
       finished: false
     }
   ]
