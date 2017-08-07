@@ -1,6 +1,9 @@
 <div class="box">
   <div id="overview-map"></div>
   <h2>{{model.name}} {{model.year}}</h2>
+  <p class="action">
+    {{#link-to 'trip.start' model.id}}Watch all the videos of this trip!{{/link-to}}
+  </p>
   <p>
     Itinerary:
     <ul>
