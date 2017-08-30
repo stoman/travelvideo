@@ -1338,15 +1338,15 @@ Video.reopenClass({
       country: 'Thailand',
       filename: 'bangkok.mp4',
       date: '2017-08-08',
-      latitude: 0.0,
-      longitude: 0.0,
+      latitude: 13.746618,
+      longitude: 100.492821,
       peopleIn: 'Stefan',
       peopleOut: 'Anna',
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 2
+      preferredZoom: 7
     },
     {
       id: 'haad_rin',
@@ -1355,15 +1355,15 @@ Video.reopenClass({
       country: 'Thailand',
       filename: 'haad_rin.mp4',
       date: '2017-08-15',
-      latitude: 0.0,
-      longitude: 0.0,
+      latitude: 9.676083,
+      longitude: 100.062310,
       peopleIn: 'Anna',
       peopleOut: 'Stefan',
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 2
+      preferredZoom: 6
     },
     {
       id: 'chiang_mai',
@@ -1372,15 +1372,15 @@ Video.reopenClass({
       country: 'Thailand',
       filename: 'chiang_mai.mp4',
       date: '2017-08-17',
-      latitude: 0.0,
-      longitude: 0.0,
+      latitude: 18.795246,
+      longitude: 98.982681,
       peopleIn: 'Stefan',
       peopleOut: 'Anna',
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 2
+      preferredZoom: 6
     },
     {
       id: 'nam_tok',
@@ -1389,15 +1389,15 @@ Video.reopenClass({
       country: 'Thailand',
       filename: 'nam_tok.mp4',
       date: '2017-08-21',
-      latitude: 0.0,
-      longitude: 0.0,
+      latitude: 14.355893,
+      longitude: 98.952535,
       peopleIn: 'Anna',
       peopleOut: 'Stefan',
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 2
+      preferredZoom: 7
     }
   ]
 });
