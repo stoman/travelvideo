@@ -50,7 +50,7 @@ Trip.reopenClass({
       id: 'world',
       name: 'Around the World',
       year: '2017',
-      videos: ['dania_beach', 'miami_beach', 'miami', 'quito', 'mitad_del_mundo', 'cuyabeno', 'tortuga_bay', 'genovesa', 'bartolome', 'floreana', 'espanola', 'pasochoa', 'mindo', 'teleferiqo', 'new_york', 'new_york_liberty_island', 'lehel', 'osaka', 'nara', 'kyoto', 'hiroshima', 'mt_misen', 'himeji', 'murodo', 'matsumoto', 'tokyo', 'bangkok', 'haad_rin', 'chiang_mai', 'nam_tok'], 
+      videos: ['dania_beach', 'miami_beach', 'miami', 'quito', 'mitad_del_mundo', 'cuyabeno', 'tortuga_bay', 'genovesa', 'bartolome', 'floreana', 'espanola', 'pasochoa', 'mindo', 'teleferiqo', 'new_york', 'new_york_liberty_island', 'lehel', 'osaka', 'nara', 'kyoto', 'hiroshima', 'mt_misen', 'himeji', 'murodo', 'matsumoto', 'tokyo', 'bangkok', 'haad_rin', 'chiang_mai', 'nam_tok', 'jakarta', 'borobudur', 'yogya', 'mt_bromo', 'ijen', 'sanur', 'auckland', 'waitomo', 'wairere_fall', 'hobbinton', 'waikite_valley', 'vinegar_hill', 'rivendell', 'karaka_point', 'lake_rotoiti', 'lyell', 'denniston', 'pancake_rocks', 'goldsborough', 'franz_josef', 'arthurs_pass', 'singapore'], 
       finished: false
     }
   ]
