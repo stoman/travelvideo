@@ -1,6 +1,6 @@
 <div class="box videos">
-  <h2>Available Videos</h2>
-  {{#each model as |countryitem|}}
+  <h2>{{ model.countVideos }} Videos from {{ model.countCountries }} Countries</h2>
+  {{#each model.videos as |countryitem|}}
     <div>
       <h3>{{countryitem.country}}</h3>
       {{#each countryitem.videos as |video|}}
