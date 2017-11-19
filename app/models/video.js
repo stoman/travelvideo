@@ -1780,49 +1780,49 @@ Video.reopenClass({
       country: 'Germany',
       filename: 'frankfurt.mp4',
       date: '2017-10-26',
-      latitude: 0.0,
-      longitude: 0.0,
+      latitude: 50.050926,
+      longitude: 8.572081,
       peopleIn: 'Stefan',
       peopleOut: 'Anna',
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 6
     },
     {
       id: 'doha_corniche',
-      name: 'Doha',
+      name: 'Doha Corniche',
       description: 'Museum of Islamic Art',
       country: 'Qatar',
       filename: 'doha_corniche.mp4',
       date: '2017-10-28',
-      latitude: 0.0,
-      longitude: 0.0,
+      latitude: 25.293226,
+      longitude: 51.539391,
       peopleIn: 'Anna',
       peopleOut: 'Stefan',
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 11
     },
     {
       id: 'doha',
-      name: 'Doha',
+      name: 'Doha Aspire Park',
       description: 'Khalifa International Stadium',
       country: 'Qatar',
       filename: 'doha.mp4',
       date: '2017-10-30',
-      latitude: 0.0,
-      longitude: 0.0,
+      latitude: 25.262469,
+      longitude: 51.446407,
       peopleIn: 'Stefan',
       peopleOut: 'Anna',
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 11
     },
     {
       id: 'desert',
@@ -1831,8 +1831,8 @@ Video.reopenClass({
       country: 'Qatar',
       filename: 'desert.mp4',
       date: '2017-11-01',
-      latitude: 0.0,
-      longitude: 0.0,
+      latitude: 24.769960,
+      longitude: 51.481502,
       peopleIn: 'Anna',
       peopleOut: 'Stefan',
       peopleStart: 'Stefan',
@@ -1848,15 +1848,15 @@ Video.reopenClass({
       country: 'Namibia',
       filename: 'windhuk.mp4',
       date: '2017-11-10',
-      latitude: 0.0,
-      longitude: 0.0,
+      latitude: -22.554181,
+      longitude: 17.092627,
       peopleIn: 'Stefan',
       peopleOut: 'Anna',
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 5
     },
     {
       id: 'maun',
@@ -1865,15 +1865,15 @@ Video.reopenClass({
       country: 'Botswana',
       filename: 'maun.mp4',
       date: '2017-11-12',
-      latitude: 0.0,
-      longitude: 0.0,
+      latitude: -19.952872,
+      longitude: 23.478692,
       peopleIn: 'Anna',
       peopleOut: 'Stefan',
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 10
     },
     {
       id: 'okavango',
@@ -1882,15 +1882,15 @@ Video.reopenClass({
       country: 'Botswana',
       filename: 'okavango.mp4',
       date: '2017-11-14',
-      latitude: 0.0,
-      longitude: 0.0,
+      latitude: -19.858356,
+      longitude: 23.368055,
       peopleIn: 'Stefan',
       peopleOut: 'Anna',
       peopleStart: 'Anna',
       peopleEnd: 'Stefan',
       guests: '',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 10
     },
     {
       id: 'victoria_falls',
@@ -1899,15 +1899,15 @@ Video.reopenClass({
       country: 'Simbabwe',
       filename: 'victoria_falls.mp4',
       date: '2017-11-16',
-      latitude: 0.0,
-      longitude: 0.0,
+      latitude: -17.924998,
+      longitude: 25.852737,
       peopleIn: 'Anna',
       peopleOut: 'Stefan',
       peopleStart: 'Stefan',
       peopleEnd: 'Anna',
       guests: 'Anthony, Paul',
       camera: 'Sony Alpha 6000',
-      preferredZoom: 8
+      preferredZoom: 6
     }
   ]
 });
