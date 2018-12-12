@@ -52,6 +52,13 @@ Trip.reopenClass({
       year: '2017',
       videos: ['dania_beach', 'miami_beach', 'miami', 'quito', 'mitad_del_mundo', 'cuyabeno', 'tortuga_bay', 'genovesa', 'bartolome', 'floreana', 'espanola', 'pasochoa', 'mindo', 'teleferiqo', 'new_york', 'new_york_liberty_island', 'lehel', 'osaka', 'nara', 'kyoto', 'hiroshima', 'mt_misen', 'himeji', 'murodo', 'matsumoto', 'tokyo', 'bangkok', 'haad_rin', 'chiang_mai', 'nam_tok', 'jakarta', 'borobudur', 'yogya', 'mt_bromo', 'ijen', 'sanur', 'auckland', 'waitomo', 'wairere_falls', 'hobbiton', 'waikite_valley', 'vinegar_hill', 'rivendell', 'karaka_point', 'lake_rotoiti', 'lyell', 'denniston', 'pancake_rocks', 'goldsborough', 'franz_josef', 'arthurs_pass', 'singapore', 'frankfurt', 'doha_corniche', 'doha', 'desert', 'windhuk', 'maun', 'okavango', 'victoria_falls', 'johannesburg', 'mumbai', 'udaipur', 'jaipur', 'agra', 'delhi', 'kuala_lumpur', 'melaka'], 
       finished: true
+    },
+    {
+      id: 'westcoast_usa',
+      name: 'Westcoast USA',
+      year: '2018',
+      videos: ['san_francisco', 'big_sur', 'santa_barbara', 'los_angeles', 'las_vegas', 'grand_canyon', 'bryce_canyon', 'zion', 'death_valley', 'mountain_view'],
+      finished: true
     }
   ]
 });
