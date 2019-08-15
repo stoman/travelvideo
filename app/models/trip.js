@@ -12,6 +12,13 @@ var Trip = DS.Model.extend({
 Trip.reopenClass({
   FIXTURES: [
     {
+      id: 'all',
+      name: 'All Videos',
+      year: '2013 - today',
+      videos: ['munich_airport', 'stockholm_arlanda', 'abisko', 'narvik', 'lulea', 'kemi', 'oulu', 'helsinki', 'stockholm', 'skopje', 'sofia', 'belgrad', 'bar', 'dubrovnik', 'mostar', 'split', 'zagreb', 'ljubljana', 'salzburg', 'dahoam', 'dubai','peking', 'peking_olympic_park', 'zhangjiajie_tianmen_mountain', 'zhangjiajie_nationalpark', 'guilin', 'tiantouzhai', 'tiantouzhai2', 'yangshuo', 'xingping', 'lijiang', 'tiger_leaping_gorge', 'hongkong', 'taormina', 'siracusa', 'etna', 'funchal', 'famara', 'puerto_del_rosario', 'santa_cruz', 'las_palmas', 'reykjavik', 'gullfoss', 'landmannahellir', 'kirkjubaejarklaustur', 'joekulsarlon', 'seydisfjoerdur', 'asbyrgi', 'hverfjall', 'drangsnes', 'porskafjoerdur', 'dania_beach', 'miami_beach', 'miami', 'quito', 'mitad_del_mundo', 'cuyabeno', 'tortuga_bay', 'genovesa', 'bartolome', 'floreana', 'espanola', 'pasochoa', 'mindo', 'teleferiqo', 'new_york', 'new_york_liberty_island', 'lehel', 'osaka', 'nara', 'kyoto', 'hiroshima', 'mt_misen', 'himeji', 'murodo', 'matsumoto', 'tokyo', 'bangkok', 'haad_rin', 'chiang_mai', 'nam_tok', 'jakarta', 'borobudur', 'yogya', 'mt_bromo', 'ijen', 'sanur', 'auckland', 'waitomo', 'wairere_falls', 'hobbiton', 'waikite_valley', 'vinegar_hill', 'rivendell', 'karaka_point', 'lake_rotoiti', 'lyell', 'denniston', 'pancake_rocks', 'goldsborough', 'franz_josef', 'arthurs_pass', 'singapore', 'frankfurt', 'doha_corniche', 'doha', 'desert', 'windhuk', 'maun', 'okavango', 'victoria_falls', 'johannesburg', 'mumbai', 'udaipur', 'jaipur', 'agra', 'delhi', 'kuala_lumpur', 'melaka', 'san_francisco', 'big_sur', 'santa_barbara', 'los_angeles', 'las_vegas', 'grand_canyon', 'bryce_canyon', 'zion', 'death_valley', 'mountain_view', 'porto', 'favaios', 'alvao', 'carreco', 'oberschleissheim'],
+      finished: false
+    },
+    {
       id: 'interrail',
       name: 'Interrail',
       year: '2013',
