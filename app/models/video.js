@@ -2214,6 +2214,23 @@ Video.reopenClass({
       guests: '',
       camera: 'Sony Alpha 6000',
       preferredZoom: 8
+    },
+    {
+      id: 'oberschleissheim',
+      name: 'Oberschleißheim',
+      description: 'Wedding',
+      country: 'Germany',
+      filename: 'oberschleissheim.mp4',
+      date: '2019-08-10',
+      latitude: 0.0,
+      longitude: 0.0,
+      peopleIn: 'Anna',
+      peopleOut: 'Stefan',
+      peopleStart: 'Stefan',
+      peopleEnd: 'Anna',
+      guests: '',
+      camera: 'Sony Alpha 6000',
+      preferredZoom: 8
     }
   ]
 });
