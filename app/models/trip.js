@@ -59,6 +59,13 @@ Trip.reopenClass({
       year: '2018',
       videos: ['san_francisco', 'big_sur', 'santa_barbara', 'los_angeles', 'las_vegas', 'grand_canyon', 'bryce_canyon', 'zion', 'death_valley', 'mountain_view'],
       finished: true
+    },
+    {
+      id: 'portugal',
+      name: 'Portugal',
+      year: '2019',
+      videos: ['porto', 'favaios', 'alvao', 'carreco'],
+      finished: true
     }
   ]
 });
