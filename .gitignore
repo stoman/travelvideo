@@ -1,4 +1,4 @@
-deploy.sh
+.idea/*
 
 # compiled output
 /dist

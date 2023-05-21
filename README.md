@@ -35,3 +35,7 @@ You will need the following things properly installed on your computer.
 
 * `ember build` (development)
 * `ember build --environment production` (production)
+
+### Building a Docker container
+
+* `docker build -t registry.stoman.de/travelvideo:latest .`
