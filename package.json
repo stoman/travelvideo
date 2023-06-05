@@ -1,7 +1,7 @@
 {
   "name": "travelvideo",
-  "version": "0.0.0",
-  "description": "Small description for travelvideo goes here",
+  "version": "1.0.0",
+  "description": "Videos from our journeys. Details: travelivdeo.stoman.de",
   "private": true,
   "directories": {
     "doc": "doc",
