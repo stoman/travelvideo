@@ -38,4 +38,4 @@ You will need the following things properly installed on your computer.
 
 ### Building a Docker container
 
-* `docker build -t registry.stoman.de/travelvideo:latest .`
+* `docker build -t registry.stoman.de/travel:latest .`
