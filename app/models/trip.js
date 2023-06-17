@@ -57,7 +57,7 @@ Trip.reopenClass({
       id: 'world',
       name: 'Around the World',
       year: '2017',
-      videos: ['dania_beach', 'miami_beach', 'miami', 'quito', 'mitad_del_mundo', 'cuyabeno', 'tortuga_bay', 'genovesa', 'bartolome', 'floreana', 'espanola', 'pasochoa', 'mindo', 'teleferiqo', 'new_york', 'new_york_liberty_island', 'lehel', 'osaka', 'nara', 'kyoto', 'hiroshima', 'mt_misen', 'himeji', 'murodo', 'matsumoto', 'tokyo', 'bangkok', 'haad_rin', 'chiang_mai', 'nam_tok', 'jakarta', 'borobudur', 'yogya', 'mt_bromo', 'ijen', 'sanur', 'auckland', 'waitomo', 'wairere_falls', 'hobbiton', 'waikite_valley', 'vinegar_hill', 'rivendell', 'karaka_point', 'lake_rotoiti', 'lyell', 'denniston', 'pancake_rocks', 'goldsborough', 'franz_josef', 'arthurs_pass', 'singapore', 'frankfurt', 'doha_corniche', 'doha', 'desert', 'windhuk', 'maun', 'okavango', 'victoria_falls', 'johannesburg', 'mumbai', 'udaipur', 'jaipur', 'agra', 'delhi', 'kuala_lumpur', 'melaka'], 
+      videos: ['dania_beach', 'miami_beach', 'miami', 'quito', 'mitad_del_mundo', 'cuyabeno', 'tortuga_bay', 'genovesa', 'bartolome', 'floreana', 'espanola', 'pasochoa', 'mindo', 'teleferiqo', 'new_york', 'new_york_liberty_island', 'lehel', 'osaka', 'nara', 'kyoto', 'hiroshima', 'mt_misen', 'himeji', 'murodo', 'matsumoto', 'tokyo', 'bangkok', 'haad_rin', 'chiang_mai', 'nam_tok', 'jakarta', 'borobudur', 'yogya', 'mt_bromo', 'ijen', 'sanur', 'auckland', 'waitomo', 'wairere_falls', 'hobbiton', 'waikite_valley', 'vinegar_hill', 'rivendell', 'karaka_point', 'lake_rotoiti', 'lyell', 'denniston', 'pancake_rocks', 'goldsborough', 'franz_josef', 'arthurs_pass', 'singapore', 'frankfurt', 'doha_corniche', 'doha', 'desert', 'windhuk', 'maun', 'okavango', 'victoria_falls', 'johannesburg', 'mumbai', 'udaipur', 'jaipur', 'agra', 'delhi', 'kuala_lumpur', 'melaka'],
       finished: true
     },
     {
@@ -82,8 +82,8 @@ Trip.reopenClass({
       finished: true
     },
     {
-      id: 'miami_caribic',
-      name: 'Miami, Artemis, and Caribic Cruise',
+      id: 'caribbean',
+      name: 'Artemis I & Caribbean',
       year: '2022',
       videos: ['everglades1', 'everglades2', 'okeechobee', 'kennedy_space_center', 'puerto_plata', 'st_croix', 'basseterre', 'philipsburg', 'san_juan', 'labadee'],
       finished: true
