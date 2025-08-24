@@ -19,6 +19,7 @@
 /testem.log
 /yarn-error.log
 
+<<<<<<< HEAD
 #videos
 public/assets/videos
 
@@ -29,5 +30,7 @@ public/assets/videos
 /package-lock.json.ember-try
 /yarn.lock.ember-try
 
+=======
+>>>>>>> b6a8981 (v5.12.0...v6.4.0)
 # broccoli-debug
 /DEBUG/
