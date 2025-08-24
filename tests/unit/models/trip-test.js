@@ -2,29 +2,33 @@
 
 import { get } from '@ember/object';
 
-import { moduleForModel, test } from 'ember-qunit';
+import { module, test } from 'qunit';
 
-moduleForModel('trip', 'Unit | Model | trip', {
-  needs: ['model:video']
-});
+import { setupTest } from 'ember-qunit';
 
-test('it exists', function(assert) {
-  let model = this.subject();
-  // let store = this.store();
-  assert.ok(!!model);
-});
+import { run } from '@ember/runloop';
 
-test('should have some videos', function(assert) {
-  const Trip = this.store().modelFor('trip');
-  const relationship = get(Trip, 'relationshipsByName').get('videos');
+module('Unit | Model | trip', function(hooks) {
+  setupTest(hooks);
 
-  assert.equal(relationship.key, 'videos', 'has relationship with video');
-  assert.equal(relationship.kind, 'hasMany', 'kind of relationship is hasMany');
-});
+  test('it exists', function(assert) {
+    let model = run(() => this.owner.lookup('service:store').createRecord('trip'));
+    // let store = this.store();
+    assert.ok(!!model);
+  });
 
-test('should have fixtures', function(assert) {
-  assert.ok(
-    get(this.store().modelFor('trip'), 'FIXTURES').length > 0,
-    'should have fixtures'
-  );
+  test('should have some videos', function(assert) {
+    const Trip = this.owner.lookup('service:store').modelFor('trip');
+    const relationship = get(Trip, 'relationshipsByName').get('videos');
+
+    assert.equal(relationship.key, 'videos', 'has relationship with video');
+    assert.equal(relationship.kind, 'hasMany', 'kind of relationship is hasMany');
+  });
+
+  test('should have fixtures', function(assert) {
+    assert.ok(
+      get(this.owner.lookup('service:store').modelFor('trip'), 'FIXTURES').length > 0,
+      'should have fixtures'
+    );
+  });
 });

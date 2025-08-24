@@ -1,21 +1,20 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('route:index', 'Unit | Route | index', {
-  needs: [
-    'service:metrics',
-  ]
-});
+module('Unit | Route | index', function(hooks) {
+  setupTest(hooks);
 
-test('it exists', function(assert) {
-  let route = this.subject();
-  assert.ok(route);
-});
-
-test('should transition to trip route', function(assert) {
-  let route = this.subject({
-    replaceWith(routeName) {
-      assert.equal(routeName, 'trip', 'replace with route name trip');
-    }
+  test('it exists', function(assert) {
+    let route = this.owner.lookup('route:index');
+    assert.ok(route);
   });
-  route.beforeModel();
+
+  test('should transition to trip route', function(assert) {
+    let route = this.owner.factoryFor('route:index').create({
+      replaceWith(routeName) {
+        assert.equal(routeName, 'trip', 'replace with route name trip');
+      }
+    });
+    route.beforeModel();
+  });
 });

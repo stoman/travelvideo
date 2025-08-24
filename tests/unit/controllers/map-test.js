@@ -1,23 +1,22 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('controller:map', 'Unit | Controller | map', {
-  needs: [
-    'service:metrics',
-  ]
-});
+module('Unit | Controller | map', function(hooks) {
+  setupTest(hooks);
 
-test('it exists', function(assert) {
-  let controller = this.subject();
-  assert.ok(controller);
-});
+  test('it exists', function(assert) {
+    let controller = this.owner.lookup('controller:map');
+    assert.ok(controller);
+  });
 
-test('hint visible by default', function(assert) {
-  let controller = this.subject();
-  assert.equal(controller.get('hintVisible'), true);
-});
+  test('hint visible by default', function(assert) {
+    let controller = this.owner.lookup('controller:map');
+    assert.equal(controller.hintVisible, true);
+  });
 
-test('hint can be hidden by action hideHint', function(assert) {
-  let controller = this.subject();
-  controller.send('hideHint');
-  assert.equal(controller.get('hintVisible'), false);
+  test('hint can be hidden by action hideHint', function(assert) {
+    let controller = this.owner.lookup('controller:map');
+    controller.send('hideHint');
+    assert.equal(controller.hintVisible, false);
+  });
 });

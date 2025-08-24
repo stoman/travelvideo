@@ -15,7 +15,7 @@ export default Controller.extend({
       else {
         //log events
         scheduleOnce('afterRender', this, () => {
-          get(this, 'metrics').trackEvent('GoogleAnalytics', {
+          this.metrics.trackEvent('GoogleAnalytics', {
             category: 'trip',
             action: 'end',
             label: this.get('model.trip.id')

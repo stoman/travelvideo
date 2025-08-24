@@ -1,22 +1,22 @@
-import DS from 'ember-data';
+import Model, { attr, hasMany } from '@ember-data/model';
 
-var Video = DS.Model.extend({
+var Video = Model.extend({
   //attributes
-  name: DS.attr('string'),
-  description: DS.attr('string'),
-  country: DS.attr('string'),
-  filename: DS.attr('string'),
-  date: DS.attr('date'),
-  latitude: DS.attr('number'),
-  longitude: DS.attr('number'),
-  peopleIn: DS.attr('string'),
-  peopleOut: DS.attr('string'),
-  peopleStart: DS.attr('string'),
-  peopleEnd: DS.attr('string'),
-  guests: DS.attr('string'),
-  camera: DS.attr('string'),
-  trips: DS.hasMany('trip'),
-  preferredZoom: DS.attr('number')
+  name: attr('string'),
+  description: attr('string'),
+  country: attr('string'),
+  filename: attr('string'),
+  date: attr('date'),
+  latitude: attr('number'),
+  longitude: attr('number'),
+  peopleIn: attr('string'),
+  peopleOut: attr('string'),
+  peopleStart: attr('string'),
+  peopleEnd: attr('string'),
+  guests: attr('string'),
+  camera: attr('string'),
+  trips: hasMany('trip'),
+  preferredZoom: attr('number')
 });
 
 //fixtures: add more data here

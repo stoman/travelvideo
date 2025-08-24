@@ -1,21 +1,20 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travelvideo/tests/helpers/module-for-acceptance';
+import { findAll, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 
-moduleForAcceptance('Acceptance | open layers');
+module('Acceptance | open layers', function(hooks) {
+  setupApplicationTest(hooks);
 
-test('checking whether the map was loaded', function(assert) {
-  visit('/');
+  test('checking whether the map was loaded', async function(assert) {
+    await visit('/');
 
-  andThen(function() {
-    assert.ok(find('#map .ol-viewport').length, 'should have created a viewport');
-    assert.equal(find('#map .ol-control').length, 0, 'map should not have controls');
+    assert.ok(findAll('#map .ol-viewport').length, 'should have created a viewport');
+    assert.equal(findAll('#map .ol-control').length, 0, 'map should not have controls');
   });
-});
 
-test('checking markers', function(assert) {
-  visit('/');
+  test('checking markers', async function(assert) {
+    await visit('/');
 
-  andThen(function() {
-    assert.ok(find('#map .marker').length, 'should have created some markers');
+    assert.ok(findAll('#map .marker').length, 'should have created some markers');
   });
 });

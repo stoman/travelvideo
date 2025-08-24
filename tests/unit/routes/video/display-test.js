@@ -1,12 +1,11 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('route:video/display', 'Unit | Route | video/display', {
-  needs: [
-    'service:metrics',
-  ]
-});
+module('Unit | Route | video/display', function(hooks) {
+  setupTest(hooks);
 
-test('it exists', function(assert) {
-  let route = this.subject();
-  assert.ok(route);
+  test('it exists', function(assert) {
+    let route = this.owner.lookup('route:video/display');
+    assert.ok(route);
+  });
 });

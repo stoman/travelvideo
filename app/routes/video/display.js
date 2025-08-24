@@ -23,12 +23,12 @@ export default Route.extend({
     //log events
     didTransition() {
       scheduleOnce('afterRender', this, () => {
-        get(this, 'metrics').trackEvent('GoogleAnalytics', {
+        this.metrics.trackEvent('GoogleAnalytics', {
           category: 'video',
           action: 'view',
           label: this.currentModel.get('id')
         });
-        get(this, 'metrics').trackEvent('GoogleAnalytics', {
+        this.metrics.trackEvent('GoogleAnalytics', {
           category: 'video',
           action: 'view-singleton',
           label: this.currentModel.get('id')

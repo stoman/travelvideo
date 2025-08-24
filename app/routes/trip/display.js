@@ -47,17 +47,17 @@ export default Route.extend({
     //log events
     didTransition() {
       scheduleOnce('afterRender', this, () => {
-        get(this, 'metrics').trackEvent('GoogleAnalytics', {
+        this.metrics.trackEvent('GoogleAnalytics', {
           category: 'video',
           action: 'view',
           label: this.currentModel.video.get('id')
         });
-        get(this, 'metrics').trackEvent('GoogleAnalytics', {
+        this.metrics.trackEvent('GoogleAnalytics', {
           category: 'video',
           action: 'view-trip',
           label: this.currentModel.video.get('id')
         });
-        get(this, 'metrics').trackEvent('GoogleAnalytics', {
+        this.metrics.trackEvent('GoogleAnalytics', {
           category: 'trip',
           action: 'view-video',
           label: this.currentModel.trip.get('id')
@@ -70,12 +70,12 @@ export default Route.extend({
     stopTrip() {
       //log event
       scheduleOnce('afterRender', this, () => {
-        get(this, 'metrics').trackEvent('GoogleAnalytics', {
+        this.metrics.trackEvent('GoogleAnalytics', {
           category: 'video',
           action: 'stop-trip',
           label: this.currentModel.video.get('id')
         });
-        get(this, 'metrics').trackEvent('GoogleAnalytics', {
+        this.metrics.trackEvent('GoogleAnalytics', {
           category: 'trip',
           action: 'stop-at-video',
           label: this.currentModel.trip.get('id')

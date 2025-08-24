@@ -14,7 +14,7 @@ export default Component.extend({
   actions: {
     //callback when video ends
     videoEnded() {
-      let end = this.get('onEnd');
+      let end = this.onEnd;
       if(end) {
         end();
       }

@@ -11,7 +11,7 @@ export default Route.extend({
 
     //log events
     scheduleOnce('afterRender', this, () => {
-      get(this, 'metrics').trackEvent('GoogleAnalytics', {
+      this.metrics.trackEvent('GoogleAnalytics', {
         category: 'trip',
         action: 'start',
         label: params.tripId

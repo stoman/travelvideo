@@ -4,7 +4,7 @@
     <div>
       <h3>{{countryitem.country}}</h3>
       {{#each countryitem.videos as |video|}}
-        {{#link-to 'video.display' video.id}}{{video.name}} ({{moment-format video.date 'DD.MM.YYYY'}}){{/link-to}}
+        <LinkTo @route="video.display" @model={{video.id}}>{{video.name}} ({{moment-format video.date 'DD.MM.YYYY'}})</LinkTo>
         <br />
       {{/each}}
     </div>

@@ -1,11 +1,11 @@
-import DS from 'ember-data';
+import Model, { attr, hasMany } from '@ember-data/model';
 
-var Trip = DS.Model.extend({
+var Trip = Model.extend({
   //attributes
-  name: DS.attr('string'),
-  year: DS.attr('string'),
-  videos: DS.hasMany('video'),
-  finished: DS.attr('boolean')
+  name: attr('string'),
+  year: attr('string'),
+  videos: hasMany('video'),
+  finished: attr('boolean')
 });
 
 //fixtures: add more data here

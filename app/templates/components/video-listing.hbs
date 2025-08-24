@@ -29,7 +29,7 @@
       {{#if video.trips}}
         <p>This video is part of the trips: <ul>
           {{#each video.trips as |trip|}}
-            <li>{{#link-to 'trip.overview' trip.id}}{{trip.name}} {{trip.year}}{{/link-to}} ({{#link-to 'trip.start' trip.id}}start full trip{{/link-to}}, {{#link-to 'trip.display' trip.id video.id}}start at {{video.name}}{{/link-to}})</li>
+            <li><LinkTo @route="trip.overview" @model={{trip.id}}>{{trip.name}} {{trip.year}}</LinkTo> (<LinkTo @route="trip.start" @model={{trip.id}}>start full trip</LinkTo>, <LinkTo @route="trip.display" @models={{array trip.id video.id}}>start at {{video.name}}</LinkTo>)</li>
           {{/each}}
         </ul></p>
       {{/if}}
