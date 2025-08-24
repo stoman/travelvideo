@@ -18,7 +18,6 @@ module.exports = function (environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
-<<<<<<< HEAD
 
     metricsAdapters: [
       {
@@ -39,8 +38,6 @@ module.exports = function (environment) {
     disqus: {
       shortname: 'travelstoman'
     }
-=======
->>>>>>> 36304b7 (v2.18.2...v3.28.6)
   };
 
   if (environment === 'development') {

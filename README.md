@@ -15,15 +15,9 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
-<<<<<<< HEAD
 * `git clone https://github.com/stoman/travelvideo` this repository
 * `cd travelvideo`
 * `npm install`
-=======
-- `git clone <repository-url>` this repository
-- `cd travelvideo`
-- `npm install`
->>>>>>> 3fa7630 (v4.12.3...v5.12.0)
 
 ## Running / Development
 
