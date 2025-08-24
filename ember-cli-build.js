@@ -3,10 +3,11 @@
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function (defaults) {
-  let app = new EmberApp(defaults, {
+  const app = new EmberApp(defaults, {
     // Add options here
   });
 
+<<<<<<< HEAD
   // Use `app.import` to add additional libraries to the generated
   // output files.
   //
@@ -22,5 +23,7 @@ module.exports = function (defaults) {
   app.import('bower_components/ol3/ol.js');
   app.import('bower_components/ol3/ol.css');
 
+=======
+>>>>>>> 16c0aa7 (v3.28.6...v4.12.3)
   return app.toTree();
 };

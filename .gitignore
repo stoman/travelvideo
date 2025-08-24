@@ -37,5 +37,14 @@ package.json.ember-try
 =======
 /.node_modules.ember-try/
 /bower.json.ember-try
+/npm-shrinkwrap.json.ember-try
 /package.json.ember-try
+<<<<<<< HEAD
 >>>>>>> 36304b7 (v2.18.2...v3.28.6)
+=======
+/package-lock.json.ember-try
+/yarn.lock.ember-try
+
+# broccoli-debug
+/DEBUG/
+>>>>>>> 16c0aa7 (v3.28.6...v4.12.3)
