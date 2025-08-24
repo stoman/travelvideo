@@ -40,11 +40,10 @@ You will need the following things properly installed on your computer.
 * `ember build` (development)
 * `ember build --environment production` (production)
 
-<<<<<<< HEAD
 ### Building a Docker container
 
 * `docker build -t registry.stoman.de/travel:latest .`
-=======
+
 ### Deploying
 
 Specify what it takes to deploy your app.
@@ -56,4 +55,3 @@ Specify what it takes to deploy your app.
 * Development Browser Extensions
   * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
   * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
->>>>>>> 841b693 (v2.8.0...v2.18.2)
