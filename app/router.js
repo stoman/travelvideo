@@ -2,8 +2,9 @@ import { get } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import EmberRouter from '@ember/routing/router';
-import config from './config/environment';
+import config from 'travelvideo/config/environment';
 
+<<<<<<< HEAD
 const Router = EmberRouter.extend({
   location: config.locationType,
   rootURL: config.rootURL,
@@ -41,3 +42,11 @@ Router.map(function() {
 });
 
 export default Router;
+=======
+export default class Router extends EmberRouter {
+  location = config.locationType;
+  rootURL = config.rootURL;
+}
+
+Router.map(function () {});
+>>>>>>> 36304b7 (v2.18.2...v3.28.6)

@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(environment) {
+module.exports = function (environment) {
   let ENV = {
     modulePrefix: 'travelvideo',
     environment,
@@ -9,18 +9,19 @@ module.exports = function(environment) {
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
-        // e.g. 'with-controller': true
+        // e.g. EMBER_NATIVE_DECORATOR_SUPPORT: true
       },
       EXTEND_PROTOTYPES: {
         // Prevent Ember Data from overriding Date.parse.
-        Date: false
-      }
+        Date: false,
+      },
     },
 
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
+<<<<<<< HEAD
 
     metricsAdapters: [
       {
@@ -41,6 +42,8 @@ module.exports = function(environment) {
     disqus: {
       shortname: 'travelstoman'
     }
+=======
+>>>>>>> 36304b7 (v2.18.2...v3.28.6)
   };
 
   if (environment === 'development') {

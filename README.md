@@ -30,6 +30,11 @@ You will need the following things properly installed on your computer.
 * `ember test`
 * `ember test --server`
 
+### Linting
+
+* `npm run lint`
+* `npm run lint:fix`
+
 ### Building
 
 * `ember build` (development)
