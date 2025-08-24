@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { Promise } from 'rsvp';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
+export default Route.extend({
   model() {
     let self = this;
     //find videos, then group them by country
-    return new Ember.RSVP.Promise(function(resolve/*, reject*/) {
+    return new Promise(function(resolve/*, reject*/) {
       self.store.query('video', {sortBy: 'name'}).then(function(videos) {
         let ret = {};
         let videoCount = 0;

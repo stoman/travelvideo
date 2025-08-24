@@ -1,18 +1,22 @@
 /* globals ol */
 
-import Ember from 'ember';
+import { get } from '@ember/object';
+
+import { scheduleOnce } from '@ember/runloop';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
 export function initialize() {
   //modify the didTransition action of all routes
-  Ember.Route.reopen({
-    metrics: Ember.inject.service(),
+  Route.reopen({
+    metrics: service(),
 
     actions: {
       didTransition() {
         const route = this;
 
         //wait for afterRender event
-        Ember.run.scheduleOnce('afterRender', this, function() {
+        scheduleOnce('afterRender', this, function() {
           //create map if not already done
           if(!this.controllerFor('application').get('backgroundMap')) {
 
@@ -139,17 +143,17 @@ export function initialize() {
 
                 //fire analytics events
                 let center = ol.proj.toLonLat(map.getView().getCenter());
-                Ember.get(route, 'metrics').trackEvent('GoogleAnalytics', {
+                get(route, 'metrics').trackEvent('GoogleAnalytics', {
                   category: 'map-movement',
                   action: 'zoom',
                   value: map.getView().getZoom()
                 });
-                Ember.get(route, 'metrics').trackEvent('GoogleAnalytics', {
+                get(route, 'metrics').trackEvent('GoogleAnalytics', {
                   category: 'map-movement',
                   action: 'longitude',
                   value: center[0]
                 });
-                Ember.get(route, 'metrics').trackEvent('GoogleAnalytics', {
+                get(route, 'metrics').trackEvent('GoogleAnalytics', {
                   category: 'map-movement',
                   action: 'latitude',
                   value: center[1]

@@ -1,13 +1,16 @@
 /* globals ol */
 
-import Ember from 'ember';
+import { scheduleOnce } from '@ember/runloop';
 
-export default Ember.Route.extend({
+import { Promise } from 'rsvp';
+import Route from '@ember/routing/route';
+
+export default Route.extend({
   model(params) {
     let self = this;
 
     //find the trip first
-    return new Ember.RSVP.Promise(function(resolve/*, reject*/) {
+    return new Promise(function(resolve/*, reject*/) {
       self.store.findRecord('trip', params.tripId).then(function(trip) {
 
         //compute offsets
@@ -36,7 +39,7 @@ export default Ember.Route.extend({
     didTransition() {
       let self = this;
 
-      Ember.run.scheduleOnce('afterRender', this, () => {
+      scheduleOnce('afterRender', this, () => {
 
         //create open layers map object
         let map = new ol.Map({

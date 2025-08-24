@@ -1,14 +1,17 @@
-import Ember from 'ember';
+import { get } from '@ember/object';
+import { scheduleOnce } from '@ember/runloop';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
-  metrics: Ember.inject.service(),
+export default Route.extend({
+  metrics: service(),
   
   model(params) {
     const self = this;
 
     //log events
-    Ember.run.scheduleOnce('afterRender', this, () => {
-      Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
+    scheduleOnce('afterRender', this, () => {
+      get(this, 'metrics').trackEvent('GoogleAnalytics', {
         category: 'trip',
         action: 'start',
         label: params.tripId

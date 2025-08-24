@@ -1,5 +1,7 @@
 /* globals Ember */
 
+import { get } from '@ember/object';
+
 import { moduleForModel, test } from 'ember-qunit';
 
 moduleForModel('trip', 'Unit | Model | trip', {
@@ -14,7 +16,7 @@ test('it exists', function(assert) {
 
 test('should have some videos', function(assert) {
   const Trip = this.store().modelFor('trip');
-  const relationship = Ember.get(Trip, 'relationshipsByName').get('videos');
+  const relationship = get(Trip, 'relationshipsByName').get('videos');
 
   assert.equal(relationship.key, 'videos', 'has relationship with video');
   assert.equal(relationship.kind, 'hasMany', 'kind of relationship is hasMany');
@@ -22,7 +24,7 @@ test('should have some videos', function(assert) {
 
 test('should have fixtures', function(assert) {
   assert.ok(
-    Ember.get(this.store().modelFor('trip'), 'FIXTURES').length > 0,
+    get(this.store().modelFor('trip'), 'FIXTURES').length > 0,
     'should have fixtures'
   );
 });

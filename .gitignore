@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 .idea/*
+=======
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+>>>>>>> 841b693 (v2.8.0...v2.18.2)
 
 # compiled output
 /dist
@@ -13,8 +17,16 @@
 /connect.lock
 /coverage/*
 /libpeerconnection.log
-npm-debug.log
+npm-debug.log*
+yarn-error.log
 testem.log
 
+<<<<<<< HEAD
 #videos
 public/assets/videos
+=======
+# ember-try
+.node_modules.ember-try/
+bower.json.ember-try
+package.json.ember-try
+>>>>>>> 841b693 (v2.8.0...v2.18.2)

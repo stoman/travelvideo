@@ -1,7 +1,10 @@
-import Ember from 'ember';
+import { get } from '@ember/object';
+import { scheduleOnce } from '@ember/runloop';
+import { inject as service } from '@ember/service';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
-  metrics: Ember.inject.service(),
+export default Controller.extend({
+  metrics: service(),
 
   actions: {
     //video ended? go to next video
@@ -11,8 +14,8 @@ export default Ember.Controller.extend({
       }
       else {
         //log events
-        Ember.run.scheduleOnce('afterRender', this, () => {
-          Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
+        scheduleOnce('afterRender', this, () => {
+          get(this, 'metrics').trackEvent('GoogleAnalytics', {
             category: 'trip',
             action: 'end',
             label: this.get('model.trip.id')
