@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   metrics: Ember.inject.service(),
-  
+
   model(params) {
     return this.store.findRecord('video', params.videoId);
   },
@@ -13,7 +13,7 @@ export default Ember.Route.extend({
       this.moveBackgroundMap(
         this.currentModel.get('longitude'),
         this.currentModel.get('latitude'),
-        this.currentModel.get('preferredZoom')
+        this.currentModel.get('preferredZoom'),
       );
     },
 
@@ -23,15 +23,15 @@ export default Ember.Route.extend({
         Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
           category: 'video',
           action: 'view',
-          label: this.currentModel.get('id')
+          label: this.currentModel.get('id'),
         });
         Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
           category: 'video',
           action: 'view-random',
-          label: this.currentModel.get('id')
+          label: this.currentModel.get('id'),
         });
       });
       return true;
-    }
-  }
+    },
+  },
 });

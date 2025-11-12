@@ -6,14 +6,14 @@ let application;
 
 module('Unit | Initializer | open layers', {
   beforeEach() {
-    Ember.run(function() {
+    Ember.run(function () {
       application = Ember.Application.create();
       application.deferReadiness();
     });
-  }
+  },
 });
 
-test('it works', function(assert) {
+test('it works', function (assert) {
   OpenLayersInitializer.initialize(application);
   assert.ok(true);
 });

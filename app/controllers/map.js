@@ -8,6 +8,6 @@ export default Ember.Controller.extend({
     //hide the hint
     hideHint() {
       this.set('hintVisible', false);
-    }
-  }
+    },
+  },
 });

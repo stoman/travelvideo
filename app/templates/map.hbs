@@ -1,8 +1,9 @@
-{{#if hintVisible}}
+{{#if this.hintVisible}}
   <div class="box map-hint">
-    <a {{action 'hideHint'}} class="close">x</a>
+    <a {{on "click" this.hideHint}} class="close">x</a>
     <p>
-      In map mode you can drag around the map and find places around the world linked with videos.
+      In map mode you can drag around the map and find places around the world
+      linked with videos.
     </p>
   </div>
 {{/if}}

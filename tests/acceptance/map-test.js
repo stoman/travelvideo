@@ -3,18 +3,18 @@ import moduleForAcceptance from 'travelvideo/tests/helpers/module-for-acceptance
 
 moduleForAcceptance('Acceptance | map');
 
-test('visiting /map', function(assert) {
+test('visiting /map', function (assert) {
   visit('/map');
 
-  andThen(function() {
+  andThen(function () {
     assert.equal(currentURL(), '/map');
   });
 });
 
-test('map should display hint', function(assert) {
+test('map should display hint', function (assert) {
   visit('/map');
 
-  andThen(function() {
+  andThen(function () {
     assert.equal(find('.map-hint').length, 1, 'hint should be visible');
   });
 
@@ -22,18 +22,22 @@ test('map should display hint', function(assert) {
   visit('/');
   visit('/map');
 
-  andThen(function() {
-    assert.equal(find('.map-hint').length, 1, 'hint should stay visible after navigation');
+  andThen(function () {
+    assert.equal(
+      find('.map-hint').length,
+      1,
+      'hint should stay visible after navigation',
+    );
   });
 });
 
-test('map hint can be hidden', function(assert) {
+test('map hint can be hidden', function (assert) {
   visit('/map');
 
   //click the hide button
   click('.map-hint a:contains("x")');
 
-  andThen(function() {
+  andThen(function () {
     assert.equal(find('.map-hint').length, 0, 'hint should not be visible');
   });
 
@@ -41,23 +45,27 @@ test('map hint can be hidden', function(assert) {
   visit('/');
   visit('/map');
 
-  andThen(function() {
-    assert.equal(find('.map-hint').length, 0, 'hint should stay invisible after navigation');
+  andThen(function () {
+    assert.equal(
+      find('.map-hint').length,
+      0,
+      'hint should stay invisible after navigation',
+    );
   });
 });
 
-test('map route should enable controls of map', function(assert) {
+test('map route should enable controls of map', function (assert) {
   visit('/map');
 
-  andThen(function() {
+  andThen(function () {
     assert.ok(find('.ol-control').length, 'map should have controls');
   });
 });
 
-test('other routes should disable controls of map', function(assert) {
+test('other routes should disable controls of map', function (assert) {
   visit('/');
 
-  andThen(function() {
+  andThen(function () {
     assert.equal(find('.ol-control').length, 0, 'map should not have controls');
   });
 });

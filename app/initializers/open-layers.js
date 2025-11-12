@@ -12,21 +12,19 @@ export function initialize() {
         const route = this;
 
         //wait for afterRender event
-        Ember.run.scheduleOnce('afterRender', this, function() {
+        Ember.run.scheduleOnce('afterRender', this, function () {
           //create map if not already done
-          if(!this.controllerFor('application').get('backgroundMap')) {
-
+          if (!this.controllerFor('application').get('backgroundMap')) {
             //create open layers view object
             let view = new ol.View({
-              center: ol.proj.fromLonLat([11.57, 48.13]),//Munich
+              center: ol.proj.fromLonLat([11.57, 48.13]), //Munich
               zoom: 4,
               minZoom: 2,
-              maxZoom: 12
+              maxZoom: 12,
             });
 
             //create open layers map object
             let map = new ol.Map({
-
               //predefined variables
               target: 'map',
               view: view,
@@ -39,15 +37,15 @@ export function initialize() {
                 //stamen map
                 new ol.layer.Tile({
                   source: new ol.source.Stamen({
-                    layer: 'watercolor'
-                  })
+                    layer: 'watercolor',
+                  }),
                 }),
                 //labels for stamen map
                 new ol.layer.Tile({
                   source: new ol.source.Stamen({
-                    layer: 'terrain-labels'
-                  })
-                })
+                    layer: 'terrain-labels',
+                  }),
+                }),
                 //OSM tiles
                 /*new ol.layer.Tile({
                   source: new ol.source.OSM()
@@ -56,7 +54,7 @@ export function initialize() {
 
               //no controls or interactions in most routes
               controls: [],
-              interactions: []
+              interactions: [],
             });
 
             //make map and view available for other components
@@ -64,8 +62,8 @@ export function initialize() {
             this.controllerFor('application').set('backgroundView', view);
 
             //add markers for videos
-            this.store.query('video', {}).then(function(videos) {
-              videos.forEach(function(video) {
+            this.store.query('video', {}).then(function (videos) {
+              videos.forEach(function (video) {
                 //create marker object
                 let label = document.createElement('div');
                 label.appendChild(document.createTextNode(video.get('name')));
@@ -78,81 +76,88 @@ export function initialize() {
                 marker.appendChild(label);
 
                 //add marker as overlay
-                map.addOverlay(new ol.Overlay({
-                  position: ol.proj.fromLonLat([
-                    video.get('longitude'),
-                    video.get('latitude')
-                  ]),
-                  element: marker
-                }));
+                map.addOverlay(
+                  new ol.Overlay({
+                    position: ol.proj.fromLonLat([
+                      video.get('longitude'),
+                      video.get('latitude'),
+                    ]),
+                    element: marker,
+                  }),
+                );
 
                 //onlick event: go to video detail page
-                icon.onclick = function() {
+                icon.onclick = function () {
                   route.transitionTo('video.display', video.id);
                 };
               });
             });
 
             //add trips to map
-            this.store.query('trip', {}).then(function(trips) {
-
+            this.store.query('trip', {}).then(function (trips) {
               //set up features
               let trip_features = [];
-              trips.forEach(function(trip) {
-
+              trips.forEach(function (trip) {
                 //compute a list of points, always start at home
                 let points = [ol.proj.fromLonLat([11.500945, 48.144391])];
-                trip.get('videos').forEach(function(video) {
-                  points.push(ol.proj.fromLonLat([
-                    video.get('longitude'),
-                    video.get('latitude')
-                  ]));
+                trip.get('videos').forEach(function (video) {
+                  points.push(
+                    ol.proj.fromLonLat([
+                      video.get('longitude'),
+                      video.get('latitude'),
+                    ]),
+                  );
                 });
 
                 //close cycle
-                if(trip.get('finished')) {
+                if (trip.get('finished')) {
                   points.push(points[0]);
                 }
 
                 //create feature
-                trip_features.push(new ol.Feature({
-                  geometry: new ol.geom.LineString(points)
-                }));
+                trip_features.push(
+                  new ol.Feature({
+                    geometry: new ol.geom.LineString(points),
+                  }),
+                );
               });
 
               //add trips as a new layer
-              map.addLayer(new ol.layer.Vector({
-                source: new ol.source.Vector({
-                  features: trip_features
+              map.addLayer(
+                new ol.layer.Vector({
+                  source: new ol.source.Vector({
+                    features: trip_features,
+                  }),
+                  style: new ol.style.Style({
+                    stroke: new ol.style.Stroke({ color: '#e74c3c', width: 5 }),
+                  }),
                 }),
-                style: new ol.style.Style({
-                  stroke: new ol.style.Stroke({ color: '#e74c3c', width: 5})
-                })
-              }));
+              );
             });
 
             //set zoom level to map object
-            map.on('moveend', function(/*event*/) {
-              if(document.querySelector('#map')) {
+            map.on('moveend', function (/*event*/) {
+              if (document.querySelector('#map')) {
                 //update css class
-                document.querySelector('#map').className = 'zoom-' + map.getView().getZoom();
+                document.querySelector('#map').className =
+                  'zoom-' + map.getView().getZoom();
 
                 //fire analytics events
                 let center = ol.proj.toLonLat(map.getView().getCenter());
                 Ember.get(route, 'metrics').trackEvent('GoogleAnalytics', {
                   category: 'map-movement',
                   action: 'zoom',
-                  value: map.getView().getZoom()
+                  value: map.getView().getZoom(),
                 });
                 Ember.get(route, 'metrics').trackEvent('GoogleAnalytics', {
                   category: 'map-movement',
                   action: 'longitude',
-                  value: center[0]
+                  value: center[0],
                 });
                 Ember.get(route, 'metrics').trackEvent('GoogleAnalytics', {
                   category: 'map-movement',
                   action: 'latitude',
-                  value: center[1]
+                  value: center[1],
                 });
               }
             });
@@ -163,7 +168,7 @@ export function initialize() {
       },
 
       //fake implementation of the afterMapCreation event
-      afterMapCreation() {}
+      afterMapCreation() {},
     },
 
     //move the background map to given coordinates and zoom level
@@ -175,7 +180,7 @@ export function initialize() {
       //move to new location
       let pan = ol.animation.pan({
         duration: 5000,
-        source: view.getCenter()
+        source: view.getCenter(),
       });
       map.beforeRender(pan);
       view.setCenter(ol.proj.fromLonLat([lon, lat]));
@@ -187,11 +192,11 @@ export function initialize() {
       });
       map.beforeRender(zoom);
       view.setZoom(zoomLevel);
-    }
+    },
   });
 }
 
 export default {
   name: 'open-layers',
-  initialize
+  initialize,
 };

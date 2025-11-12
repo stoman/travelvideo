@@ -2,10 +2,10 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 moduleForComponent('video-listing', 'Integration | Component | video listing', {
-  integration: true
+  integration: true,
 });
 
-test('it renders', function(assert) {
+test('it renders', function (assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
@@ -23,7 +23,7 @@ test('it renders', function(assert) {
   assert.equal(this.$().text().trim(), 'template block text');
 });
 
-test('it displays a video', function(assert) {
+test('it displays a video', function (assert) {
   //create fake video
   let data = {
     id: 'testid',
@@ -37,7 +37,7 @@ test('it displays a video', function(assert) {
     peopleIn: 'testera',
     peopleOut: 'testerb',
     guests: 'testerc',
-    camera: 'testcamera'
+    camera: 'testcamera',
   };
   this.set('video', data);
 
@@ -47,26 +47,23 @@ test('it displays a video', function(assert) {
   //check that all important properties are displayed
   assert.ok(
     this.$().text().indexOf(data.name) !== -1,
-    'should render video name'
+    'should render video name',
   );
   assert.ok(
     this.$().text().indexOf(data.description) !== -1,
-    'should render video description'
+    'should render video description',
   );
   assert.ok(
     this.$().text().indexOf(data.country) !== -1,
-    'should render video country'
+    'should render video country',
   );
-  assert.ok(
-    this.$('video').length > 0,
-    'should render a video tag'
-  );
+  assert.ok(this.$('video').length > 0, 'should render a video tag');
   assert.ok(
     this.$().text().indexOf(data.guests) !== -1,
-    'should render video guests'
+    'should render video guests',
   );
   assert.ok(
     this.$().text().indexOf(data.camera) !== -1,
-    'should render video camera'
+    'should render video camera',
   );
 });

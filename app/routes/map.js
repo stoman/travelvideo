@@ -13,7 +13,7 @@ export default Ember.Route.extend({
       map.addControl(new ol.control.Zoom());
 
       //add interactions
-      ol.interaction.defaults().forEach(function(interaction) {
+      ol.interaction.defaults().forEach(function (interaction) {
         map.addInteraction(interaction);
       });
 
@@ -27,17 +27,17 @@ export default Ember.Route.extend({
       let map = this.controllerFor('application').get('backgroundMap');
 
       //remove all controls
-      map.getControls().forEach(function(control) {
+      map.getControls().forEach(function (control) {
         map.removeControl(control);
       });
 
       //remove all interactions
-      map.getInteractions().forEach(function(interaction) {
+      map.getInteractions().forEach(function (interaction) {
         map.removeInteraction(interaction);
       });
 
       //show content container
       document.getElementById('content').style.visibility = 'visible';
-    }
-  }
+    },
+  },
 });

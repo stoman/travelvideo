@@ -1,9 +1,14 @@
 <div class="box">
   <h2>Select a Trip</h2>
-  {{#each model as |trip|}}
+  {{#each this.model as |trip|}}
     <p>
-      {{#link-to 'trip.overview' trip.id}}{{trip.name}} {{trip.year}}{{/link-to}}
-      ({{#each trip.videos as |video index|}} {{if index "-"}} {{video.name}} {{/each}} {{#unless trip.finished}} - and more to come... {{/unless}})
+      <LinkTo @route="trip.overview" @model={{trip.id}}>{{trip.name}}
+        {{trip.year}}</LinkTo>
+      ({{#each trip.videos as |video index|}}
+        {{if index "-"}}
+        {{video.name}}
+      {{/each}}
+      {{#unless trip.finished}} - and more to come... {{/unless}})
     </p>
   {{/each}}
 </div>

@@ -1,37 +1,49 @@
-{{#if video}}
+{{#if @video}}
   <div class="videodetail">
-    {{#if controls}}
-      <video src="/assets/videos/{{videoQuality}}/{{video.filename}}" onended={{action "videoEnded"}} controls>
+    {{#if @controls}}
+      <video
+        src="/assets/videos/{{@videoQuality}}/{{@video.filename}}"
+        onended={{action "videoEnded"}}
+        controls
+      >
         Your browser does not support HTML5 videos. Please update.
       </video>
     {{else}}
-      <video src="/assets/videos/{{videoQuality}}/{{video.filename}}" onended={{action "videoEnded"}}>
+      <video
+        src="/assets/videos/{{@videoQuality}}/{{@video.filename}}"
+        onended={{action "videoEnded"}}
+      >
         Your browser does not support HTML5 videos. Please update.
       </video>
     {{/if}}
 
     <div class="box">
-      <h2>{{video.name}}</h2>
-      {{#if video.description}}
-        <p>{{video.description}}</p>
+      <h2>{{@video.name}}</h2>
+      {{#if @video.description}}
+        <p>{{@video.description}}</p>
       {{/if}}
-      <p>Country: {{video.country}}</p>
-      <p>Date: {{moment-format video.date 'DD.MM.YYYY'}}</p>
-      <p>Latitude: {{video.latitude}}</p>
-      <p>Longitude: {{video.longitude}}</p>
-      {{#if video.guests}}
-        <p>Guests: {{video.guests}}</p>
+      <p>Country: {{@video.country}}</p>
+      <p>Date: {{moment-format @video.date "DD.MM.YYYY"}}</p>
+      <p>Latitude: {{@video.latitude}}</p>
+      <p>Longitude: {{@video.longitude}}</p>
+      {{#if @video.guests}}
+        <p>Guests: {{@video.guests}}</p>
       {{/if}}
-      {{#if video.camera}}
-        <p>Camera: {{video.camera}}</p>
+      {{#if @video.camera}}
+        <p>Camera: {{@video.camera}}</p>
       {{/if}}
       {{yield}}
-      {{#if video.trips}}
-        <p>This video is part of the trips: <ul>
-          {{#each video.trips as |trip|}}
-            <li>{{#link-to 'trip.overview' trip.id}}{{trip.name}} {{trip.year}}{{/link-to}} ({{#link-to 'trip.start' trip.id}}start full trip{{/link-to}}, {{#link-to 'trip.display' trip.id video.id}}start at {{video.name}}{{/link-to}})</li>
-          {{/each}}
-        </ul></p>
+      {{#if @video.trips}}
+        <p>This video is part of the trips:
+          <ul>
+            {{#each @video.trips as |trip|}}
+              <li><LinkTo @route="trip.overview" @model={{trip.id}}>{{trip.name}}
+                  {{trip.year}}</LinkTo>
+                (<LinkTo @route="trip.start" @model={{trip.id}}>start full trip</LinkTo>,
+                <LinkTo @route="trip.display" @models={{array trip.id @video.id}}>start at
+                  {{@video.name}}</LinkTo>)</li>
+            {{/each}}
+          </ul></p>
       {{/if}}
     </div>
   </div>

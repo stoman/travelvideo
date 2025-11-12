@@ -1,20 +1,27 @@
 .idea/*
 
 # compiled output
-/dist
-/tmp
+/dist/
+/declarations/
 
 # dependencies
-/node_modules
-/bower_components
+/node_modules/
+/bower_components/
 
 # misc
+/.env*
+/.pnp*
 /.sass-cache
 /connect.lock
-/coverage/*
+/.eslintcache
+/coverage/
 /libpeerconnection.log
-npm-debug.log
-testem.log
+/npm-debug.log*
+/testem.log
+/yarn-error.log
+
+# broccoli-debug
+/DEBUG/
 
 #videos
 public/assets/videos

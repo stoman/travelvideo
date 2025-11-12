@@ -1,9 +1,11 @@
-{{#video-listing video=model.video onEnd=(action "videoEnded") autoplay=true}}
-  {{#if model.lastVideo}}
-    <p>Last video on trip: {{#link-to 'trip.display' model.trip.id model.lastVideo.id}}{{model.lastVideo.name}}{{/link-to}}</p>
+<VideoListing @video={{this.model.video}} @onEnd={{this.videoEnded}} @autoplay={{true}}>
+  {{#if this.model.lastVideo}}
+    <p>Last video on trip:
+      <LinkTo @route="trip.display" @models={{array this.model.trip.id this.model.lastVideo.id}}>{{this.model.lastVideo.name}}</LinkTo></p>
   {{/if}}
-  {{#if model.nextVideo}}
-    <p>Next video on trip: {{#link-to 'trip.display' model.trip.id model.nextVideo.id}}{{model.nextVideo.name}}{{/link-to}}</p>
+  {{#if this.model.nextVideo}}
+    <p>Next video on trip:
+      <LinkTo @route="trip.display" @models={{array this.model.trip.id this.model.nextVideo.id}}>{{this.model.nextVideo.name}}</LinkTo></p>
   {{/if}}
-  <p><a href="#" {{action 'stopTrip'}}>Stop at this video.</a></p>
-{{/video-listing}}
+  <p><a href="#" {{on "click" this.stopTrip}}>Stop at this video.</a></p>
+</VideoListing>
