@@ -1,9 +1,18 @@
-/*jshint node:true*/
-/* global require, module */
-var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+'use strict';
 
-module.exports = function(defaults) {
-  var app = new EmberApp(defaults, {
+const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+
+module.exports = function (defaults) {
+  const app = new EmberApp(defaults, {
+    emberData: {
+      deprecations: {
+        // New projects can safely leave this deprecation disabled.
+        // If upgrading, to opt-into the deprecated behavior, set this to true and then follow:
+        // https://deprecations.emberjs.com/id/ember-data-deprecate-store-extends-ember-object
+        // before upgrading to Ember Data 6.0
+        DEPRECATE_STORE_EXTENDS_EMBER_OBJECT: false,
+      },
+    },
     // Add options here
   });
 
@@ -19,8 +28,10 @@ module.exports = function(defaults) {
   // modules that you would like to import into your application
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
-  app.import('bower_components/ol3/ol.js');
-  app.import('bower_components/ol3/ol.css');
+
+  // TODO: OpenLayers (ol3) needs to be installed via npm instead of Bower
+  // app.import('bower_components/ol3/ol.js');
+  // app.import('bower_components/ol3/ol.css');
 
   return app.toTree();
 };

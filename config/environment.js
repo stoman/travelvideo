@@ -1,16 +1,17 @@
-/* jshint node: true */
+'use strict';
 
-module.exports = function(environment) {
-  var ENV = {
+module.exports = function (environment) {
+  const ENV = {
     modulePrefix: 'travelvideo',
-    environment: environment,
+    environment,
     rootURL: '/',
-    locationType: 'auto',
+    locationType: 'history',
     EmberENV: {
+      EXTEND_PROTOTYPES: false,
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
-        // e.g. 'with-controller': true
-      }
+        // e.g. EMBER_NATIVE_DECORATOR_SUPPORT: true
+      },
     },
 
     APP: {
@@ -29,14 +30,14 @@ module.exports = function(environment) {
           // Use verbose tracing of GA events
           trace: environment === 'development',
           // Ensure development env hits aren't sent to GA
-          sendHitTask: environment !== 'development'
-        }
-      }
+          sendHitTask: environment !== 'development',
+        },
+      },
     ],
 
     disqus: {
-      shortname: 'travelstoman'
-    }
+      shortname: 'travelstoman',
+    },
   };
 
   if (environment === 'development') {
@@ -56,10 +57,11 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+    ENV.APP.autoboot = false;
   }
 
   if (environment === 'production') {
-
+    // here you can enable a production-specific feature
   }
 
   return ENV;

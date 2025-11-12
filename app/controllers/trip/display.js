@@ -6,22 +6,25 @@ export default Ember.Controller.extend({
   actions: {
     //video ended? go to next video
     videoEnded() {
-      if(this.get('model.nextVideo')) {
-        this.transitionToRoute('trip.display', this.get('model.trip.id'), this.get('model.nextVideo.id'));
-      }
-      else {
+      if (this.get('model.nextVideo')) {
+        this.transitionToRoute(
+          'trip.display',
+          this.get('model.trip.id'),
+          this.get('model.nextVideo.id'),
+        );
+      } else {
         //log events
         Ember.run.scheduleOnce('afterRender', this, () => {
           Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
             category: 'trip',
             action: 'end',
-            label: this.get('model.trip.id')
+            label: this.get('model.trip.id'),
           });
         });
 
         //redirect to trip index page
         this.transitionToRoute('trip.overview', this.get('model.trip.id'));
       }
-    }
-  }
+    },
+  },
 });

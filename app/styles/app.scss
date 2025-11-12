@@ -1,14 +1,18 @@
-@import 'about';
-@import 'application';
-@import 'map';
-@import 'videos';
-@import 'components/video-listing';
+@import "about";
+@import "application";
+@import "map";
+@import "videos";
+@import "components/video-listing";
 
 body {
   overflow: hidden;
 }
 
-a, a:link, a:active, a:visited, a:hover {
+a,
+a:link,
+a:active,
+a:visited,
+a:hover {
   color: #000066;
   text-decoaration: underline;
   font-weight: bold;
@@ -24,7 +28,7 @@ a, a:link, a:active, a:visited, a:hover {
   left: 0;
   right: 15px;
   background-color: #ffffff;
-  background-image: url('/assets/paper.jpg');
+  background-image: url("/assets/paper.jpg");
   background-repeat: repeat;
   padding: 1px 20px 20px 20px;
   border-radius: 10px;
@@ -51,29 +55,29 @@ a, a:link, a:active, a:visited, a:hover {
     display: inline-block;
     text-decoration: none;
   }
-  
+
   a:nth-child(1) {
-    background-image: url('/assets/stamp1.png');
+    background-image: url("/assets/stamp1.png");
     transform: rotate(1deg);
   }
 
   a:nth-child(2) {
-    background-image: url('/assets/stamp2.png');
+    background-image: url("/assets/stamp2.png");
     transform: rotate(-3deg);
   }
 
   a:nth-child(3) {
-    background-image: url('/assets/stamp3.png');
+    background-image: url("/assets/stamp3.png");
     transform: rotate(0deg);
   }
 
   a:nth-child(4) {
-    background-image: url('/assets/stamp4.png');
+    background-image: url("/assets/stamp4.png");
     transform: rotate(2deg);
   }
 
   a:nth-child(5) {
-    background-image: url('/assets/stamp5.png');
+    background-image: url("/assets/stamp5.png");
     transform: rotate(-1deg);
   }
 }

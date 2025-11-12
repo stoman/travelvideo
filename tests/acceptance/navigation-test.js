@@ -3,9 +3,9 @@ import moduleForAcceptance from 'travelvideo/tests/helpers/module-for-acceptance
 
 moduleForAcceptance('Acceptance | navigation');
 
-test('visiting /, checking redirect', function(assert) {
+test('visiting /, checking redirect', function (assert) {
   visit('/');
-  andThen(function() {
+  andThen(function () {
     assert.equal(currentURL(), '/trip', 'should redirect to trip');
   });
 });
