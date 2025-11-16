@@ -1,31 +1,34 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { service } from '@ember/service';
 
-export default Ember.Route.extend({
-  model() {
-    let self = this;
+export default class VideoIndexRoute extends Route {
+  @service store;
+
+  async model() {
     //find videos, then group them by country
-    return new Ember.RSVP.Promise(function (resolve /*, reject*/) {
-      self.store.query('video', { sortBy: 'name' }).then(function (videos) {
-        let ret = {};
-        let videoCount = 0;
-        videos.forEach(function (video) {
-          videoCount++;
-          if (!ret.hasOwnProperty(video.get('country'))) {
-            ret[video.get('country')] = {
-              country: video.get('country'),
-              videos: [],
-            };
-          }
-          ret[video.get('country')].videos.push(video);
-        });
-        resolve({
-          videos: Object.keys(ret)
-            .sort()
-            .map((key) => ret[key]),
-          countVideos: videoCount,
-          countCountries: Object.keys(ret).length,
-        });
-      });
+    const videos = await this.store.query('video', { sortBy: 'name' });
+
+    const ret = {};
+    let videoCount = 0;
+
+    videos.forEach((video) => {
+      videoCount++;
+      const country = video.get('country');
+      if (!ret.hasOwnProperty(country)) {
+        ret[country] = {
+          country: country,
+          videos: [],
+        };
+      }
+      ret[country].videos.push(video);
     });
-  },
-});
+
+    return {
+      videos: Object.keys(ret)
+        .sort()
+        .map((key) => ret[key]),
+      countVideos: videoCount,
+      countCountries: Object.keys(ret).length,
+    };
+  }
+}
