@@ -9,9 +9,12 @@ export default class Router extends EmberRouter {
 
   @service metrics;
 
-  didTransition() {
-    super.didTransition(...arguments);
-    this._trackPage();
+  constructor() {
+    super(...arguments);
+    // Listen to route changes for analytics tracking
+    this.on('routeDidChange', () => {
+      this._trackPage();
+    });
   }
 
   _trackPage() {
