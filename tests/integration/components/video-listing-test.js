@@ -7,15 +7,15 @@ module('Integration | Component | video listing', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    await render(hbs`{{video-listing}}`);
+    await render(hbs`<VideoListing />`);
 
     assert.strictEqual(this.element.textContent.trim(), '');
 
     // Template block usage:
     await render(hbs`
-      {{#video-listing}}
+      <VideoListing>
         template block text
-      {{/video-listing}}
+      </VideoListing>
     `);
 
     assert.strictEqual(this.element.textContent.trim(), 'template block text');
@@ -40,7 +40,7 @@ module('Integration | Component | video listing', function (hooks) {
     this.set('video', data);
 
     //render component
-    await render(hbs`{{video-listing video=video}}`);
+    await render(hbs`<VideoListing @video={{this.video}} />`);
 
     //check that all important properties are displayed
     assert
