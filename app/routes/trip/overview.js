@@ -1,21 +1,25 @@
 /* globals ol */
 
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 import { scheduleOnce } from '@ember/runloop';
+import { Promise } from 'rsvp';
 
-export default Ember.Route.extend({
+export default class TripOverviewRoute extends Route {
+  @service router;
+
   model(params) {
-    let self = this;
+    const self = this;
 
     //find the trip first
-    return new Ember.RSVP.Promise(function (resolve /*, reject*/) {
+    return new Promise(function (resolve /*, reject*/) {
       self.store.findRecord('trip', params.tripId).then(function (trip) {
         //compute offsets
         trip.get('videos').then(function (videos) {
-          let videosWithOffsets = [];
+          const videosWithOffsets = [];
           let lastVideo;
           for (let i = 0; i < videos.length; i++) {
-            let offset = lastVideo
+            const offset = lastVideo
               ? Math.ceil(
                   (videos.objectAt(i).get('date').getTime() -
                     lastVideo.get('date').getTime()) /
@@ -39,14 +43,23 @@ export default Ember.Route.extend({
         });
       });
     });
-  },
+  }
 
-  actions: {
-    //show overview map
-    didTransition() {
-      let self = this;
+  activate() {
+    super.activate(...arguments);
+    this.router.on('routeDidChange', this, this.showOverviewMap);
+  }
 
-      scheduleOnce('afterRender', this, () => {
+  deactivate() {
+    super.deactivate(...arguments);
+    this.router.off('routeDidChange', this, this.showOverviewMap);
+  }
+
+  //show overview map
+  showOverviewMap() {
+    const self = this;
+
+    scheduleOnce('afterRender', this, () => {
         //create open layers map object
         let map = new ol.Map({
           //predefined variables
@@ -102,9 +115,6 @@ export default Ember.Route.extend({
           //zoom map to line
           map.getView().fit(lineLayer.getSource().getExtent(), map.getSize());
         });
-      });
-
-      return true;
-    },
-  },
-});
+    });
+  }
+}
