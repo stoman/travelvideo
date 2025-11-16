@@ -11,17 +11,25 @@ export default class MapManagerService extends Service {
   backgroundMap = null;
   backgroundView = null;
   currentAfterMapCreationCallback = null;
+  handleRouteChangeBound = null;
 
   init() {
     super.init(...arguments);
 
+    // Store bound handler so we can remove it later
+    this.handleRouteChangeBound = this.handleRouteChange.bind(this);
+
     // Listen to route changes
-    this.router.on('routeDidChange', this.handleRouteChange.bind(this));
+    this.router.on('routeDidChange', this.handleRouteChangeBound);
   }
 
   willDestroy() {
     super.willDestroy(...arguments);
-    this.router.off('routeDidChange', this.handleRouteChange.bind(this));
+
+    // Remove the exact same handler we added
+    if (this.handleRouteChangeBound) {
+      this.router.off('routeDidChange', this.handleRouteChangeBound);
+    }
   }
 
   registerAfterMapCreationCallback(callback) {
