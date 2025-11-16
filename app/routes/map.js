@@ -1,43 +1,57 @@
 /* globals ol */
 
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { service } from '@ember/service';
+import { action } from '@ember/object';
 
-export default Ember.Route.extend({
-  actions: {
-    //entering the route
-    afterMapCreation() {
-      //get map object
-      let map = this.controllerFor('application').get('backgroundMap');
+export default class MapRoute extends Route {
+  @service mapManager;
 
-      //show controls
-      map.addControl(new ol.control.Zoom());
+  activate() {
+    super.activate(...arguments);
+    this.mapManager.registerAfterMapCreationCallback(
+      this.afterMapCreation.bind(this),
+    );
+  }
 
-      //add interactions
-      ol.interaction.defaults().forEach(function (interaction) {
-        map.addInteraction(interaction);
-      });
+  deactivate() {
+    super.deactivate(...arguments);
+    this.mapManager.unregisterAfterMapCreationCallback();
+  }
 
-      //hide content container above the map
-      document.getElementById('content').style.visibility = 'hidden';
-    },
+  //entering the route
+  afterMapCreation() {
+    //get map object
+    const map = this.mapManager.backgroundMap;
 
-    //leaving the route
-    willTransition() {
-      //get map object
-      let map = this.controllerFor('application').get('backgroundMap');
+    //show controls
+    map.addControl(new ol.control.Zoom());
 
-      //remove all controls
-      map.getControls().forEach(function (control) {
-        map.removeControl(control);
-      });
+    //add interactions
+    ol.interaction.defaults().forEach(function (interaction) {
+      map.addInteraction(interaction);
+    });
 
-      //remove all interactions
-      map.getInteractions().forEach(function (interaction) {
-        map.removeInteraction(interaction);
-      });
+    //hide content container above the map
+    document.getElementById('content').style.visibility = 'hidden';
+  }
 
-      //show content container
-      document.getElementById('content').style.visibility = 'visible';
-    },
-  },
-});
+  @action
+  willTransition() {
+    //get map object
+    const map = this.mapManager.backgroundMap;
+
+    //remove all controls
+    map.getControls().forEach(function (control) {
+      map.removeControl(control);
+    });
+
+    //remove all interactions
+    map.getInteractions().forEach(function (interaction) {
+      map.removeInteraction(interaction);
+    });
+
+    //show content container
+    document.getElementById('content').style.visibility = 'visible';
+  }
+}
