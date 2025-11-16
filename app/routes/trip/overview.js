@@ -5,7 +5,7 @@ import Map from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
-import StamenSource from 'ol/source/Stamen';
+import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
 import Feature from 'ol/Feature';
 import LineString from 'ol/geom/LineString';
@@ -64,11 +64,9 @@ export default class TripOverviewRoute extends Route {
 
         //load tiles
         layers: [
-          //stamen map
+          // OpenStreetMap tiles
           new TileLayer({
-            source: new StamenSource({
-              layer: 'watercolor',
-            }),
+            source: new OSM(),
           }),
         ],
 

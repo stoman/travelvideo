@@ -4,7 +4,7 @@ import Map from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
-import StamenSource from 'ol/source/Stamen';
+import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
 import Overlay from 'ol/Overlay';
 import Feature from 'ol/Feature';
@@ -84,17 +84,9 @@ export default class MapManagerService extends Service {
 
       // Load tiles
       layers: [
-        // Stamen map
+        // OpenStreetMap tiles
         new TileLayer({
-          source: new StamenSource({
-            layer: 'watercolor',
-          }),
-        }),
-        // Labels for stamen map
-        new TileLayer({
-          source: new StamenSource({
-            layer: 'terrain-labels',
-          }),
+          source: new OSM(),
         }),
       ],
 
