@@ -1,28 +1,30 @@
-/* globals Ember */
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-import { moduleForModel, test } from 'ember-qunit';
+module('Unit | Model | video', function (hooks) {
+  setupTest(hooks);
 
-moduleForModel('video', 'Unit | Model | video', {
-  needs: ['model:trip'],
-});
+  test('it exists', function (assert) {
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('video', {});
+    assert.ok(model);
+  });
 
-test('it exists', function (assert) {
-  let model = this.subject();
-  // let store = this.store();
-  assert.ok(!!model);
-});
+  test('should have trips', function (assert) {
+    const store = this.owner.lookup('service:store');
+    const Video = store.modelFor('video');
+    const relationship = Video.relationshipsByName.get('trips');
 
-test('should have trips', function (assert) {
-  const Video = this.store().modelFor('video');
-  const relationship = Ember.get(Video, 'relationshipsByName').get('trips');
+    assert.strictEqual(relationship.key, 'trips', 'has relationship with trip');
+    assert.strictEqual(relationship.kind, 'hasMany', 'kind of relationship is hasMany');
+  });
 
-  assert.equal(relationship.key, 'trips', 'has relationship with trip');
-  assert.equal(relationship.kind, 'hasMany', 'kind of relationship is hasMany');
-});
-
-test('should have fixtures', function (assert) {
-  assert.ok(
-    Ember.get(this.store().modelFor('video'), 'FIXTURES').length > 0,
-    'should have fixtures',
-  );
+  test('should have fixtures', function (assert) {
+    const store = this.owner.lookup('service:store');
+    const Video = store.modelFor('video');
+    assert.ok(
+      Video.FIXTURES.length > 0,
+      'should have fixtures',
+    );
+  });
 });

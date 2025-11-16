@@ -1,6 +1,7 @@
 /* globals ol */
 
 import Ember from 'ember';
+import { scheduleOnce } from '@ember/runloop';
 
 export default Ember.Route.extend({
   model(params) {
@@ -45,7 +46,7 @@ export default Ember.Route.extend({
     didTransition() {
       let self = this;
 
-      Ember.run.scheduleOnce('afterRender', this, () => {
+      scheduleOnce('afterRender', this, () => {
         //create open layers map object
         let map = new ol.Map({
           //predefined variables

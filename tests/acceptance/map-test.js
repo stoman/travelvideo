@@ -1,71 +1,56 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travelvideo/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { visit, currentURL, click } from '@ember/test-helpers';
+import { setupApplicationTest } from 'ember-qunit';
 
-moduleForAcceptance('Acceptance | map');
+module('Acceptance | map', function (hooks) {
+  setupApplicationTest(hooks);
 
-test('visiting /map', function (assert) {
-  visit('/map');
-
-  andThen(function () {
-    assert.equal(currentURL(), '/map');
-  });
-});
-
-test('map should display hint', function (assert) {
-  visit('/map');
-
-  andThen(function () {
-    assert.equal(find('.map-hint').length, 1, 'hint should be visible');
+  test('visiting /map', async function (assert) {
+    await visit('/map');
+    assert.strictEqual(currentURL(), '/map');
   });
 
-  //navigate around
-  visit('/');
-  visit('/map');
+  test('map should display hint', async function (assert) {
+    await visit('/map');
+    assert.dom('.map-hint').exists({ count: 1 }, 'hint should be visible');
 
-  andThen(function () {
-    assert.equal(
-      find('.map-hint').length,
-      1,
-      'hint should stay visible after navigation',
-    );
-  });
-});
+    //navigate around
+    await visit('/');
+    await visit('/map');
 
-test('map hint can be hidden', function (assert) {
-  visit('/map');
-
-  //click the hide button
-  click('.map-hint a:contains("x")');
-
-  andThen(function () {
-    assert.equal(find('.map-hint').length, 0, 'hint should not be visible');
+    assert
+      .dom('.map-hint')
+      .exists({ count: 1 }, 'hint should stay visible after navigation');
   });
 
-  //navigate around
-  visit('/');
-  visit('/map');
+  test('map hint can be hidden', async function (assert) {
+    await visit('/map');
 
-  andThen(function () {
-    assert.equal(
-      find('.map-hint').length,
-      0,
-      'hint should stay invisible after navigation',
-    );
+    //click the hide button
+    await click('.map-hint a');
+
+    assert
+      .dom('.map-hint')
+      .doesNotExist('hint should not be visible');
+
+    //navigate around
+    await visit('/');
+    await visit('/map');
+
+    assert
+      .dom('.map-hint')
+      .doesNotExist('hint should stay invisible after navigation');
   });
-});
 
-test('map route should enable controls of map', function (assert) {
-  visit('/map');
-
-  andThen(function () {
-    assert.ok(find('.ol-control').length, 'map should have controls');
+  test('map route should enable controls of map', async function (assert) {
+    await visit('/map');
+    assert.dom('.ol-control').exists('map should have controls');
   });
-});
 
-test('other routes should disable controls of map', function (assert) {
-  visit('/');
-
-  andThen(function () {
-    assert.equal(find('.ol-control').length, 0, 'map should not have controls');
+  test('other routes should disable controls of map', async function (assert) {
+    await visit('/');
+    assert
+      .dom('.ol-control')
+      .doesNotExist('map should not have controls');
   });
 });

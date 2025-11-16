@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { scheduleOnce } from '@ember/runloop';
 
 export default Ember.Route.extend({
   metrics: Ember.inject.service(),
@@ -42,7 +43,7 @@ export default Ember.Route.extend({
 
     //log events
     didTransition() {
-      Ember.run.scheduleOnce('afterRender', this, () => {
+      scheduleOnce('afterRender', this, () => {
         Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
           category: 'video',
           action: 'view',
@@ -65,7 +66,7 @@ export default Ember.Route.extend({
     //action for stopping the trip
     stopTrip() {
       //log event
-      Ember.run.scheduleOnce('afterRender', this, () => {
+      scheduleOnce('afterRender', this, () => {
         Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
           category: 'video',
           action: 'stop-trip',

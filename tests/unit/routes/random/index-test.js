@@ -1,10 +1,11 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('route:random/index', 'Unit | Route | random/index', {
-  needs: ['service:metrics'],
-});
+module('Unit | Route | random/index', function (hooks) {
+  setupTest(hooks);
 
-test('it exists', function (assert) {
-  let route = this.subject();
-  assert.ok(route);
+  test('it exists', function (assert) {
+    const route = this.owner.lookup('route:random/index');
+    assert.ok(route);
+  });
 });

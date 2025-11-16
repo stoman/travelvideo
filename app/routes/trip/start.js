@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { scheduleOnce } from '@ember/runloop';
 
 export default Ember.Route.extend({
   metrics: Ember.inject.service(),
@@ -7,7 +8,7 @@ export default Ember.Route.extend({
     const self = this;
 
     //log events
-    Ember.run.scheduleOnce('afterRender', this, () => {
+    scheduleOnce('afterRender', this, () => {
       Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
         category: 'trip',
         action: 'start',
