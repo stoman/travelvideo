@@ -14,7 +14,7 @@ export default class VideoModel extends Model {
   @attr('string') peopleEnd;
   @attr('string') guests;
   @attr('string') camera;
-  @hasMany('trip') trips;
+  @hasMany('trip', { async: true, inverse: 'videos' }) trips;
   @attr('number') preferredZoom;
 
   // Static fixtures - accessed by the adapter

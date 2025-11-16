@@ -3,7 +3,7 @@ import Model, { attr, hasMany } from '@ember-data/model';
 export default class TripModel extends Model {
   @attr('string') name;
   @attr('string') year;
-  @hasMany('video') videos;
+  @hasMany('video', { async: true, inverse: 'trips' }) videos;
   @attr('boolean') finished;
 
   static FIXTURES = [
