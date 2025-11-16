@@ -5,7 +5,6 @@ import { scheduleOnce } from '@ember/runloop';
 export default class RandomDisplayRoute extends Route {
   @service metrics;
   @service mapManager;
-  @service router;
 
   model(params) {
     return this.store.findRecord('video', params.videoId);
@@ -13,7 +12,6 @@ export default class RandomDisplayRoute extends Route {
 
   activate() {
     super.activate(...arguments);
-    this.router.on('routeDidChange', this, this.trackPageView);
     this.mapManager.registerAfterMapCreationCallback(
       this.afterMapCreation.bind(this),
     );
@@ -21,24 +19,23 @@ export default class RandomDisplayRoute extends Route {
 
   deactivate() {
     super.deactivate(...arguments);
-    this.router.off('routeDidChange', this, this.trackPageView);
     this.mapManager.unregisterAfterMapCreationCallback();
   }
 
-  trackPageView() {
+  afterModel(model) {
+    super.afterModel(...arguments);
+    // Track page view after model is loaded
     scheduleOnce('afterRender', this, () => {
-      if (this.controller && this.controller.model) {
-        this.metrics.trackEvent('GoogleAnalytics', {
-          category: 'video',
-          action: 'view',
-          label: this.controller.model.get('id'),
-        });
-        this.metrics.trackEvent('GoogleAnalytics', {
-          category: 'video',
-          action: 'view-random',
-          label: this.controller.model.get('id'),
-        });
-      }
+      this.metrics.trackEvent('GoogleAnalytics', {
+        category: 'video',
+        action: 'view',
+        label: model.get('id'),
+      });
+      this.metrics.trackEvent('GoogleAnalytics', {
+        category: 'video',
+        action: 'view-random',
+        label: model.get('id'),
+      });
     });
   }
 

@@ -38,7 +38,6 @@ export default class TripDisplayRoute extends Route {
 
   activate() {
     super.activate(...arguments);
-    this.router.on('routeDidChange', this, this.trackPageView);
     this.mapManager.registerAfterMapCreationCallback(
       this.afterMapCreation.bind(this),
     );
@@ -46,29 +45,28 @@ export default class TripDisplayRoute extends Route {
 
   deactivate() {
     super.deactivate(...arguments);
-    this.router.off('routeDidChange', this, this.trackPageView);
     this.mapManager.unregisterAfterMapCreationCallback();
   }
 
-  trackPageView() {
+  afterModel(model) {
+    super.afterModel(...arguments);
+    // Track page view after model is loaded
     scheduleOnce('afterRender', this, () => {
-      if (this.controller && this.controller.model) {
-        this.metrics.trackEvent('GoogleAnalytics', {
-          category: 'video',
-          action: 'view',
-          label: this.controller.model.video.get('id'),
-        });
-        this.metrics.trackEvent('GoogleAnalytics', {
-          category: 'video',
-          action: 'view-trip',
-          label: this.controller.model.video.get('id'),
-        });
-        this.metrics.trackEvent('GoogleAnalytics', {
-          category: 'trip',
-          action: 'view-video',
-          label: this.controller.model.trip.get('id'),
-        });
-      }
+      this.metrics.trackEvent('GoogleAnalytics', {
+        category: 'video',
+        action: 'view',
+        label: model.video.get('id'),
+      });
+      this.metrics.trackEvent('GoogleAnalytics', {
+        category: 'video',
+        action: 'view-trip',
+        label: model.video.get('id'),
+      });
+      this.metrics.trackEvent('GoogleAnalytics', {
+        category: 'trip',
+        action: 'view-video',
+        label: model.trip.get('id'),
+      });
     });
   }
 
