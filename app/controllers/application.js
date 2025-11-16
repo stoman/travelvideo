@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
+export default class ApplicationController extends Controller {
   //the open layers map and view object of the background map
-  backgroundMap: null,
-  backgroundView: null,
-});
+  backgroundMap = null;
+  backgroundView = null;
+}

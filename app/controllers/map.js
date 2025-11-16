@@ -1,13 +1,12 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
-export default Ember.Controller.extend({
-  //this property saves whether the hint should be displayed
-  hintVisible: true,
+export default class MapController extends Controller {
+  @tracked hintVisible = true;
 
-  actions: {
-    //hide the hint
-    hideHint() {
-      this.set('hintVisible', false);
-    },
-  },
-});
+  @action
+  hideHint() {
+    this.hintVisible = false;
+  }
+}

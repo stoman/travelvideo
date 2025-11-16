@@ -1,34 +1,16 @@
-import Ember from 'ember';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
-export default Ember.Component.extend({
-  //model data
-  video: null,
-  //settings
-  autoplay: false,
-  controls: false,
-
+export default class VideoListingComponent extends Component {
   //compute video quality
-  videoQuality: 'max',
+  get videoQuality() {
+    return this.args.videoQuality || 'max';
+  }
 
-  //actions
-  actions: {
-    //callback when video ends
-    videoEnded() {
-      let end = this.get('onEnd');
-      if (end) {
-        end();
-      }
-    },
-  },
-
-  //after rendering start video
-  didRender() {
-    if (this.autoplay) {
-      window.setTimeout(function () {
-        for (let videoTag of this.$('video')) {
-          videoTag.play();
-        }
-      }, 5000);
+  @action
+  videoEnded() {
+    if (this.args.onEnd) {
+      this.args.onEnd();
     }
-  },
-});
+  }
+}

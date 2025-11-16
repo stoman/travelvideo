@@ -2,16 +2,16 @@
   <div class="videodetail">
     {{#if @controls}}
       <video
-        src="/assets/videos/{{@videoQuality}}/{{@video.filename}}"
-        onended={{action "videoEnded"}}
+        src="/assets/videos/{{this.videoQuality}}/{{@video.filename}}"
+        {{on "ended" this.videoEnded}}
         controls
       >
         Your browser does not support HTML5 videos. Please update.
       </video>
     {{else}}
       <video
-        src="/assets/videos/{{@videoQuality}}/{{@video.filename}}"
-        onended={{action "videoEnded"}}
+        src="/assets/videos/{{this.videoQuality}}/{{@video.filename}}"
+        {{on "ended" this.videoEnded}}
       >
         Your browser does not support HTML5 videos. Please update.
       </video>
