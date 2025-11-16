@@ -45,18 +45,9 @@ export default class TripOverviewRoute extends Route {
     });
   }
 
-  activate() {
-    super.activate(...arguments);
-    this.router.on('routeDidChange', this, this.showOverviewMap);
-  }
-
-  deactivate() {
-    super.deactivate(...arguments);
-    this.router.off('routeDidChange', this, this.showOverviewMap);
-  }
-
-  //show overview map
-  showOverviewMap() {
+  afterModel(model) {
+    super.afterModel(...arguments);
+    // Show overview map after model is loaded
     const self = this;
 
     scheduleOnce('afterRender', this, () => {
