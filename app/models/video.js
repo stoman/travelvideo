@@ -1,27 +1,24 @@
-import DS from 'ember-data';
+import Model, { attr, hasMany } from '@ember-data/model';
 
-var Video = DS.Model.extend({
-  //attributes
-  name: DS.attr('string'),
-  description: DS.attr('string'),
-  country: DS.attr('string'),
-  filename: DS.attr('string'),
-  date: DS.attr('date'),
-  latitude: DS.attr('number'),
-  longitude: DS.attr('number'),
-  peopleIn: DS.attr('string'),
-  peopleOut: DS.attr('string'),
-  peopleStart: DS.attr('string'),
-  peopleEnd: DS.attr('string'),
-  guests: DS.attr('string'),
-  camera: DS.attr('string'),
-  trips: DS.hasMany('trip'),
-  preferredZoom: DS.attr('number'),
-});
+export default class VideoModel extends Model {
+  @attr('string') name;
+  @attr('string') description;
+  @attr('string') country;
+  @attr('string') filename;
+  @attr('date') date;
+  @attr('number') latitude;
+  @attr('number') longitude;
+  @attr('string') peopleIn;
+  @attr('string') peopleOut;
+  @attr('string') peopleStart;
+  @attr('string') peopleEnd;
+  @attr('string') guests;
+  @attr('string') camera;
+  @hasMany('trip') trips;
+  @attr('number') preferredZoom;
 
-//fixtures: add more data here
-Video.reopenClass({
-  FIXTURES: [
+  // Static fixtures - accessed by the adapter
+  static FIXTURES = [
     {
       id: 'munich_airport',
       name: 'München Flughafen',
@@ -2662,7 +2659,5 @@ Video.reopenClass({
       camera: 'Sony Alpha 6000',
       preferredZoom: 9,
     },
-  ],
-});
-
-export default Video;
+  ];
+}

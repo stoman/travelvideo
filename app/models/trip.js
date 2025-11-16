@@ -1,16 +1,12 @@
-import DS from 'ember-data';
+import Model, { attr, hasMany } from '@ember-data/model';
 
-var Trip = DS.Model.extend({
-  //attributes
-  name: DS.attr('string'),
-  year: DS.attr('string'),
-  videos: DS.hasMany('video'),
-  finished: DS.attr('boolean'),
-});
+export default class TripModel extends Model {
+  @attr('string') name;
+  @attr('string') year;
+  @hasMany('video') videos;
+  @attr('boolean') finished;
 
-//fixtures: add more data here
-Trip.reopenClass({
-  FIXTURES: [
+  static FIXTURES = [
     {
       id: 'all',
       name: 'All Videos',
@@ -394,7 +390,5 @@ Trip.reopenClass({
       videos: ['sulina', 'obretin', 'bucuresti', 'bran', 'rasnov', 'ploiesti'],
       finished: true,
     },
-  ],
-});
-
-export default Trip;
+  ];
+}
