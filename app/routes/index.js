@@ -1,9 +1,12 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { service } from '@ember/service';
 
-export default Ember.Route.extend({
+export default class IndexRoute extends Route {
+  @service router;
+
   //redirect the index route to the trips route
   beforeModel() {
-    this._super(...arguments);
-    this.replaceWith('trip');
-  },
-});
+    super.beforeModel(...arguments);
+    this.router.replaceWith('trip.index');
+  }
+}
