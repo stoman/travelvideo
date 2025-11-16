@@ -1,30 +1,36 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { service } from '@ember/service';
+import { action } from '@ember/object';
+import { scheduleOnce } from '@ember/runloop';
 
-export default Ember.Controller.extend({
-  metrics: Ember.inject.service(),
+export default class TripDisplayController extends Controller {
+  @service metrics;
 
-  actions: {
-    //video ended? go to next video
-    videoEnded() {
-      if (this.get('model.nextVideo')) {
-        this.transitionToRoute(
-          'trip.display',
-          this.get('model.trip.id'),
-          this.get('model.nextVideo.id'),
-        );
-      } else {
-        //log events
-        Ember.run.scheduleOnce('afterRender', this, () => {
-          Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
-            category: 'trip',
-            action: 'end',
-            label: this.get('model.trip.id'),
-          });
+  @action
+  videoEnded() {
+    if (this.model.nextVideo) {
+      this.transitionToRoute(
+        'trip.display',
+        this.model.trip.id,
+        this.model.nextVideo.id,
+      );
+    } else {
+      //log events
+      scheduleOnce('afterRender', this, () => {
+        this.metrics.trackEvent('GoogleAnalytics', {
+          category: 'trip',
+          action: 'end',
+          label: this.model.trip.id,
         });
+      });
 
-        //redirect to trip index page
-        this.transitionToRoute('trip.overview', this.get('model.trip.id'));
-      }
-    },
-  },
-});
+      //redirect to trip index page
+      this.transitionToRoute('trip.overview', this.model.trip.id);
+    }
+  }
+
+  @action
+  stopTrip() {
+    this.transitionToRoute('trip.overview', this.model.trip.id);
+  }
+}

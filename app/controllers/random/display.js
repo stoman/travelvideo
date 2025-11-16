@@ -1,22 +1,21 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { service } from '@ember/service';
+import { action } from '@ember/object';
 
-export default Ember.Controller.extend({
-  actions: {
-    //video ended? go to next video
-    videoEnded() {
-      const self = this;
-      this.store
-        .query('video', {
-          filter: { peopleStart: this.get('model.peopleEnd') },
-          sortBy: 'random',
-          limit: 1,
-        })
-        .then(function (videos) {
-          self.transitionToRoute(
-            'random.display',
-            videos.objectAt(0).get('id'),
-          );
-        });
-    },
-  },
-});
+export default class RandomDisplayController extends Controller {
+  @service store;
+
+  @action
+  async videoEnded() {
+    const videos = await this.store.query('video', {
+      filter: { peopleStart: this.model.peopleEnd },
+      sortBy: 'random',
+      limit: 1,
+    });
+
+    const nextVideo = videos.objectAt(0);
+    if (nextVideo) {
+      this.transitionToRoute('random.display', nextVideo.id);
+    }
+  }
+}
