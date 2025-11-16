@@ -1,7 +1,17 @@
-/* globals ol */
-
 import Service, { inject as service } from '@ember/service';
 import { scheduleOnce } from '@ember/runloop';
+import Map from 'ol/Map';
+import View from 'ol/View';
+import TileLayer from 'ol/layer/Tile';
+import VectorLayer from 'ol/layer/Vector';
+import StamenSource from 'ol/source/Stamen';
+import VectorSource from 'ol/source/Vector';
+import Overlay from 'ol/Overlay';
+import Feature from 'ol/Feature';
+import LineString from 'ol/geom/LineString';
+import Style from 'ol/style/Style';
+import Stroke from 'ol/style/Stroke';
+import { fromLonLat, toLonLat } from 'ol/proj';
 
 export default class MapManagerService extends Service {
   @service router;
@@ -56,15 +66,15 @@ export default class MapManagerService extends Service {
 
   initializeMap() {
     // Create open layers view object
-    const view = new ol.View({
-      center: ol.proj.fromLonLat([11.57, 48.13]), // Munich
+    const view = new View({
+      center: fromLonLat([11.57, 48.13]), // Munich
       zoom: 4,
       minZoom: 2,
       maxZoom: 12,
     });
 
     // Create open layers map object
-    const map = new ol.Map({
+    const map = new Map({
       // Predefined variables
       target: 'map',
       view: view,
@@ -75,14 +85,14 @@ export default class MapManagerService extends Service {
       // Load tiles
       layers: [
         // Stamen map
-        new ol.layer.Tile({
-          source: new ol.source.Stamen({
+        new TileLayer({
+          source: new StamenSource({
             layer: 'watercolor',
           }),
         }),
         // Labels for stamen map
-        new ol.layer.Tile({
-          source: new ol.source.Stamen({
+        new TileLayer({
+          source: new StamenSource({
             layer: 'terrain-labels',
           }),
         }),
@@ -113,8 +123,8 @@ export default class MapManagerService extends Service {
 
         // Add marker as overlay
         map.addOverlay(
-          new ol.Overlay({
-            position: ol.proj.fromLonLat([
+          new Overlay({
+            position: fromLonLat([
               video.get('longitude'),
               video.get('latitude'),
             ]),
@@ -135,10 +145,10 @@ export default class MapManagerService extends Service {
       const trip_features = [];
       trips.forEach((trip) => {
         // Compute a list of points, always start at home
-        const points = [ol.proj.fromLonLat([11.500945, 48.144391])];
+        const points = [fromLonLat([11.500945, 48.144391])];
         trip.get('videos').forEach((video) => {
           points.push(
-            ol.proj.fromLonLat([
+            fromLonLat([
               video.get('longitude'),
               video.get('latitude'),
             ]),
@@ -152,20 +162,20 @@ export default class MapManagerService extends Service {
 
         // Create feature
         trip_features.push(
-          new ol.Feature({
-            geometry: new ol.geom.LineString(points),
+          new Feature({
+            geometry: new LineString(points),
           }),
         );
       });
 
       // Add trips as a new layer
       map.addLayer(
-        new ol.layer.Vector({
-          source: new ol.source.Vector({
+        new VectorLayer({
+          source: new VectorSource({
             features: trip_features,
           }),
-          style: new ol.style.Style({
-            stroke: new ol.style.Stroke({ color: '#e74c3c', width: 5 }),
+          style: new Style({
+            stroke: new Stroke({ color: '#e74c3c', width: 5 }),
           }),
         }),
       );
@@ -179,7 +189,7 @@ export default class MapManagerService extends Service {
           'zoom-' + map.getView().getZoom();
 
         // Fire analytics events
-        const center = ol.proj.toLonLat(map.getView().getCenter());
+        const center = toLonLat(map.getView().getCenter());
         this.metrics.trackEvent('GoogleAnalytics', {
           category: 'map-movement',
           action: 'zoom',
@@ -208,20 +218,11 @@ export default class MapManagerService extends Service {
       return;
     }
 
-    // Move to new location
-    const pan = ol.animation.pan({
+    // Animate to new location and zoom level using modern OpenLayers API
+    view.animate({
+      center: fromLonLat([lon, lat]),
+      zoom: zoomLevel,
       duration: 5000,
-      source: view.getCenter(),
     });
-    map.beforeRender(pan);
-    view.setCenter(ol.proj.fromLonLat([lon, lat]));
-
-    // Zoom to new level
-    const zoom = ol.animation.zoom({
-      duration: 5000,
-      resolution: map.getView().getResolution(),
-    });
-    map.beforeRender(zoom);
-    view.setZoom(zoomLevel);
   }
 }

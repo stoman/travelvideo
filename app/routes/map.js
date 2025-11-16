@@ -1,8 +1,8 @@
-/* globals ol */
-
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
+import Zoom from 'ol/control/Zoom';
+import { defaults as defaultInteractions } from 'ol/interaction';
 
 export default class MapRoute extends Route {
   @service mapManager;
@@ -25,10 +25,10 @@ export default class MapRoute extends Route {
     const map = this.mapManager.backgroundMap;
 
     //show controls
-    map.addControl(new ol.control.Zoom());
+    map.addControl(new Zoom());
 
     //add interactions
-    ol.interaction.defaults().forEach(function (interaction) {
+    defaultInteractions().forEach(function (interaction) {
       map.addInteraction(interaction);
     });
 
