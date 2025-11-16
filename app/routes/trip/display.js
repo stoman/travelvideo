@@ -1,16 +1,21 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 import { scheduleOnce } from '@ember/runloop';
+import { Promise } from 'rsvp';
+import { action } from '@ember/object';
 
-export default Ember.Route.extend({
-  metrics: Ember.inject.service(),
+export default class TripDisplayRoute extends Route {
+  @service metrics;
+  @service mapManager;
+  @service router;
 
   model(params) {
-    let self = this;
+    const self = this;
     //find trip, then work with it
-    return new Ember.RSVP.Promise(function (resolve /*, reject*/) {
+    return new Promise(function (resolve /*, reject*/) {
       self.store.findRecord('trip', params.tripId).then(function (trip) {
         //find video
-        let ret = {
+        const ret = {
           video: self.store.findRecord('video', params.videoId),
           trip: trip,
         };
@@ -29,58 +34,71 @@ export default Ember.Route.extend({
         resolve(ret);
       });
     });
-  },
+  }
 
-  actions: {
-    //move map to coordinates of the current video on loading
-    afterMapCreation() {
-      this.moveBackgroundMap(
-        this.currentModel.video.get('longitude'),
-        this.currentModel.video.get('latitude'),
-        this.currentModel.video.get('preferredZoom'),
-      );
-    },
+  activate() {
+    super.activate(...arguments);
+    this.router.on('routeDidChange', this, this.trackPageView);
+    this.mapManager.registerAfterMapCreationCallback(
+      this.afterMapCreation.bind(this),
+    );
+  }
 
-    //log events
-    didTransition() {
-      scheduleOnce('afterRender', this, () => {
-        Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
+  deactivate() {
+    super.deactivate(...arguments);
+    this.router.off('routeDidChange', this, this.trackPageView);
+    this.mapManager.unregisterAfterMapCreationCallback();
+  }
+
+  trackPageView() {
+    scheduleOnce('afterRender', this, () => {
+      if (this.controller && this.controller.model) {
+        this.metrics.trackEvent('GoogleAnalytics', {
           category: 'video',
           action: 'view',
-          label: this.currentModel.video.get('id'),
+          label: this.controller.model.video.get('id'),
         });
-        Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
+        this.metrics.trackEvent('GoogleAnalytics', {
           category: 'video',
           action: 'view-trip',
-          label: this.currentModel.video.get('id'),
+          label: this.controller.model.video.get('id'),
         });
-        Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
+        this.metrics.trackEvent('GoogleAnalytics', {
           category: 'trip',
           action: 'view-video',
-          label: this.currentModel.trip.get('id'),
+          label: this.controller.model.trip.get('id'),
         });
-      });
-      return true;
-    },
+      }
+    });
+  }
 
-    //action for stopping the trip
-    stopTrip() {
-      //log event
-      scheduleOnce('afterRender', this, () => {
-        Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
-          category: 'video',
-          action: 'stop-trip',
-          label: this.currentModel.video.get('id'),
-        });
-        Ember.get(this, 'metrics').trackEvent('GoogleAnalytics', {
-          category: 'trip',
-          action: 'stop-at-video',
-          label: this.currentModel.trip.get('id'),
-        });
-      });
+  //move map to coordinates of the current video on loading
+  afterMapCreation() {
+    this.mapManager.moveBackgroundMap(
+      this.currentModel.video.get('longitude'),
+      this.currentModel.video.get('latitude'),
+      this.currentModel.video.get('preferredZoom'),
+    );
+  }
 
-      //redirect to video page
-      this.transitionTo('video.display', this.currentModel.video.get('id'));
-    },
-  },
-});
+  //action for stopping the trip
+  @action
+  stopTrip() {
+    //log event
+    scheduleOnce('afterRender', this, () => {
+      this.metrics.trackEvent('GoogleAnalytics', {
+        category: 'video',
+        action: 'stop-trip',
+        label: this.currentModel.video.get('id'),
+      });
+      this.metrics.trackEvent('GoogleAnalytics', {
+        category: 'trip',
+        action: 'stop-at-video',
+        label: this.currentModel.trip.get('id'),
+      });
+    });
+
+    //redirect to video page
+    this.transitionTo('video.display', this.currentModel.video.get('id'));
+  }
+}
