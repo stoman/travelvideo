@@ -1,8 +1,11 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('adapter:application', 'Unit | Adapter | application', {});
+module('Unit | Adapter | application', function (hooks) {
+  setupTest(hooks);
 
-test('it exists', function (assert) {
-  let adapter = this.subject();
-  assert.ok(adapter);
+  test('it exists', function (assert) {
+    const adapter = this.owner.lookup('adapter:application');
+    assert.ok(adapter);
+  });
 });

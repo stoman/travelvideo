@@ -1,19 +1,21 @@
-import Ember from 'ember';
+import Application from '@ember/application';
+import { run } from '@ember/runloop';
 import OpenLayersInitializer from 'travelvideo/initializers/open-layers';
 import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-let application;
+module('Unit | Initializer | open layers', function (hooks) {
+  setupTest(hooks);
 
-module('Unit | Initializer | open layers', {
-  beforeEach() {
-    Ember.run(function () {
-      application = Ember.Application.create();
-      application.deferReadiness();
+  hooks.beforeEach(function () {
+    this.application = Application.create();
+    this.application.deferReadiness();
+  });
+
+  test('it works', function (assert) {
+    run(() => {
+      OpenLayersInitializer.initialize(this.application);
     });
-  },
-});
-
-test('it works', function (assert) {
-  OpenLayersInitializer.initialize(application);
-  assert.ok(true);
+    assert.ok(true);
+  });
 });

@@ -1,27 +1,24 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'travelvideo/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { visit, currentURL, click } from '@ember/test-helpers';
+import { setupApplicationTest } from 'ember-qunit';
 
-moduleForAcceptance('Acceptance | navigation');
+module('Acceptance | navigation', function (hooks) {
+  setupApplicationTest(hooks);
 
-test('visiting /, checking redirect', function (assert) {
-  visit('/');
-  andThen(function () {
-    assert.equal(currentURL(), '/trip', 'should redirect to trip');
+  test('visiting /, checking redirect', async function (assert) {
+    await visit('/');
+    assert.strictEqual(currentURL(), '/trip', 'should redirect to trip');
   });
-});
 
-test('front page should link to the about page', function (assert) {
-  visit('/');
-  click('a:contains("about")');
-  andThen(function () {
-    assert.equal(currentURL(), '/about', 'should navigate to about');
+  test('front page should link to the about page', async function (assert) {
+    await visit('/');
+    await click('a:contains("about")');
+    assert.strictEqual(currentURL(), '/about', 'should navigate to about');
   });
-});
 
-test('front page should link to trip overview', function (assert) {
-  visit('/');
-  click('a:contains("trip")');
-  andThen(function () {
-    assert.equal(currentURL(), '/trip', 'should navigate to trips');
+  test('front page should link to trip overview', async function (assert) {
+    await visit('/');
+    await click('a:contains("trip")');
+    assert.strictEqual(currentURL(), '/trip', 'should navigate to trips');
   });
 });

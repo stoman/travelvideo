@@ -1,11 +1,11 @@
-import { moduleFor, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleFor('controller:random/display', 'Unit | Controller | random/display', {
-  needs: ['service:metrics'],
-});
+module('Unit | Controller | random/display', function (hooks) {
+  setupTest(hooks);
 
-// Replace this with your real tests.
-test('it exists', function (assert) {
-  let controller = this.subject();
-  assert.ok(controller);
+  test('it exists', function (assert) {
+    const controller = this.owner.lookup('controller:random/display');
+    assert.ok(controller);
+  });
 });

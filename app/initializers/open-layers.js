@@ -1,6 +1,7 @@
 /* globals ol */
 
 import Ember from 'ember';
+import { scheduleOnce } from '@ember/runloop';
 
 export function initialize() {
   //modify the didTransition action of all routes
@@ -12,7 +13,7 @@ export function initialize() {
         const route = this;
 
         //wait for afterRender event
-        Ember.run.scheduleOnce('afterRender', this, function () {
+        scheduleOnce('afterRender', this, function () {
           //create map if not already done
           if (!this.controllerFor('application').get('backgroundMap')) {
             //create open layers view object
