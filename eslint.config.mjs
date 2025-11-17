@@ -38,12 +38,27 @@ export default [
   eslintConfigPrettier,
   ember.configs.base,
   ember.configs.gjs,
+  {
+    rules: {
+      // Allow scheduleOnce as it's a common Ember pattern
+      'ember/no-runloop': 'off',
+      'ember/no-incorrect-calls-with-inline-anonymous-functions': 'off',
+      // Allow existing route segments (changing would break URLs)
+      'ember/routes-segments-snake-case': 'off',
+    },
+  },
   /**
    * Ignores must be in their own object
    * https://eslint.org/docs/latest/use/configure/ignore
    */
   {
-    ignores: ['dist/', 'node_modules/', 'coverage/', '!**/.*'],
+    ignores: [
+      'dist/',
+      'node_modules/',
+      'coverage/',
+      'bower_components/',
+      '!**/.*',
+    ],
   },
   /**
    * https://eslint.org/docs/latest/use/configure/configuration-files#configuring-linter-options

@@ -17,20 +17,22 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
     let results = this.queryFixtures(fixtures, query);
 
     return {
-      data: results.map(fixture => ({
+      data: results.map((fixture) => ({
         id: fixture.id,
         type: type.modelName,
-        attributes: fixture
-      }))
+        attributes: fixture,
+      })),
     };
   }
 
   _loadFixture(type, id) {
     const fixtures = this._getAllFixtures(type);
-    const fixture = fixtures.find(f => f.id === id);
+    const fixture = fixtures.find((f) => f.id === id);
 
     if (!fixture) {
-      return Promise.reject(new Error(`No fixture found for ${type.modelName} with id ${id}`));
+      return Promise.reject(
+        new Error(`No fixture found for ${type.modelName} with id ${id}`),
+      );
     }
 
     return Promise.resolve({
@@ -38,8 +40,8 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
         id: fixture.id,
         type: type.modelName,
         attributes: fixture,
-        relationships: this._buildRelationships(fixture)
-      }
+        relationships: this._buildRelationships(fixture),
+      },
     });
   }
 
@@ -47,12 +49,12 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
     const fixtures = this._getAllFixtures(type);
 
     return Promise.resolve({
-      data: fixtures.map(fixture => ({
+      data: fixtures.map((fixture) => ({
         id: fixture.id,
         type: type.modelName,
         attributes: fixture,
-        relationships: this._buildRelationships(fixture)
-      }))
+        relationships: this._buildRelationships(fixture),
+      })),
     });
   }
 
@@ -66,13 +68,13 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
     const relationships = {};
 
     // Handle hasMany relationships (like videos in trip, trips in video)
-    Object.keys(fixture).forEach(key => {
+    Object.keys(fixture).forEach((key) => {
       if (Array.isArray(fixture[key]) && key !== 'id') {
         relationships[key] = {
-          data: fixture[key].map(id => ({
+          data: fixture[key].map((id) => ({
             id: typeof id === 'object' ? id.id : id,
-            type: key.slice(0, -1) // Remove 's' from plural
-          }))
+            type: key.slice(0, -1), // Remove 's' from plural
+          })),
         };
       }
     });

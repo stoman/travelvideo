@@ -15,16 +15,21 @@ module('Unit | Model | trip', function (hooks) {
     const Trip = store.modelFor('trip');
     const relationship = Trip.relationshipsByName.get('videos');
 
-    assert.strictEqual(relationship.key, 'videos', 'has relationship with video');
-    assert.strictEqual(relationship.kind, 'hasMany', 'kind of relationship is hasMany');
+    assert.strictEqual(
+      relationship.key,
+      'videos',
+      'has relationship with video',
+    );
+    assert.strictEqual(
+      relationship.kind,
+      'hasMany',
+      'kind of relationship is hasMany',
+    );
   });
 
   test('should have fixtures', function (assert) {
     const store = this.owner.lookup('service:store');
     const Trip = store.modelFor('trip');
-    assert.ok(
-      Trip.FIXTURES.length > 0,
-      'should have fixtures',
-    );
+    assert.ok(Trip.FIXTURES.length > 0, 'should have fixtures');
   });
 });

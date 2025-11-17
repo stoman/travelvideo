@@ -2,16 +2,20 @@
   <div id="overview-map"></div>
   <h2>{{this.model.name}} {{this.model.year}}</h2>
   <p class="action">
-    <LinkTo @route="trip.start" @model={{this.model.id}}>Watch all the videos of this trip!</LinkTo>
+    <LinkTo @route="trip.start" @model={{this.model.id}}>Watch all the videos of
+      this trip!</LinkTo>
   </p>
   <p>
     Itinerary:
     <ul>
-      {{#each this.model.videosWithOffsets as |videoWithOffset index|}}
+      {{#each this.model.videosWithOffsets as |videoWithOffset|}}
         {{#if videoWithOffset.offset}}
           <li>{{videoWithOffset.offset}} without video</li>
         {{/if}}
-        <li><LinkTo @route="trip.display" @models={{array this.model.id videoWithOffset.video.id}}>{{videoWithOffset.video.name}}
+        <li><LinkTo
+            @route="trip.display"
+            @models={{array this.model.id videoWithOffset.video.id}}
+          >{{videoWithOffset.video.name}}
             ({{videoWithOffset.video.country}})</LinkTo></li>
       {{/each}}
       {{#unless this.model.finished}}
@@ -20,6 +24,7 @@
     </ul>
   </p>
   <p class="action">
-    <LinkTo @route="trip.start" @model={{this.model.id}}>Watch all the videos of this trip!</LinkTo>
+    <LinkTo @route="trip.start" @model={{this.model.id}}>Watch all the videos of
+      this trip!</LinkTo>
   </p>
 </div>

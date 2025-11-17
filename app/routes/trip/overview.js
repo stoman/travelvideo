@@ -38,8 +38,7 @@ export default class TripOverviewRoute extends Route {
         : 0;
       videosWithOffsets.push({
         video: videos.objectAt(i),
-        offset:
-          offset <= 0 ? false : offset + ' day' + (offset > 1 ? 's' : ''),
+        offset: offset <= 0 ? false : offset + ' day' + (offset > 1 ? 's' : ''),
       });
       lastVideo = videos.objectAt(i);
     }
@@ -48,7 +47,7 @@ export default class TripOverviewRoute extends Route {
     return trip;
   }
 
-  afterModel(model) {
+  afterModel() {
     super.afterModel(...arguments);
     // Show overview map after model is loaded
 

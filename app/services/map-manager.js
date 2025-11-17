@@ -23,8 +23,8 @@ export default class MapManagerService extends Service {
   currentAfterMapCreationCallback = null;
   handleRouteChangeBound = null;
 
-  init() {
-    super.init(...arguments);
+  constructor() {
+    super(...arguments);
 
     // Store bound handler so we can remove it later
     this.handleRouteChangeBound = this.handleRouteChange.bind(this);
@@ -50,7 +50,7 @@ export default class MapManagerService extends Service {
     this.currentAfterMapCreationCallback = null;
   }
 
-  handleRouteChange(transition) {
+  handleRouteChange() {
     scheduleOnce('afterRender', this, () => {
       // Create map if not already done
       if (!this.backgroundMap) {
@@ -140,10 +140,7 @@ export default class MapManagerService extends Service {
         const points = [fromLonLat([11.500945, 48.144391])];
         trip.get('videos').forEach((video) => {
           points.push(
-            fromLonLat([
-              video.get('longitude'),
-              video.get('latitude'),
-            ]),
+            fromLonLat([video.get('longitude'), video.get('latitude')]),
           );
         });
 

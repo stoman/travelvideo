@@ -3,7 +3,9 @@ import { service } from '@ember/service';
 import { scheduleOnce } from '@ember/runloop';
 
 export default class TripStartRoute extends Route {
+  @service store;
   @service metrics;
+  @service router;
 
   model(params) {
     const self = this;
@@ -19,7 +21,7 @@ export default class TripStartRoute extends Route {
 
     //redirect to first video
     this.store.findRecord('trip', params.tripId).then(function (trip) {
-      self.transitionTo(
+      self.router.transitionTo(
         'trip.display',
         params.tripId,
         trip.get('videos').objectAt(0).get('id'),

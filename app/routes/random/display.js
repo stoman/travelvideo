@@ -3,6 +3,7 @@ import { service } from '@ember/service';
 import { scheduleOnce } from '@ember/runloop';
 
 export default class RandomDisplayRoute extends Route {
+  @service store;
   @service metrics;
   @service mapManager;
 

@@ -14,7 +14,7 @@ module('Acceptance | navigation', function (hooks) {
     await visit('/');
     // Find the about link in the menu by its text content
     const aboutLink = [...document.querySelectorAll('#menu a')].find(
-      (el) => el.textContent.trim() === 'about'
+      (el) => el.textContent.trim() === 'about',
     );
     await click(aboutLink);
     assert.strictEqual(currentURL(), '/about', 'should navigate to about');
@@ -24,7 +24,7 @@ module('Acceptance | navigation', function (hooks) {
     await visit('/');
     // Find the trips link in the menu by its text content
     const tripsLink = [...document.querySelectorAll('#menu a')].find(
-      (el) => el.textContent.trim() === 'trips'
+      (el) => el.textContent.trim() === 'trips',
     );
     await click(tripsLink);
     assert.strictEqual(currentURL(), '/trip', 'should navigate to trips');

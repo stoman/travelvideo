@@ -5,6 +5,7 @@ import { Promise } from 'rsvp';
 import { action } from '@ember/object';
 
 export default class TripDisplayRoute extends Route {
+  @service store;
   @service metrics;
   @service mapManager;
   @service router;
@@ -97,6 +98,9 @@ export default class TripDisplayRoute extends Route {
     });
 
     //redirect to video page
-    this.transitionTo('video.display', this.currentModel.video.get('id'));
+    this.router.transitionTo(
+      'video.display',
+      this.currentModel.video.get('id'),
+    );
   }
 }
