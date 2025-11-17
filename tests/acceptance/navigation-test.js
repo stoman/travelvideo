@@ -12,13 +12,21 @@ module('Acceptance | navigation', function (hooks) {
 
   test('front page should link to the about page', async function (assert) {
     await visit('/');
-    await click('a:contains("about")');
+    // Find the about link in the menu by its text content
+    const aboutLink = [...document.querySelectorAll('#menu a')].find(
+      (el) => el.textContent.trim() === 'about'
+    );
+    await click(aboutLink);
     assert.strictEqual(currentURL(), '/about', 'should navigate to about');
   });
 
   test('front page should link to trip overview', async function (assert) {
     await visit('/');
-    await click('a:contains("trip")');
+    // Find the trips link in the menu by its text content
+    const tripsLink = [...document.querySelectorAll('#menu a')].find(
+      (el) => el.textContent.trim() === 'trips'
+    );
+    await click(tripsLink);
     assert.strictEqual(currentURL(), '/trip', 'should navigate to trips');
   });
 });
