@@ -5,11 +5,12 @@ import { scheduleOnce } from '@ember/runloop';
 
 export default class TripDisplayController extends Controller {
   @service metrics;
+  @service router;
 
   @action
   videoEnded() {
     if (this.model.nextVideo) {
-      this.transitionToRoute(
+      this.router.transitionTo(
         'trip.display',
         this.model.trip.id,
         this.model.nextVideo.id,
@@ -25,12 +26,12 @@ export default class TripDisplayController extends Controller {
       });
 
       //redirect to trip index page
-      this.transitionToRoute('trip.overview', this.model.trip.id);
+      this.router.transitionTo('trip.overview', this.model.trip.id);
     }
   }
 
   @action
   stopTrip() {
-    this.transitionToRoute('trip.overview', this.model.trip.id);
+    this.router.transitionTo('trip.overview', this.model.trip.id);
   }
 }

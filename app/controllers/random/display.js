@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 
 export default class RandomDisplayController extends Controller {
   @service store;
+  @service router;
 
   @action
   async videoEnded() {
@@ -15,7 +16,7 @@ export default class RandomDisplayController extends Controller {
 
     const nextVideo = videos.objectAt(0);
     if (nextVideo) {
-      this.transitionToRoute('random.display', nextVideo.id);
+      this.router.transitionTo('random.display', nextVideo.id);
     }
   }
 }

@@ -13,12 +13,8 @@ module('Acceptance | about', function (hooks) {
   test('about text shows actual content', async function (assert) {
     await visit('/about');
 
-    assert
-      .dom('.about')
-      .exists({ count: 1 }, 'about text should be visible');
-    assert
-      .dom('.about img')
-      .exists({ count: 1 }, 'image should be visible');
+    assert.dom('.about').exists({ count: 1 }, 'about text should be visible');
+    assert.dom('.about img').exists({ count: 1 }, 'image should be visible');
     assert
       .dom('.about a[href="https://github.com/stoman/travelvideo"]')
       .exists({ count: 1 }, 'link to GitHub should be visible');

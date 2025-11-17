@@ -43,36 +43,15 @@ module('Integration | Component | video listing', function (hooks) {
     await render(hbs`<VideoListing @video={{this.video}} />`);
 
     //check that all important properties are displayed
+    assert.dom().hasText(new RegExp(data.name), 'should render video name');
     assert
       .dom()
-      .hasText(
-        new RegExp(data.name),
-        'should render video name',
-      );
+      .hasText(new RegExp(data.description), 'should render video description');
     assert
       .dom()
-      .hasText(
-        new RegExp(data.description),
-        'should render video description',
-      );
-    assert
-      .dom()
-      .hasText(
-        new RegExp(data.country),
-        'should render video country',
-      );
+      .hasText(new RegExp(data.country), 'should render video country');
     assert.dom('video').exists('should render a video tag');
-    assert
-      .dom()
-      .hasText(
-        new RegExp(data.guests),
-        'should render video guests',
-      );
-    assert
-      .dom()
-      .hasText(
-        new RegExp(data.camera),
-        'should render video camera',
-      );
+    assert.dom().hasText(new RegExp(data.guests), 'should render video guests');
+    assert.dom().hasText(new RegExp(data.camera), 'should render video camera');
   });
 });

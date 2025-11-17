@@ -14,7 +14,7 @@ export default class VideoIndexRoute extends Route {
     videos.forEach((video) => {
       videoCount++;
       const country = video.get('country');
-      if (!ret.hasOwnProperty(country)) {
+      if (!Object.hasOwn(ret, country)) {
         ret[country] = {
           country: country,
           videos: [],

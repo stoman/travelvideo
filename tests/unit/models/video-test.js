@@ -16,15 +16,16 @@ module('Unit | Model | video', function (hooks) {
     const relationship = Video.relationshipsByName.get('trips');
 
     assert.strictEqual(relationship.key, 'trips', 'has relationship with trip');
-    assert.strictEqual(relationship.kind, 'hasMany', 'kind of relationship is hasMany');
+    assert.strictEqual(
+      relationship.kind,
+      'hasMany',
+      'kind of relationship is hasMany',
+    );
   });
 
   test('should have fixtures', function (assert) {
     const store = this.owner.lookup('service:store');
     const Video = store.modelFor('video');
-    assert.ok(
-      Video.FIXTURES.length > 0,
-      'should have fixtures',
-    );
+    assert.ok(Video.FIXTURES.length > 0, 'should have fixtures');
   });
 });

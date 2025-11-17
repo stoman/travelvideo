@@ -27,11 +27,9 @@ module('Acceptance | map', function (hooks) {
     await visit('/map');
 
     //click the hide button
-    await click('.map-hint a');
+    await click('.map-hint button');
 
-    assert
-      .dom('.map-hint')
-      .doesNotExist('hint should not be visible');
+    assert.dom('.map-hint').doesNotExist('hint should not be visible');
 
     //navigate around
     await visit('/');
@@ -49,8 +47,6 @@ module('Acceptance | map', function (hooks) {
 
   test('other routes should disable controls of map', async function (assert) {
     await visit('/');
-    assert
-      .dom('.ol-control')
-      .doesNotExist('map should not have controls');
+    assert.dom('.ol-control').doesNotExist('map should not have controls');
   });
 });

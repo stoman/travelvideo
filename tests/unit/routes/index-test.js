@@ -13,7 +13,11 @@ module('Unit | Route | index', function (hooks) {
     assert.expect(1);
     const route = this.owner.lookup('route:index');
     route.router.replaceWith = function (routeName) {
-      assert.strictEqual(routeName, 'trip.index', 'replace with route name trip.index');
+      assert.strictEqual(
+        routeName,
+        'trip.index',
+        'replace with route name trip.index',
+      );
     };
     route.beforeModel();
   });

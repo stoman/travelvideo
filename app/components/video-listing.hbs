@@ -6,6 +6,7 @@
         {{on "ended" this.videoEnded}}
         controls
       >
+        <track kind="captions" />
         Your browser does not support HTML5 videos. Please update.
       </video>
     {{else}}
@@ -13,6 +14,7 @@
         src="/assets/videos/{{this.videoQuality}}/{{@video.filename}}"
         {{on "ended" this.videoEnded}}
       >
+        <track kind="captions" />
         Your browser does not support HTML5 videos. Please update.
       </video>
     {{/if}}
@@ -37,10 +39,16 @@
         <p>This video is part of the trips:
           <ul>
             {{#each @video.trips as |trip|}}
-              <li><LinkTo @route="trip.overview" @model={{trip.id}}>{{trip.name}}
+              <li><LinkTo
+                  @route="trip.overview"
+                  @model={{trip.id}}
+                >{{trip.name}}
                   {{trip.year}}</LinkTo>
                 (<LinkTo @route="trip.start" @model={{trip.id}}>start full trip</LinkTo>,
-                <LinkTo @route="trip.display" @models={{array trip.id @video.id}}>start at
+                <LinkTo
+                  @route="trip.display"
+                  @models={{array trip.id @video.id}}
+                >start at
                   {{@video.name}}</LinkTo>)</li>
             {{/each}}
           </ul></p>

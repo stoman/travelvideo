@@ -9,9 +9,7 @@ module('Acceptance | open layers', function (hooks) {
     await visit('/');
 
     assert.dom('#map .ol-viewport').exists('should have created a viewport');
-    assert
-      .dom('#map .ol-control')
-      .doesNotExist('map should not have controls');
+    assert.dom('#map .ol-control').doesNotExist('map should not have controls');
   });
 
   test('checking markers', async function (assert) {
