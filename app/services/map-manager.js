@@ -1,4 +1,4 @@
-import Service, { inject as service } from '@ember/service';
+import Service, { service } from '@ember/service';
 import { scheduleOnce } from '@ember/runloop';
 import Map from 'ol/Map';
 import View from 'ol/View';
