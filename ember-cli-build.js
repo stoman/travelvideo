@@ -2,7 +2,9 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-module.exports = function (defaults) {
+module.exports = async function (defaults) {
+  const { setConfig } = await import('@warp-drive/build-config');
+
   const app = new EmberApp(defaults, {
     emberData: {
       deprecations: {
@@ -12,6 +14,12 @@ module.exports = function (defaults) {
         // before upgrading to Ember Data 6.0
         DEPRECATE_STORE_EXTENDS_EMBER_OBJECT: false,
       },
+    },
+  });
+
+  setConfig(app, __dirname, {
+    deprecations: {
+      DEPRECATE_TRACKING_PACKAGE: false,
     },
   });
 
