@@ -25,6 +25,11 @@ You will need the following things properly installed on your computer.
 - Visit your app at [http://localhost:4200](http://localhost:4200).
 - Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
 
+## Run with Docker locally
+
+- `docker build -f Dockerfile -t travelvideo .`
+- `docker run -p 8080:80 -v <absolute_path_to_videos_local>:/usr/local/apache2/htdocs/assets/videos:ro travelvideo`
+
 ### Running Tests
 
 - `npm run test`
