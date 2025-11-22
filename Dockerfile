@@ -1,4 +1,4 @@
-FROM danlynn/ember-cli:2.8.0 AS builder
+FROM danlynn/ember-cli:2.18.2 AS builder
 WORKDIR /myapp
 COPY ./package.json .
 RUN npm install
