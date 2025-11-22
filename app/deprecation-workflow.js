@@ -10,15 +10,14 @@ setupDeprecationWorkflow({
   */
   throwOnUnhandled: false,
   workflow: [
-    /* ... handlers ... */
-    /* to generate this list, run your app for a while (or run the test suite),
-     * and then run in the browser console:
-     *
-     *    deprecationWorkflow.flushDeprecations()
-     *
-     * And copy the handlers here
-     */
-    /* example: */
-    /* { handler: 'silence', matchId: 'template-action' }, */
+    // Silence WarpDrive internal deprecations
+    // These are triggered internally by ember-data when using store.createRecord
+    // and other store methods. Cannot be avoided without migrating away from
+    // the traditional adapter/serializer pattern to WarpDrive's RequestManager.
+    // Will be resolved when upgrading to ember-data 6.0.
+    {
+      handler: 'silence',
+      matchId: 'warp-drive:deprecate-legacy-request-methods',
+    },
   ],
 });

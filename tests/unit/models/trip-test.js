@@ -11,8 +11,7 @@ module('Unit | Model | trip', function (hooks) {
   });
 
   test('should have some videos', function (assert) {
-    const store = this.owner.lookup('service:store');
-    const Trip = store.modelFor('trip');
+    const Trip = this.owner.factoryFor('model:trip').class;
     const relationship = Trip.relationshipsByName.get('videos');
 
     assert.strictEqual(
@@ -28,8 +27,7 @@ module('Unit | Model | trip', function (hooks) {
   });
 
   test('should have fixtures', function (assert) {
-    const store = this.owner.lookup('service:store');
-    const Trip = store.modelFor('trip');
+    const Trip = this.owner.factoryFor('model:trip').class;
     assert.ok(Trip.FIXTURES.length > 0, 'should have fixtures');
   });
 });
