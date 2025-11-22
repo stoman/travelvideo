@@ -28,7 +28,14 @@ You will need the following things properly installed on your computer.
 ### Running Tests
 
 - `npm run test`
+- `npm run test`
 - `npm run test:ember -- --server`
+
+### Running Tests in Docker
+
+If you don't have Node.js installed locally, you can run the tests in a Docker container:
+
+- `.\run-tests.bat`
 
 ### Linting
 

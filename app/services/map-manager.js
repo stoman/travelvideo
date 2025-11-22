@@ -22,6 +22,7 @@ export default class MapManagerService extends Service {
   backgroundView = null;
   currentAfterMapCreationCallback = null;
   handleRouteChangeBound = null;
+  handleMapMoveEndBound = null;
 
   constructor() {
     super(...arguments);
@@ -39,6 +40,14 @@ export default class MapManagerService extends Service {
     // Remove the exact same handler we added
     if (this.handleRouteChangeBound) {
       this.router.off('routeDidChange', this.handleRouteChangeBound);
+    }
+
+    if (this.backgroundMap) {
+      if (this.handleMapMoveEndBound) {
+        this.backgroundMap.un('moveend', this.handleMapMoveEndBound);
+      }
+      this.backgroundMap.setTarget(null);
+      this.backgroundMap = null;
     }
   }
 
@@ -171,7 +180,11 @@ export default class MapManagerService extends Service {
     });
 
     // Set zoom level to map object
-    map.on('moveend', () => {
+    this.handleMapMoveEndBound = () => {
+      if (this.isDestroying || this.isDestroyed) {
+        return;
+      }
+
       if (document.querySelector('#map')) {
         // Update CSS class
         document.querySelector('#map').className =
@@ -195,7 +208,8 @@ export default class MapManagerService extends Service {
           value: center[1],
         });
       }
-    });
+    };
+    map.on('moveend', this.handleMapMoveEndBound);
   }
 
   // Move the background map to given coordinates and zoom level

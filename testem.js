@@ -6,9 +6,7 @@ module.exports = {
   launch_in_ci: ['Chrome'],
   launch_in_dev: ['Chrome'],
   browser_start_timeout: 180,
-  browser_paths: {
-    Chrome: '/tmp/chrome/chrome-linux/chrome',
-  },
+
   browser_args: {
     Chrome: [
       '--no-sandbox',
