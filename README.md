@@ -35,7 +35,8 @@ You will need the following things properly installed on your computer.
 
 If you don't have Node.js installed locally, you can run the tests in a Docker container:
 
-- `.\run-tests.bat`
+- `docker build -f Dockerfile.test -t travelvideo-test .`
+- `docker run --rm travelvideo-test npm test`
 
 ### Linting
 

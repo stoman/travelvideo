@@ -1,8 +1,8 @@
-@import "about";
-@import "application";
-@import "map";
-@import "videos";
-@import "components/video-listing";
+@use "about";
+@use "application";
+@use "map";
+@use "videos";
+@use "components/video-listing";
 
 body {
   overflow: hidden;
@@ -14,7 +14,7 @@ a:active,
 a:visited,
 a:hover {
   color: #000066;
-  text-decoaration: underline;
+  text-decoration: underline;
   font-weight: bold;
 }
 
