@@ -11,8 +11,7 @@ module('Unit | Model | video', function (hooks) {
   });
 
   test('should have trips', function (assert) {
-    const store = this.owner.lookup('service:store');
-    const Video = store.modelFor('video');
+    const Video = this.owner.factoryFor('model:video').class;
     const relationship = Video.relationshipsByName.get('trips');
 
     assert.strictEqual(relationship.key, 'trips', 'has relationship with trip');
@@ -24,8 +23,7 @@ module('Unit | Model | video', function (hooks) {
   });
 
   test('should have fixtures', function (assert) {
-    const store = this.owner.lookup('service:store');
-    const Video = store.modelFor('video');
+    const Video = this.owner.factoryFor('model:video').class;
     assert.ok(Video.FIXTURES.length > 0, 'should have fixtures');
   });
 });
