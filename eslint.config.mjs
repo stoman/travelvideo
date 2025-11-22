@@ -56,7 +56,6 @@ export default [
       'dist/',
       'node_modules/',
       'coverage/',
-      'bower_components/',
       '!**/.*',
     ],
   },

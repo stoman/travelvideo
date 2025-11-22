@@ -1,8 +1,8 @@
 # travelvideo
 
-[![Build Status](https://travis-ci.org/stoman/travelvideo.svg?branch=master)](https://travis-ci.org/stoman/travelvideo)
-
 This is the code for the website located at [https://travel.stoman.de](https://travel.stoman.de). This repository contains all the code, but due to file sizes not the actual videos. You can view the website at the URL given above or build the website yourself as described below.
+
+The website is a log of some of the places we visited together. In most of those places we created a short video holding a sign with the name of the city. The videos are concatenated in a way such that each video starts with the same people visible as the last one ended with.
 
 ## Prerequisites
 
@@ -18,7 +18,6 @@ You will need the following things properly installed on your computer.
 - `git clone https://github.com/stoman/travelvideo` this repository
 - `cd travelvideo`
 - `npm install`
-- `bower install`
 
 ## Running / Development
 
@@ -47,12 +46,4 @@ You will need the following things properly installed on your computer.
 
 ### Deploying
 
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-- [ember.js](https://emberjs.com/)
-- [ember-cli](https://cli.emberjs.com/release/)
-- Development Browser Extensions
-  - [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  - [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+Build the Docker container and push it to the registry as listed above. Then connect to the server and pull the container. Videos are not part of the container, so you need to upload them to the server if changed or added.
