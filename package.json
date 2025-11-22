@@ -78,7 +78,7 @@
     "sass": "^1.94.0",
     "stylelint": "^16.23.1",
     "stylelint-config-standard": "^39.0.0",
-    "tracked-built-ins": "^3.4.0",
+    "tracked-built-ins": "^4.0.0",
     "webpack": "^5.101.3"
   },
   "engines": {
