@@ -26,21 +26,20 @@ export default class TripOverviewRoute extends Route {
     const videosWithOffsets = [];
     let lastVideo;
     for (let i = 0; i < videos.length; i++) {
+      const video = videos[i];
+      const date = new Date(video.get('date'));
+      const lastDate = lastVideo ? new Date(lastVideo.get('date')) : null;
+
       const offset = lastVideo
         ? Math.ceil(
-            (videos.objectAt(i).get('date').getTime() -
-              lastVideo.get('date').getTime()) /
-              1000 /
-              60 /
-              60 /
-              24,
-          ) - 1
+          (date.getTime() - lastDate.getTime()) / 1000 / 60 / 60 / 24,
+        ) - 1
         : 0;
       videosWithOffsets.push({
-        video: videos.objectAt(i),
+        video: video,
         offset: offset <= 0 ? false : offset + ' day' + (offset > 1 ? 's' : ''),
       });
-      lastVideo = videos.objectAt(i);
+      lastVideo = video;
     }
     trip.set('videosWithOffsets', videosWithOffsets);
 

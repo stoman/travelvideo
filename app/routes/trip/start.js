@@ -7,9 +7,7 @@ export default class TripStartRoute extends Route {
   @service metrics;
   @service router;
 
-  model(params) {
-    const self = this;
-
+  async model(params) {
     //log events
     scheduleOnce('afterRender', this, () => {
       this.metrics.trackEvent('GoogleAnalytics', {
@@ -20,12 +18,14 @@ export default class TripStartRoute extends Route {
     });
 
     //redirect to first video
-    this.store.findRecord('trip', params.tripId).then(function (trip) {
-      self.router.transitionTo(
+    const trip = await this.store.findRecord('trip', params.tripId);
+    const videos = await trip.get('videos');
+    if (videos && videos.length > 0) {
+      this.router.transitionTo(
         'trip.display',
         params.tripId,
-        trip.get('videos').objectAt(0).get('id'),
+        videos[0].get('id'),
       );
-    });
+    }
   }
 }
