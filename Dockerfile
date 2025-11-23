@@ -16,5 +16,6 @@ COPY ./docker-httpd.conf /usr/local/apache2/conf/httpd.conf
 COPY --from=builder /myapp/dist/ /usr/local/apache2/htdocs/
 COPY --from=builder /myapp/dist/.htaccess /usr/local/apache2/htdocs/
 RUN chown -R daemon:daemon /usr/local/apache2/htdocs/ && \
-    chown daemon:daemon /usr/local/apache2/conf/httpd.conf
+    chown daemon:daemon /usr/local/apache2/conf/httpd.conf && \
+    chown -R daemon:daemon /usr/local/apache2/logs/
 USER daemon
