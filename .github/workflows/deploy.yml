@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build:
@@ -41,6 +42,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
+            set -e
             cd travel/
-            sudo docker-compose pull
-            sudo docker-compose restart
+            sudo docker compose pull
+            sudo docker compose down
+            sudo docker compose up -d --remove-orphans
