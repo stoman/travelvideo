@@ -1,7 +1,6 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import { scheduleOnce } from '@ember/runloop';
-import { Promise } from 'rsvp';
 import { action } from '@ember/object';
 
 export default class TripDisplayRoute extends Route {

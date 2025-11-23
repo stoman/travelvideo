@@ -32,8 +32,8 @@ export default class TripOverviewRoute extends Route {
 
       const offset = lastVideo
         ? Math.ceil(
-          (date.getTime() - lastDate.getTime()) / 1000 / 60 / 60 / 24,
-        ) - 1
+            (date.getTime() - lastDate.getTime()) / 1000 / 60 / 60 / 24,
+          ) - 1
         : 0;
       videosWithOffsets.push({
         video: video,
