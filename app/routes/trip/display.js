@@ -10,31 +10,28 @@ export default class TripDisplayRoute extends Route {
   @service mapManager;
   @service router;
 
-  model(params) {
-    const self = this;
-    //find trip, then work with it
-    return new Promise(function (resolve /*, reject*/) {
-      self.store.findRecord('trip', params.tripId).then(function (trip) {
-        //find video
-        const ret = {
-          video: self.store.findRecord('video', params.videoId),
-          trip: trip,
-        };
-        //search trip for last and next video
-        for (let i = 0; i < trip.get('videos.length'); i++) {
-          if (trip.get('videos').objectAt(i).get('id') === params.videoId) {
-            if (i < trip.get('videos.length') - 1) {
-              ret['nextVideo'] = trip.get('videos').objectAt(i + 1);
-            }
-            if (i > 0) {
-              ret['lastVideo'] = trip.get('videos').objectAt(i - 1);
-            }
-          }
+  async model(params) {
+    const trip = await this.store.findRecord('trip', params.tripId);
+    const video = await this.store.findRecord('video', params.videoId);
+
+    const ret = {
+      video: video,
+      trip: trip,
+    };
+
+    //search trip for last and next video
+    const videos = await trip.get('videos');
+    for (let i = 0; i < videos.length; i++) {
+      if (videos[i].get('id') === params.videoId) {
+        if (i < videos.length - 1) {
+          ret['nextVideo'] = videos[i + 1];
         }
-        //resolve promise => return
-        resolve(ret);
-      });
-    });
+        if (i > 0) {
+          ret['lastVideo'] = videos[i - 1];
+        }
+      }
+    }
+    return ret;
   }
 
   activate() {

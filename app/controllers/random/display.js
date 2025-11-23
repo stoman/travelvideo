@@ -14,7 +14,7 @@ export default class RandomDisplayController extends Controller {
       limit: 1,
     });
 
-    const nextVideo = videos.objectAt(0);
+    const nextVideo = videos[0];
     if (nextVideo) {
       this.router.transitionTo('random.display', nextVideo.id);
     }
