@@ -13,4 +13,6 @@ export default class RandomIndexRoute extends Route {
     });
     this.router.transitionTo('random.display', videos[0].get('id'));
   }
+
+  titleToken = 'Random Video';
 }

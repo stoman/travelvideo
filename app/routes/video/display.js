@@ -48,4 +48,8 @@ export default class VideoDisplayRoute extends Route {
       this.currentModel.get('preferredZoom'),
     );
   }
+
+  titleToken(model) {
+    return model.get('name');
+  }
 }
