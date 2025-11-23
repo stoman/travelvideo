@@ -36,6 +36,7 @@ module('Acceptance | google analytics', function (hooks) {
       (adapter) => adapter.name === 'GoogleAnalyticsFour',
     );
 
+    assert.ok(ga4Adapter, 'GoogleAnalyticsFour adapter should be configured');
     assert.notOk(
       ga4Adapter.environments.includes('test'),
       'GoogleAnalyticsFour should NOT be enabled in test environment',
