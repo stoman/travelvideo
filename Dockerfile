@@ -1,7 +1,7 @@
 FROM danlynn/ember-cli:6.7.2 AS builder
 WORKDIR /myapp
 COPY package.json package-lock.json ./
-RUN npm ci --only=production=false
+RUN npm ci
 
 COPY . .
 RUN ember build --environment production
