@@ -26,7 +26,6 @@ module.exports = function (environment) {
         config: {
           id: 'G-V757JDJL11',
           options: {
-            anonymize_ip: true,
             debug_mode: environment === 'development',
           },
         },
