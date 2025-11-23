@@ -1,3 +1,4 @@
+{{page-title this.model.name}}
 <div class="box">
   <div id="overview-map"></div>
   <h2>{{this.model.name}} {{this.model.year}}</h2>
@@ -12,11 +13,14 @@
         {{#if videoWithOffset.offset}}
           <li>{{videoWithOffset.offset}} without video</li>
         {{/if}}
-        <li><LinkTo
+        <li>
+          <LinkTo
             @route="trip.display"
             @models={{array this.model.id videoWithOffset.video.id}}
-          >{{videoWithOffset.video.name}}
-            ({{videoWithOffset.video.country}})</LinkTo></li>
+          >
+            {{videoWithOffset.video.name}}
+            ({{videoWithOffset.video.country}})</LinkTo>
+        </li>
       {{/each}}
       {{#unless this.model.finished}}
         <li>and more to come...</li>

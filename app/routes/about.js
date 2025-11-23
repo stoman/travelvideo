@@ -1,3 +1,5 @@
 import Route from '@ember/routing/route';
 
-export default class AboutRoute extends Route {}
+export default class AboutRoute extends Route {
+  titleToken = 'About';
+}

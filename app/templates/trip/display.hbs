@@ -1,3 +1,5 @@
+{{page-title (concat this.model.video.name " - " this.model.trip.name)}}
+
 <VideoListing
   @video={{this.model.video}}
   @onEnd={{this.videoEnded}}
@@ -8,14 +10,18 @@
       <LinkTo
         @route="trip.display"
         @models={{array this.model.trip.id this.model.lastVideo.id}}
-      >{{this.model.lastVideo.name}}</LinkTo></p>
+      >
+        {{this.model.lastVideo.name}}</LinkTo>
+    </p>
   {{/if}}
   {{#if this.model.nextVideo}}
     <p>Next video on trip:
       <LinkTo
         @route="trip.display"
         @models={{array this.model.trip.id this.model.nextVideo.id}}
-      >{{this.model.nextVideo.name}}</LinkTo></p>
+      >
+        {{this.model.nextVideo.name}}</LinkTo>
+    </p>
   {{/if}}
   <p><a href="#" {{on "click" this.stopTrip}}>Stop at this video.</a></p>
 </VideoListing>
