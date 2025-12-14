@@ -31,7 +31,7 @@ export default class VideoListingComponent extends Component {
     scheduleOnce('afterRender', this, () => {
       this.metrics.trackEvent('GoogleAnalytics', {
         category: 'video',
-        action: 'paused',
+        action: 'pause',
         label: this.args.video.id,
       });
     });

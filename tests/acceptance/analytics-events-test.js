@@ -65,20 +65,22 @@ module('Acceptance | analytics events', function (hooks) {
   });
 
   test('visiting a random video', async function (assert) {
-    await visit('/random/display/munich_airport');
+    await visit('/random');
+
+    const randomVideoId = this.owner.lookup('service:router').currentURL.split('/').pop();
 
     // It should track the random video event
     assert.strictEqual(
       trackedEvents.length,
-      1,
+      2,
       'random video event was tracked',
     );
     assert.deepEqual(
-      trackedEvents[0].options,
+      trackedEvents[1].options,
       {
         category: 'video',
         action: 'view-random',
-        label: 'munich_airport',
+        label: randomVideoId,
       },
       'random video event has correct data',
     );

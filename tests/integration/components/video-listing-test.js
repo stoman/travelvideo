@@ -103,7 +103,7 @@ module('Integration | Component | video listing | analytics', function (hooks) {
       trackedEvents[1].options,
       {
         category: 'video',
-        action: 'paused',
+        action: 'pause',
         label: 'testid',
       },
       'pause event has correct data',
