@@ -1,0 +1,16 @@
+
+> travelvideo@1.0.0 start
+> ember serve
+
+- building...
+
+Build successful (17187ms) – Serving on http://localhost:4200/
+
+Slowest Nodes (totalTime >= 5%) | Total (avg)
+-+-
+ember-auto-import-webpack (1) | 15014ms
+Babel: travelvideo (2) | 861ms (430 ms)
+
+- cleaning up
+cleaning up...
+- cleaning up
