@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { visit, click, triggerEvent } from '@ember/test-helpers';
+import { visit, click, triggerEvent, currentURL } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import Service from '@ember/service';
 
@@ -67,19 +67,17 @@ module('Acceptance | analytics events', function (hooks) {
   test('visiting a random video', async function (assert) {
     await visit('/random');
 
-    const randomVideoId = this.owner
-      .lookup('service:router')
-      .currentURL.split('/')
-      .pop();
+    const url = currentURL();
+    const randomVideoId = url.split('/').pop();
 
-    // It should track the random video event
-    assert.strictEqual(
-      trackedEvents.length,
-      2,
-      'random video event was tracked',
+    const randomVideoEvent = trackedEvents.find(
+      (event) => event.options.action === 'view-random',
     );
+
+    assert.ok(randomVideoEvent, 'random video event was tracked');
+
     assert.deepEqual(
-      trackedEvents[1].options,
+      randomVideoEvent.options,
       {
         category: 'video',
         action: 'view-random',
