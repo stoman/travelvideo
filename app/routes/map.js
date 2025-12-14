@@ -54,6 +54,4 @@ export default class MapRoute extends Route {
     //show content container
     document.getElementById('content').style.visibility = 'visible';
   }
-
-  titleToken = 'Map';
 }

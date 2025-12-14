@@ -48,8 +48,4 @@ export default class RandomDisplayRoute extends Route {
       this.currentModel.get('preferredZoom'),
     );
   }
-
-  titleToken(model) {
-    return `${model.get('name')} - Random`;
-  }
 }

@@ -106,8 +106,4 @@ export default class TripOverviewRoute extends Route {
       map.getView().fit(lineLayer.getSource().getExtent(), map.getSize());
     });
   }
-
-  titleToken(model) {
-    return model.get('name');
-  }
 }

@@ -8,6 +8,4 @@ export default class TripIndexRoute extends Route {
     await Promise.all(trips.map((t) => t.get('videos')));
     return trips;
   }
-
-  titleToken = 'Trips';
 }
