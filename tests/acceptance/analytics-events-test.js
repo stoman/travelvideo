@@ -72,7 +72,6 @@ module('Acceptance | analytics events', function (hooks) {
 
   test('visiting a random video', async function (assert) {
     await visit('/random');
-    await settled();
 
     const url = currentURL();
     const randomVideoId = url.split('/').pop();
