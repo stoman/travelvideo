@@ -23,5 +23,6 @@
         {{this.model.nextVideo.name}}</LinkTo>
     </p>
   {{/if}}
-  <p><a href="#" {{on "click" this.stopTrip}}>Stop at this video.</a></p>
+  <p><button type="button" class="stop-trip" {{on "click" this.stopTrip}}>Stop
+      at this video.</button></p>
 </VideoListing>
