@@ -28,6 +28,4 @@ export default class TripStartRoute extends Route {
       );
     }
   }
-
-  titleToken = 'Starting Trip';
 }

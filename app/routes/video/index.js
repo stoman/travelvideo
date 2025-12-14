@@ -31,6 +31,4 @@ export default class VideoIndexRoute extends Route {
       countCountries: Object.keys(ret).length,
     };
   }
-
-  titleToken = 'Videos';
 }

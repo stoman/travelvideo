@@ -99,8 +99,4 @@ export default class TripDisplayRoute extends Route {
       this.currentModel.video.get('id'),
     );
   }
-
-  titleToken(model) {
-    return `${model.video.get('name')} - ${model.trip.get('name')}`;
-  }
 }
