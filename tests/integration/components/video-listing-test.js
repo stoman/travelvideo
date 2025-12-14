@@ -78,6 +78,7 @@ module('Integration | Component | video listing | analytics', function (hooks) {
     const data = {
       id: 'testid',
       name: 'testname',
+      date: '2024-01-01',
     };
     this.set('video', data);
 
