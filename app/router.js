@@ -6,6 +6,25 @@ import config from 'travelvideo/config/environment';
 export default class Router extends EmberRouter {
   location = config.locationType;
   rootURL = config.rootURL;
+
+  @service metrics;
+
+  constructor() {
+    super(...arguments);
+    // Listen to route changes for analytics tracking
+    this.on('routeDidChange', () => {
+      this._trackPage();
+    });
+  }
+
+  _trackPage() {
+    scheduleOnce('afterRender', this, () => {
+      const page = this.url;
+      const title = this.currentRouteName || 'unknown';
+
+      this.metrics.trackPage({ page, title });
+    });
+  }
 }
 
 Router.map(function () {
