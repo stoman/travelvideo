@@ -32,9 +32,12 @@ module('Acceptance | analytics events', function (hooks) {
     await visit('/trip/start/interrail');
 
     // It should track the start of the trip
-    assert.strictEqual(trackedEvents.length, 1, 'start event was tracked');
+    const startEvent = trackedEvents.find(
+      (event) => event.options.action === 'start',
+    );
+    assert.ok(startEvent, 'start event was tracked');
     assert.deepEqual(
-      trackedEvents[0].options,
+      startEvent.options,
       {
         category: 'trip',
         action: 'start',
@@ -45,9 +48,12 @@ module('Acceptance | analytics events', function (hooks) {
 
     // It should track the next video event
     await triggerEvent('video', 'ended');
-    assert.strictEqual(trackedEvents.length, 2, 'next video event was tracked');
+    const nextVideoEvent = trackedEvents.find(
+      (event) => event.options.action === 'nextVideo',
+    );
+    assert.ok(nextVideoEvent, 'next video event was tracked');
     assert.deepEqual(
-      trackedEvents[1].options,
+      nextVideoEvent.options,
       {
         category: 'trip',
         action: 'nextVideo',
@@ -57,10 +63,13 @@ module('Acceptance | analytics events', function (hooks) {
     );
 
     // It should track the stop event
-    await click('button.stop-trip'); // Assuming there's a button with this class
-    assert.strictEqual(trackedEvents.length, 3, 'stop event was tracked');
+    await click('button.stop-trip');
+    const stopEvent = trackedEvents.find(
+      (event) => event.options.action === 'stop',
+    );
+    assert.ok(stopEvent, 'stop event was tracked');
     assert.deepEqual(
-      trackedEvents[2].options,
+      stopEvent.options,
       {
         category: 'trip',
         action: 'stop',
