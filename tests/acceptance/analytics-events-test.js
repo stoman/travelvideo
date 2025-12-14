@@ -67,7 +67,10 @@ module('Acceptance | analytics events', function (hooks) {
   test('visiting a random video', async function (assert) {
     await visit('/random');
 
-    const randomVideoId = this.owner.lookup('service:router').currentURL.split('/').pop();
+    const randomVideoId = this.owner
+      .lookup('service:router')
+      .currentURL.split('/')
+      .pop();
 
     // It should track the random video event
     assert.strictEqual(
