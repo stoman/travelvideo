@@ -72,6 +72,8 @@ module('Acceptance | analytics events', function (hooks) {
 
   test('visiting a random video', async function (assert) {
     await visit('/random');
+    // eslint-disable-next-line ember/no-settled-after-test-helper
+    await settled();
 
     const url = currentURL();
     const randomVideoId = url.split('/').pop();
