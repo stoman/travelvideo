@@ -1,5 +1,11 @@
 import { module, test } from 'qunit';
-import { visit, click, triggerEvent, currentURL } from '@ember/test-helpers';
+import {
+  visit,
+  click,
+  triggerEvent,
+  currentURL,
+  settled,
+} from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import Service from '@ember/service';
 
@@ -66,6 +72,7 @@ module('Acceptance | analytics events', function (hooks) {
 
   test('visiting a random video', async function (assert) {
     await visit('/random');
+    await settled();
 
     const url = currentURL();
     const randomVideoId = url.split('/').pop();
