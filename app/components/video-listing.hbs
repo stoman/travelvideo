@@ -4,6 +4,8 @@
       <video
         src="/assets/videos/{{this.videoQuality}}/{{@video.filename}}"
         {{on "ended" this.videoEnded}}
+        {{on "play" this.videoPlayed}}
+        {{on "pause" this.videoPaused}}
         controls
         autoplay
         muted
@@ -15,6 +17,8 @@
       <video
         src="/assets/videos/{{this.videoQuality}}/{{@video.filename}}"
         {{on "ended" this.videoEnded}}
+        {{on "play" this.videoPlayed}}
+        {{on "pause" this.videoPaused}}
         autoplay
         muted
       >

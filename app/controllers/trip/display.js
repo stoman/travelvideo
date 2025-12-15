@@ -10,6 +10,13 @@ export default class TripDisplayController extends Controller {
   @action
   videoEnded() {
     if (this.model.nextVideo) {
+      scheduleOnce('afterRender', this, () => {
+        this.metrics.trackEvent('GoogleAnalytics', {
+          category: 'trip',
+          action: 'nextVideo',
+          label: this.model.trip.id,
+        });
+      });
       this.router.transitionTo(
         'trip.display',
         this.model.trip.id,
@@ -32,6 +39,13 @@ export default class TripDisplayController extends Controller {
 
   @action
   stopTrip() {
+    scheduleOnce('afterRender', this, () => {
+      this.metrics.trackEvent('GoogleAnalytics', {
+        category: 'trip',
+        action: 'stop',
+        label: this.model.trip.id,
+      });
+    });
     this.router.transitionTo('trip.overview', this.model.trip.id);
   }
 }
