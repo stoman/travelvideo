@@ -5,7 +5,7 @@ export default class RandomIndexRoute extends Route {
   @service store;
   @service router;
 
-  async model() {
+  async beforeModel() {
     const videos = await this.store.query('video', {
       sortBy: 'random',
       limit: 1,
