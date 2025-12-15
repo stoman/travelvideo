@@ -10,7 +10,9 @@ export default class RandomIndexRoute extends Route {
       sortBy: 'random',
       limit: 1,
     });
-    const randomVideo = videos[0];
-    this.router.transitionTo('random.display', randomVideo.id);
+    if (videos && videos.length > 0) {
+      const randomVideo = videos[0];
+      this.router.transitionTo('random.display', randomVideo.id);
+    }
   }
 }
