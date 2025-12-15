@@ -11,6 +11,6 @@ export default class RandomIndexRoute extends Route {
       sortBy: 'random',
       limit: 1,
     });
-    this.router.transitionTo('random.display', videos[0].get('id'));
+    this.router.transitionTo('random.display', videos[0].id);
   }
 }

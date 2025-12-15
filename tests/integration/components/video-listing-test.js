@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | video listing', function (hooks) {
@@ -53,5 +53,23 @@ module('Integration | Component | video listing', function (hooks) {
     assert.dom('video').exists('should render a video tag');
     assert.dom().hasText(new RegExp(data.guests), 'should render video guests');
     assert.dom().hasText(new RegExp(data.camera), 'should render video camera');
+  });
+
+  test('it calls onEnd when the video ends', async function (assert) {
+    assert.expect(1);
+
+    // TDD: test-driven development
+    // 1. Arrange
+    this.set('video', { filename: 'test.mp4' });
+    this.set('onEnd', () => {
+      // 3. Assert
+      assert.ok(true, 'onEnd was called');
+    });
+
+    // 2. Act
+    await render(
+      hbs`<VideoListing @video={{this.video}} @onEnd={{this.onEnd}} />`,
+    );
+    await triggerEvent('video', 'ended');
   });
 });
