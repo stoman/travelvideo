@@ -58,7 +58,6 @@ module('Integration | Component | video listing', function (hooks) {
   test('it calls onEnd when the video ends', async function (assert) {
     assert.expect(1);
 
-    // TDD: test-driven development
     // 1. Arrange
     this.set('video', { filename: 'test.mp4' });
     this.set('onEnd', () => {
