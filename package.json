@@ -83,7 +83,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "ol": "^10.7.0",
-    "playwright": "^1.57.0"
+    "ol": "^10.7.0"
   }
 }

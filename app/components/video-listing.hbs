@@ -29,7 +29,7 @@
         <p>{{@video.description}}</p>
       {{/if}}
       <p>Country: {{@video.country}}</p>
-      <p>Date: {{format-date @video.date}}</p>
+      <p>Date: <span data-test-video-date>{{format-date @video.date}}</span></p>
       <p>Latitude: {{@video.latitude}}</p>
       <p>Longitude: {{@video.longitude}}</p>
       {{#if @video.guests}}
