@@ -5,12 +5,14 @@ export default class RandomIndexRoute extends Route {
   @service store;
   @service router;
 
-  //redirect to a random video
   async beforeModel() {
     const videos = await this.store.query('video', {
       sortBy: 'random',
       limit: 1,
     });
-    this.router.transitionTo('random.display', videos[0].id);
+    if (videos && videos.length > 0) {
+      const randomVideo = videos[0];
+      this.router.transitionTo('random.display', randomVideo.id);
+    }
   }
 }
