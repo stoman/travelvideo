@@ -1,7 +1,8 @@
 import { helper } from '@ember/component/helper';
 
 export function formatDate([dateString]) {
-  const date = new Date(dateString);
+  const [year, month, day] = dateString.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
   return new Intl.DateTimeFormat('de-DE', {
     year: 'numeric',
     month: '2-digit',
