@@ -1,97 +1,131 @@
-# travelvideo
+# Travel Video
 
-This is the code for the website located at [https://travel.stoman.de](https://travel.stoman.de). This repository contains all the code, but due to file sizes not the actual videos. You can view the website at the URL given above or build the website yourself as described below.
+[![Deploy to Production](https://github.com/stoman/travelvideo/actions/workflows/deploy.yml/badge.svg)](https://github.com/stoman/travelvideo/actions/workflows/deploy.yml)
 
-The website is a log of some of the places we visited together. In most of those places we created a short video holding a sign with the name of the city. The videos are concatenated in a way such that each video starts with the same people visible as the last one ended with.
+This repository contains the source code for the website [travel.stoman.de](https://travel.stoman.de), a collection of travel videos from various adventures.
 
-## Prerequisites
+## About the Project
 
-You will need the following things properly installed on your computer.
+The website serves as a visual travel log, showcasing short videos from different cities and countries. A unique feature of this project is the way the videos are concatenated: each video begins with the same people visible as the previous one ended, creating a seamless and continuous journey.
 
-- [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/) (with npm)
-- [Ember CLI](https://cli.emberjs.com/release/)
-- [Google Chrome](https://google.com/chrome/)
+This project is built with [Ember.js](https://emberjs.com/) and uses [Docker](https://www.docker.com/) for containerization, making the development and deployment processes consistent and reliable.
 
-## Setup
+## Getting Started
 
-- `git clone https://github.com/stoman/travelvideo` this repository
-- `cd travelvideo`
-- `npm install` (unless running in Docker)
+To get started, you'll need to have [Git](https://git-scm.com/) and [Node.js](https://nodejs.org/) (version >= 20.11) installed on your machine.
 
-## Running
+1.  **Clone the repository:**
 
-- `npm run start`
-- Visit your app at [http://localhost:4200](http://localhost:4200).
-- Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
+    ```bash
+    git clone https://github.com/stoman/travelvideo.git
+    cd travelvideo
+    ```
 
-### Running with Docker Locally
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-- `docker build -f Dockerfile -t travelvideo .`
-- `docker run -p 8080:80 -v <absolute_path_to_videos_local>:/usr/local/apache2/htdocs/assets/videos:ro travelvideo`
+## Local Development
 
-## Testing / Linting
+For local development, you can run the Ember.js development server directly. This provides features like live reloading and a dedicated testing environment.
 
-### Running Tests Locally
+- **Start the development server:**
 
-- `npm run test`
-- `npm run test:ember -- --server`
-- `npm run lint`
-- `npm run lint:fix`
+  ```bash
+  npm start
+  ```
 
-### Running Tests in Docker (Recommended)
+  - Your application will be available at [http://localhost:4200](http://localhost:4200).
+  - You can run the tests at [http://localhost:4200/tests](http://localhost:4200/tests).
 
-Using Docker Compose with volume mounting for faster iteration:
+- **Run tests from the command line:**
+  ```bash
+  npm test
+  ```
 
-```bash
-# Run all tests (linting + tests)
-docker compose -f docker-compose.test.yml run --rm test
+## Docker-based Development
 
-# Fix formatting issues with Prettier
-docker compose -f docker-compose.test.yml run --rm test npm run lint:fix
+For a more isolated and reproducible environment, you can use Docker and Docker Compose.
 
-# Run only linting (no tests)
-docker compose -f docker-compose.test.yml run --rm test npm run lint
+### Running the Application
 
-# Run only Ember tests (skip linting)
-docker compose -f docker-compose.test.yml run --rm test npm run test:ember
+1.  **Place video files:**
+    - Create a `videos` directory in the project root.
+    - Place all your video files inside this directory.
 
-# Interactive shell in container
-docker compose -f docker-compose.test.yml run --rm test bash
+2.  **Build and run the container:**
+    ```bash
+    docker-compose up --build
+    ```
 
-# Build/rebuild the test image
-docker compose -f docker-compose.test.yml build
-```
+    - The website will be available at [http://localhost:8080](http://localhost:8080).
 
-**Note**: Files are mounted from your local directory, so changes made by Prettier in the container apply directly to your working files. No need to rebuild the Docker image for code changes!
+### Running Tests
 
-#### Alternative: Docker without volume mounting
+Testing in a Docker container is the recommended approach as it ensures a consistent environment. The test setup is defined in `docker-compose.test.yml`.
 
-If you prefer to run tests without volume mounting:
+- **Run all tests (linting and browser tests):**
 
-```bash
-docker build -f Dockerfile.test -t travelvideo-test .
-docker run --rm travelvideo-test npm test
-```
+  ```bash
+  docker-compose -f docker-compose.test.yml up --build --exit-code-from test
+  ```
 
-## Deploying
+- **Run only linting:**
 
-Deployments are run automatically by GitHub Actions. The workflow is defined in `.github/workflows/deploy.yml`.
+  ```bash
+  docker-compose -f docker-compose.test.yml run --rm test npm run lint
+  ```
+
+- **Fix linting and formatting issues:**
+
+  ```bash
+  docker-compose -f docker-compose.test.yml run --rm test npm run lint:fix
+  ```
+
+- **Run only the browser-based tests:**
+
+  ```bash
+  docker-compose -f docker-compose.test.yml run --rm test npm run test:ember
+  ```
+
+- **Open an interactive shell in the test container:**
+  ```bash
+  docker-compose -f docker-compose.test.yml run --rm test bash
+  ```
+
+## Linting and Formatting
+
+The project uses ESLint for JavaScript, Stylelint for CSS, and Prettier for code formatting.
+
+- **Run all linters:**
+
+  ```bash
+  npm run lint
+  ```
+
+- **Fix all linting and formatting issues:**
+  ```bash
+  npm run lint:fix
+  ```
+
+## Deployment
+
+Deployments are automated using GitHub Actions and are triggered on every push to the `main` branch. The workflow is defined in `.github/workflows/deploy.yml`.
 
 ### Manual Deployment
 
-Build the Docker container and push it to the registry:
+To deploy manually, you'll need to build and push the Docker image to the container registry.
 
-```bash
-docker build -t registry.stoman.de/travel:latest .
-```
+1.  **Build the Docker image:**
 
-Then connect to the server and pull the container. Videos are not part of the container, so you need to upload them to the server if changed or added.
+    ```bash
+    docker build -t registry.stoman.de/travel:latest .
+    ```
 
-### Development Build
+2.  **Push the image to the registry:**
+    ```bash
+    docker push registry.stoman.de/travel:latest
+    ```
 
-- `npm exec ember build`
-
-### Production Build
-
-- `npm run build`
+Once the image is pushed, you can connect to the server and redeploy the application by pulling the latest image.
