@@ -1,4 +1,4 @@
-FROM danlynn/ember-cli:6.8.0 AS builder
+FROM danlynn/ember-cli:6.10.0 AS builder
 WORKDIR /myapp
 COPY package.json package-lock.json ./
 RUN npm ci
