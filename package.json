@@ -73,7 +73,7 @@
     "qunit-dom": "^3.5.0",
     "sass": "^1.94.0",
     "stylelint": "^16.23.1",
-    "stylelint-config-standard": "^39.0.0"
+    "stylelint-config-standard": "^40.0.0"
   },
   "engines": {
     "node": ">= 20.11"
