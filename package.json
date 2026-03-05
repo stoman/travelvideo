@@ -32,7 +32,7 @@
     "@ember/optional-features": "^3.0.0",
     "@ember/test-helpers": "^5.2.2",
     "@embroider/macros": "^1.18.1",
-    "@eslint/js": "^9.35.0",
+    "@eslint/js": "^10.0.0",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
     "@warp-drive/build-config": "^5.8.0",
