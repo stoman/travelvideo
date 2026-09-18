@@ -102,7 +102,7 @@ browsable. Turn it off.
 
 ## Video file storage — in the repo
 
-Decided: the ~160 MB video archive is **committed to git** at `public/assets/videos/max/`.
+Decided: the ~160 MB video archive is **committed to git** at `public/assets/videos/`.
 Remove `public/assets/videos` from `.gitignore`.
 
 Vite copies `public/` to `dist/` verbatim, and the Dockerfile already copies `dist/` into the

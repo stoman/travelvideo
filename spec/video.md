@@ -3,7 +3,12 @@
 ## Serve the files exactly as they are
 
 **No encoding pipeline, no ffmpeg, no quality ladder, no manifest.** Copy the existing files
-across and serve them from `/assets/videos/max/{filename}` — keep that path.
+across and serve them from `/assets/videos/{filename}`.
+
+Note the path change: production currently serves from `/assets/videos/max/`, where `max` was
+meant to be one of several renditions. Since there is only ever one, the subdirectory is
+dropped. Video file URLs are not preserved across the rewrite — unlike page URLs, they are
+only referenced by the app itself, never linked externally.
 
 Source characteristics:
 
@@ -17,9 +22,6 @@ Source characteristics:
 | Duration | a few seconds each |
 | Audio | **none — no audio track at all** |
 
-`max` is the only rendition that exists; the quality switching implied by the directory
-naming was never built.
-
 Do not reintroduce any of the following — each was considered and rejected:
 
 - **1080p/720p renditions** — the source is 480p, so upscaling adds bytes and no detail.
@@ -31,7 +33,7 @@ Do not reintroduce any of the following — each was considered and rejected:
 ## Player
 
 ```html
-<video src="/assets/videos/max/{filename}" muted playsinline preload="metadata"></video>
+<video src="/assets/videos/{filename}" muted playsinline preload="metadata"></video>
 ```
 
 **Always `muted`.** The clips genuinely contain no audio track, which is confirmed above.
@@ -92,7 +94,7 @@ remaining reason to need it.
 
 ## Storage — committed to git
 
-Decided: the video files **live in the repo**, at `public/assets/videos/max/`. Remove
+Decided: the video files **live in the repo**, at `public/assets/videos/`. Remove
 `public/assets/videos` from `.gitignore`.
 
 ~160 MB total with a 2.2 MB largest file — comfortably within GitHub's limits. The benefit is

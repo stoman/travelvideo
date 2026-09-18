@@ -30,7 +30,7 @@ the Invariants section of [data-model.md](data-model.md) becomes a test:
 - **People chain integrity**: `peopleEnd[n] === peopleStart[n+1]` within each trip. Expect
   pre-existing violations in the historical data — start by reporting them as warnings and
   ask Stefan which are genuine errors before promoting this to a hard failure.
-- Every `filename` resolves to a file present in `public/assets/videos/max/`. Fully
+- Every `filename` resolves to a file present in `public/assets/videos/`. Fully
   enforceable in CI now that the videos are committed to the repo.
 - Every video appears in at least one **real** trip — the derived `all` trip does not count,
   since checking videos against a list generated from them is circular.

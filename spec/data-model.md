@@ -14,7 +14,7 @@
 | `name` | string | Display name, may contain non-ASCII (`München Flughafen`, `Jökulsárlón`) |
 | `description` | string | Optional note; frequently empty |
 | `country` | string | Free text, used for grouping on the video index |
-| `filename` | string | e.g. `hobbiton.mp4`, served from `/assets/videos/max/` |
+| `filename` | string | e.g. `hobbiton.mp4`, served from `/assets/videos/` |
 | `date` | ISO date string | `2017-09-19`. Drives trip ordering and day-gap calculation |
 | `latitude` | number | Decimal degrees |
 | `longitude` | number | Decimal degrees |
@@ -148,6 +148,6 @@ which is a typo while adding a trip. See [testing.md](testing.md).
 - **People chain integrity:** for consecutive videos in a trip, `peopleEnd[n]` equals
   `peopleStart[n+1]`. Expect existing violations in the historical data — report them as
   warnings until they have been reviewed, then promote this to a hard failure.
-- **Every `filename` resolves to a file that exists** in `public/assets/videos/max/`. Since
+- **Every `filename` resolves to a file that exists** in `public/assets/videos/`. Since
   the videos are committed to the repo, this is fully enforceable in CI — a trip referencing a
   video that was never added will fail the build instead of 404-ing in production.

@@ -22,8 +22,13 @@ retrieved first. Production is the authoritative copy — the files served there
 ones that should be committed:
 
 ```
-https://travel.stoman.de/assets/videos/max/<filename>
+source:      https://travel.stoman.de/assets/videos/max/<filename>
+destination: public/assets/videos/<filename>
 ```
+
+The `max` segment is correct on the source URL and deliberately absent at the destination —
+production kept it for renditions that were never built, and the rewrite drops it. See
+[video.md](video.md).
 
 Every `filename` is listed in the `FIXTURES` array in `app/models/video.js`, so extract the
 177 names and fetch them. Check for a local archive first in case originals exist elsewhere,
@@ -46,7 +51,7 @@ Nothing renders yet; this is the layer everything else reads.
 
 1. Scaffold Vite + TypeScript. Confirm `npm run build` emits static files to `dist/`.
 2. **Bring the videos into the repo.** Remove `public/assets/videos` from `.gitignore` and
-   commit the ~160 MB archive to `public/assets/videos/max/`. Doing this first makes the
+   commit the ~160 MB archive to `public/assets/videos/`. Doing this first makes the
    "every filename exists" invariant enforceable from the start. This commit is irreversible —
    see [video.md](video.md).
 3. Write the one-time migration script: `app/models/{video,trip}.js` FIXTURES →
