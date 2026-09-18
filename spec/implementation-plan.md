@@ -10,9 +10,8 @@ lands early and the project can be paused without leaving anything broken.
 
 Handle these before starting Phase 1.
 
-**Toolchain.** Node is installed. **ffmpeg is still needed** for the one-off normalisation in
-Phase 1 and is not present; `winget` is available. Note that freshly installed tools are not
-visible to already-running shells — restart the editor or invoke them by full path.
+**Toolchain.** Node and ffmpeg are both installed. ffmpeg is used once in Phase 1 for the
+normalisation, and again whenever a trip is added later.
 
 **The videos are downloaded but not in place.** They sit at `videos/max/` in the repo root —
 outside `.gitignore`, which only covers `public/assets/videos`, so `videos/` has been added to
