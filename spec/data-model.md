@@ -139,15 +139,27 @@ which is a typo while adding a trip. See [testing.md](testing.md).
 - **Every video is referenced by at least one real trip.** Now that `all` is derived rather
   than stored, this is a genuinely useful check: it catches a video added to `videos.json`
   that was never assigned to a trip, which would otherwise be reachable only by direct URL.
-- `latitude` ∈ [-90, 90], `longitude` ∈ [-180, 180], and neither is `0.0` unless genuinely
-  intended. Placeholder `0.0, 0.0` coordinates have appeared in real commits before.
+- `latitude` ∈ [-90, 90], `longitude` ∈ [-180, 180], and neither is `0.0`. The current data is
+  clean on all three — placeholder `0.0, 0.0` coordinates have reached `main` before, so this
+  is a guard against recurrence rather than a known problem.
 - `preferredZoom` is an integer within the map's configured min/max zoom.
 - `date` parses as a valid ISO date.
 - Dates are non-decreasing within each trip's `videos` order.
 - `filename` is non-empty and unique.
 - **People chain integrity:** for consecutive videos in a trip, `peopleEnd[n]` equals
-  `peopleStart[n+1]`. Expect existing violations in the historical data — report them as
-  warnings until they have been reviewed, then promote this to a hard failure.
+  `peopleStart[n+1]`. The current data has **exactly five violations**, all in two trips:
+
+  | Trip | Break |
+  |---|---|
+  | `china` | `peking` ends *Anna* → `peking_olympic_park` starts *Stefan* |
+  | `china` | `tiantouzhai` ends *Anna, Anna-Maria, Jasmin* → `tiantouzhai2` starts *Stefan* |
+  | `china` | `tiantouzhai2` ends *Anna* → `yangshuo` starts *Anna, Anna-Maria, Jasmin* |
+  | `world` | `miami_beach` ends *Anna* → `miami` starts *Stefan* |
+  | `world` | `miami` ends *Anna* → `quito` starts *Stefan* |
+
+  These may be intentional — the chain plausibly restarts across a travel day or a change of
+  companions — so do not "fix" the data. Implement the check, list these five as known
+  exceptions, and confirm each before promoting the check to a hard failure.
 - **Every `filename` resolves to a file that exists** in `public/assets/videos/`. Since
   the videos are committed to the repo, this is fully enforceable in CI — a trip referencing a
   video that was never added will fail the build instead of 404-ing in production.

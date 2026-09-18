@@ -96,8 +96,8 @@ decision is fresh and with full attention, not squeezed in after a day of scaffo
 5. Define types, load the data, derive the `all` trip, and build the derived indices
    (`videoToTrips`, `videosByCountry`, day gaps, counts).
 6. Write the content-invariant tests and run them against the migrated data. Expect
-   people-chain violations in the historical data; report them as warnings for review rather
-   than failing the build on day one.
+   people-chain violations are listed in [data-model.md](data-model.md); report them as
+   warnings for review rather than failing the build on day one.
 7. Wire `npm test` to `node --test` and add `tsc --noEmit`.
 8. **Write `docs/adding-videos.md`** — human-facing, for the next time a trip is added. Last
    in the phase so it can describe the real `videos.json` shape rather than a predicted one,
