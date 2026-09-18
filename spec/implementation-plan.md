@@ -1,7 +1,22 @@
 # Implementation Plan
 
-Branch: `rewrite/vanilla-spa`. `main` stays deployable throughout — the live site keeps
-running on Ember until the rewrite is genuinely finished.
+## Branching
+
+**`rewrite/vanilla-spa` is the design branch.** It holds this specification and nothing else.
+
+**Create a new branch from it and commit all implementation work there:**
+
+```bash
+git checkout rewrite/vanilla-spa
+git checkout -b rewrite/implementation
+```
+
+Keep the two separate. Spec changes belong on the design branch and can be merged forward;
+implementation never lands on it. When the rewrite is complete, the implementation branch is
+what merges to `main`.
+
+`main` stays deployable throughout — the live site keeps running on Ember until the rewrite is
+genuinely finished.
 
 **A half-finished rewrite is strictly worse than a working Ember app.** Sequence so that value
 lands early and the project can be paused without leaving anything broken.
@@ -39,10 +54,15 @@ commit, and do not wait until the end of a phase.
 
 Each message should say what changed and why. Steps are sized so that one commit each keeps
 the history reviewable, makes a bad change easy to isolate, and lets the work be paused and
-resumed without reconstructing intent. Push regularly so the pull request reflects real
-progress rather than arriving as one large drop.
+resumed without reconstructing intent.
 
 Where a step leaves tests failing or the build broken, say so in the commit message.
+
+**Do not push.** Commit locally and stop there — the history gets reviewed before it is
+published. This is not bureaucracy: unpushed commits can still be amended, reordered or reset
+away, and published ones cannot. It matters most for the video commit in Phase 1, where a
+mistaken 90 MB blob is a `git reset` while local and permanent in GitHub's history the moment
+it is pushed.
 
 ## Phase 0 — ship independently of the rewrite
 
@@ -59,30 +79,34 @@ belong on `main`, not on the rewrite branch.
 
 Nothing renders yet; this is the layer everything else reads.
 
-1. Scaffold Vite + TypeScript. Confirm `npm run build` emits static files to `dist/`.
-2. **Normalise the videos.** Run the ffmpeg pass from [video.md](video.md) over the 177
+**Do the video normalisation first.** It is the only irreversible step in the whole plan — once
+the archive is committed those bytes are in history forever — so it should happen while the
+decision is fresh and with full attention, not squeezed in after a day of scaffolding.
+
+1. **Normalise the videos.** Run the ffmpeg pass from [video.md](video.md) over the 177
    referenced files in `videos/max/`, writing to `public/assets/videos/`. Skip the five
-   orphans. Verify every output opens, matches its source duration and is smaller before
-   going further; keep the originals until you have.
-3. **Commit the normalised archive.** Remove `public/assets/videos` from `.gitignore`, drop
-   the `videos/` line from `.git/info/exclude`, and commit. Doing this before the data work
-   makes the "every filename exists" invariant enforceable from the start. **This commit is
-   irreversible** — see [video.md](video.md).
-4. **Write `docs/adding-videos.md`** — human-facing, for the next time a trip is added, while
-   the process is fresh. It must cover: the exact ffmpeg invocation and what each flag does;
-   the file naming convention; where files go; how to add entries to `videos.json` and
-   `trips.json`; how to find coordinates and choose a `preferredZoom`; the people-chaining
-   rule that `peopleEnd` of one clip must equal `peopleStart` of the next; running the
-   invariant tests before committing; and a warning that committing video is permanent, so
-   files should be normalised once and correctly rather than fixed up later.
-5. Write the one-time migration script: `app/models/{video,trip}.js` FIXTURES →
+   orphans. Verify every output opens, matches its source duration and is smaller; spot-check
+   the five 1080p clips and a few 320×240 ones by eye. Keep the originals until you have.
+2. **Commit the normalised archive.** Remove `public/assets/videos` from `.gitignore`, drop
+   the `videos/` line from `.git/info/exclude`, and commit. **This commit is irreversible** —
+   do not proceed until step 1's verification passed.
+3. Scaffold Vite + TypeScript. Confirm `npm run build` emits static files to `dist/`.
+4. Write the one-time migration script: `app/models/{video,trip}.js` FIXTURES →
    `src/data/{videos,trips}.json`. Drop the `all` trip; it becomes derived.
-6. Define types, load the data, derive the `all` trip, and build the derived indices
+5. Define types, load the data, derive the `all` trip, and build the derived indices
    (`videoToTrips`, `videosByCountry`, day gaps, counts).
-7. Write the content-invariant tests and run them against the migrated data. Expect
+6. Write the content-invariant tests and run them against the migrated data. Expect
    people-chain violations in the historical data; report them as warnings for review rather
    than failing the build on day one.
-8. Wire `npm test` to `node --test` and add `tsc --noEmit`.
+7. Wire `npm test` to `node --test` and add `tsc --noEmit`.
+8. **Write `docs/adding-videos.md`** — human-facing, for the next time a trip is added. Last
+   in the phase so it can describe the real `videos.json` shape rather than a predicted one,
+   but still while the encoding work is fresh. It must cover: the exact ffmpeg invocation and
+   what each flag does; the file naming convention; where files go; how to add entries to
+   `videos.json` and `trips.json`; how to find coordinates and choose a `preferredZoom`; the
+   people-chaining rule that `peopleEnd` of one clip must equal `peopleStart` of the next;
+   running the invariant tests before committing; and a warning that committing video is
+   permanent, so files should be normalised once and correctly rather than fixed up later.
 
 **Exit criteria:** `node --test` passes against all 177 videos and 16 trips.
 
@@ -172,7 +196,9 @@ during trip playback.
    - **Validation:** `npm test` runs the content invariants; run it before committing data.
 6. **Verify every preserved URL resolves**, ideally by crawling the live site's link graph
    before cutover and checking each path against the new build.
-7. Merge to `main` and let the existing pipeline deploy.
+7. Stop there. Pushing the branch, opening the pull request and merging to `main` are review
+   steps, not implementation steps — the deploy pipeline fires on merge and puts the rewrite
+   live.
 
 **Rollback:** revert the merge commit; CI rebuilds and redeploys the Ember app. Keep the
 pre-cutover commit tagged so this stays a one-step operation.
