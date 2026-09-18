@@ -67,7 +67,7 @@ Settled. Do not relitigate without a concrete reason.
 | Static data files in the repo | No backend, no CMS |
 | `node:test` for tests | Built into Node; adds no dependency |
 | Vanilla CSS | Custom properties, nesting and container queries cover everything needed |
-| Pure-CSS postage-stamp nav | Drops the ink texture in favour of the shape; removes all five PNGs |
+| No background images anywhere | Stamps, paper texture and map marker all rendered in CSS; only the about-page photo survives |
 | Keep GA4 | Already working |
 | Preserve all existing URLs | Years of shared links |
 

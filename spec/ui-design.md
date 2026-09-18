@@ -4,7 +4,8 @@
 
 The existing look is a travel-journal scrapbook and it is the site's character. Preserve it:
 
-- **Paper texture** (`/assets/paper.jpg`) behind content boxes, white rounded borders.
+- **Paper texture** behind content boxes, white rounded borders — rendered in CSS, not an
+  image. See below.
 - **Postage-stamp navigation** — flat blocks in warm colours (amber, coral, salmon) with
   perforated edges, bold black labels, each rotated a degree or two so they look scattered
   rather than aligned. Rendered in pure CSS; see below.
@@ -56,10 +57,34 @@ The point of this change is that a sixth menu item must not need a sixth asset.
 - **Rotation** cycles the same way — keep today's `1°, -3°, 0°, 2°, -1°` on desktop.
 - Nothing about adding or removing a nav item should require touching an asset.
 
-### Cleanup
+## The paper texture — also pure CSS
 
-`stamp1.png`–`stamp5.png` are deleted. `paper.jpg` stays — it is still the content-box
-texture, which is unaffected by this change.
+Today: `paper.jpg`, 68 KB, tiled behind every content box. It is a warm cream sheet with
+faint tonal mottling and sparse darker flecks — low contrast, no strong grain.
+
+**Replace it with CSS.** Those characteristics are reproducible without an image:
+
+- A warm cream base, around `#f1ece1`.
+- Two or three large, very low-alpha `radial-gradient`s for the uneven tonal mottling.
+- A few small `radial-gradient`s at low alpha for the flecks.
+
+The one thing CSS gradients cannot do is true randomness — they tile. Avoid visible
+repetition by giving each layer a **different, mutually coprime tile size** (37px, 53px, 71px
+and so on). The combined pattern then only repeats after their product, which is far larger
+than any content box, so the eye never catches it. Keep the contrast as low as the original;
+the texture should be almost subliminal, and anything stronger will read as a pattern rather
+than as paper.
+
+## No image assets at all
+
+Between the stamps and the paper texture, the design uses **no background images**:
+
+| Asset | Fate |
+|---|---|
+| `stamp1.png`–`stamp5.png` | Deleted — replaced by CSS perforated stamps |
+| `paper.jpg` | Deleted — replaced by the CSS texture above |
+| `marker.png` | Deleted — MapLibre draws markers from the style, not a bitmap |
+| `us.jpg` | **Kept.** It is photographic content on the about page, not decoration |
 
 ## Navigation
 

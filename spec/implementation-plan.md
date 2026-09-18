@@ -8,13 +8,11 @@ lands early and the project can be paused without leaving anything broken.
 
 ## Prerequisites
 
-Two things are missing from the working copy and will block Phase 1 if not handled first.
+Handle these before starting Phase 1.
 
-**No local toolchain.** There is no `node`, `npm`, `python`, `ffmpeg` or `docker` on the
-machine — the current app is built entirely on CI runners and in images. Nothing in this plan
-can be run locally until that is resolved. Install **Node 24** (matching CI) and **ffmpeg**
-(needed once, in Phase 1). `winget` is available. Decide before starting; the work is
-iterative and a container round-trip per test run is painful.
+**Toolchain.** Node is installed. **ffmpeg is still needed** for the one-off normalisation in
+Phase 1 and is not present; `winget` is available. Note that freshly installed tools are not
+visible to already-running shells — restart the editor or invoke them by full path.
 
 **The videos are downloaded but not in place.** They sit at `videos/max/` in the repo root —
 outside `.gitignore`, which only covers `public/assets/videos`, so `videos/` has been added to
@@ -135,12 +133,15 @@ during trip playback.
 
 ## Phase 6 — design
 
-1. Base stylesheet: custom properties, paper texture, typography.
+1. Base stylesheet: custom properties, typography, and the CSS paper texture (layered
+   radial-gradients on coprime tile sizes — no image).
 2. Stamp navigation in pure CSS — perforated silhouette via composited radial-gradient masks,
-   colour and rotation cycled with `:nth-child`. Delete `stamp1.png`–`stamp5.png`.
-3. Mobile layout: stacked video → details → map, bottom stamp bar, `100dvh` flex column.
-4. Desktop layout: full-bleed map, floating paper box, scattered stamps.
-5. Focus states, contrast check, `prefers-reduced-motion`.
+   colour and rotation cycled with `:nth-child`.
+3. Delete every background image: `stamp1.png`–`stamp5.png`, `paper.jpg`, `marker.png`. Only
+   `us.jpg` survives, as about-page content.
+4. Mobile layout: stacked video → details → map, bottom stamp bar, `100dvh` flex column.
+5. Desktop layout: full-bleed map, floating paper box, scattered stamps.
+6. Focus states, contrast check, `prefers-reduced-motion`.
 
 **Exit criteria:** verified on a real phone, not a narrow desktop window.
 
