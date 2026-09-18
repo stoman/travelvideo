@@ -95,7 +95,7 @@ decision is fresh and with full attention, not squeezed in after a day of scaffo
    `src/data/{videos,trips}.json`. Drop the `all` trip; it becomes derived.
 5. Define types, load the data, derive the `all` trip, and build the derived indices
    (`videoToTrips`, `videosByCountry`, day gaps, counts).
-6. Write the content-invariant tests and run them against the migrated data. Expect
+6. Write the content-invariant tests and run them against the migrated data. The five known
    people-chain violations are listed in [data-model.md](data-model.md); report them as
    warnings for review rather than failing the build on day one.
 7. Wire `npm test` to `node --test` and add `tsc --noEmit`.
