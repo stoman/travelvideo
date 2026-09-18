@@ -13,17 +13,26 @@ referenced by the app itself, never linked externally.
 ### What the archive actually contains
 
 177 referenced files, **194.8 MB**, mean 1.10 MB, largest 8.5 MB. Every clip is a few seconds
-long and **silent** — no audio track anywhere. Resolutions are not uniform:
+long and **silent** — no audio track anywhere. Resolutions are not uniform, and — corrected
+after probing every file's actual stream data rather than the displayed size — **most of the
+archive is anamorphic**, not native widescreen:
 
-| Resolution | Files | Size | Share |
-|---|---|---|---|
-| 853×480 | 131 | 144.2 MB | 74% |
-| 1920×1080 | 5 | 28.1 MB | 14% |
-| 320×240 | 40 | 21.4 MB | 11% |
-| 640×480 (anamorphic, displays 853×480) | 1 | 1.2 MB | 0.6% |
+| Coded size | Sample aspect ratio | Displays as | Files | Size | Share |
+|---|---|---|---|---|---|---|
+| 640×480 | 4:3 (anamorphic) | 853×480 | 131 | 144.2 MB | 74% |
+| 1920×1080 | 1:1 | 1920×1080 | 5 | 28.1 MB | 14% |
+| 320×240 | 1:1 | 320×240 | 40 | 21.4 MB | 11% |
+| 640×480 | 1:1 (not anamorphic) | 640×480 | 1 | 1.2 MB | 0.6% |
+
+The earlier version of this table had it backwards: it treated the 131-file bucket as native
+853×480 and called out a single file as "the anamorphic one" — which is actually the one file
+in the archive that is *not* anamorphic. 131 files (74%) carry a 4:3 pixel aspect ratio on
+640×480 coded video, stretching them to a 16:9-looking 853×480 on playback. Any ffmpeg filter
+that scales by display size must account for this on nearly three-quarters of the archive, not
+treat it as a one-off.
 
 Bitrates are far higher than the content needs — the 1080p clips run at 6,670–8,510 kbps, and
-the 853×480 bulk sits around 2,300 kbps where roughly 1,000 would look identical.
+the anamorphic bulk sits around 2,300 kbps where roughly 1,000 would look identical.
 
 ### Normalise before committing, not after
 
@@ -38,26 +47,44 @@ its output committed. It is not a build step, not in CI, and not a maintenance b
 
 ```
 ffmpeg -i <src> \
-  -vf "scale='min(1280,iw*sar)':-2:flags=lanczos,setsar=1" \
+  -vf "scale=iw*sar:ih:flags=lanczos,setsar=1,scale='trunc(min(1280,iw)/2)*2':-2:flags=lanczos" \
   -c:v libx264 -preset slow -crf 21 \
   -pix_fmt yuv420p -profile:v high \
   -an -movflags +faststart \
   <dst>
 ```
 
+This is a two-stage scale, not one. A single `scale='min(1280,iw*sar)':-2` (the original draft
+of this command) is wrong on the 131 anamorphic files: `iw*sar` for 640×480 at SAR 4:3 is
+853.33, truncated to the odd number 853, which libx264 rejects outright
+(`width not divisible by 2`). Worse, even if it didn't error, `scale`'s `-2` computes the free
+dimension from the filter's *current* width/height ratio, which at that point is still the
+un-corrected 640:480 — so the result would be 853×640, silently stretched to the wrong aspect
+ratio. Fixing this needed two passes: undo the anamorphic squeeze first, *then* cap and encode.
+
 Why each flag:
 
-- `iw*sar` scales by *display* width, which correctly handles the one anamorphic file;
-  `setsar=1` outputs square pixels so no player has to guess.
-- `min(1280,…)` caps at 720p and **never upscales** — the 320×240 clips stay 320×240, since
-  there is no detail to invent.
-- `-2` keeps the height even while preserving aspect ratio.
+- **Stage one**, `scale=iw*sar:ih`, physically resizes to display width using the sample aspect
+  ratio, un-squeezing the 131 anamorphic files (640×480 SAR 4:3 → 853×480). `setsar=1` records
+  that the pixels are now square, so nothing downstream reapplies the correction.
+- **Stage two**, `scale='trunc(min(1280,iw)/2)*2':-2`, caps at 720p and **never upscales** — the
+  320×240 clips stay 320×240, since there is no detail to invent. `trunc(.../2)*2` forces the
+  target width to an even number (needed for 4:2:0 chroma subsampling); `-2` computes the height
+  from the now-correct square-pixel aspect ratio and rounds it to even too. For files that were
+  never anamorphic (320×240, 1920×1080, and the one true 640×480 clip) stage one is a no-op
+  since their SAR is already 1:1, so this behaves exactly like the original single-stage filter
+  for them.
 - `-crf 21` is deliberately conservative. These are already lossy, so re-encoding loses a
   little; 21 keeps that invisible while still cutting bitrate by more than half.
 - `-preset slow` buys meaningful compression for a few seconds of clip each.
 - `-an` strips audio tracks that carry nothing.
 - `+faststart` moves the moov atom to the front so playback begins before the file finishes
   downloading. The originals do not all have this.
+
+Verified against one sample from each bucket: correct display aspect ratio, matching source
+duration exactly, and a smaller file in every case (e.g. the 640×480 anamorphic
+`agra.mp4` → 852×480 at DAR 853:480, 879 KB → 587 KB; the 1920×1080 `bryce_canyon.mp4` →
+1280×720, 8.1 MB → 1.6 MB).
 
 **Verify before committing and keep the originals until you have:** every output must open,
 match its source duration, and be smaller. Spot-check the five 1080p clips and a handful of
