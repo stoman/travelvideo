@@ -6,6 +6,29 @@ running on Ember until the rewrite is genuinely finished.
 **A half-finished rewrite is strictly worse than a working Ember app.** Sequence so that value
 lands early and the project can be paused without leaving anything broken.
 
+## Prerequisites
+
+Two things are missing from the working copy and will block Phase 1 if not handled first.
+
+**Node is not installed locally.** There is no `node`, `npm`, `python` or `ffmpeg` on the
+machine — the current app is built entirely inside Docker (`danlynn/ember-cli`) and on CI
+runners. Nothing in this plan can be run locally until that is resolved. Either install Node
+24 (matching CI) or run the toolchain in a container. Decide before starting; a lot of the
+work is iterative and a container round-trip per test run is painful.
+
+**The video files are not in the repo or the working copy.** `public/assets/videos` does not
+exist locally and is gitignored. Phase 1 commits ~160 MB of video, so they have to be
+retrieved first. Production is the authoritative copy — the files served there are exactly the
+ones that should be committed:
+
+```
+https://travel.stoman.de/assets/videos/max/<filename>
+```
+
+Every `filename` is listed in the `FIXTURES` array in `app/models/video.js`, so extract the
+177 names and fetch them. Check for a local archive first in case originals exist elsewhere,
+but the production files are correct as-is and need no processing.
+
 ## Phase 0 — ship independently of the rewrite
 
 Small, high-value, and benefits visitors whether or not the rewrite ever completes. These
