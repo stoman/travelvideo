@@ -34,6 +34,18 @@ Every `filename` is listed in the `FIXTURES` array in `app/models/video.js`, so 
 177 names and fetch them. Check for a local archive first in case originals exist elsewhere,
 but the production files are correct as-is and need no processing.
 
+## Commit discipline
+
+**Make a separate commit for every numbered step below.** Do not batch several steps into one
+commit, and do not wait until the end of a phase.
+
+Each message should say what changed and why. Steps are sized so that one commit each keeps
+the history reviewable, makes a bad change easy to isolate, and lets the work be paused and
+resumed without reconstructing intent. Push regularly so the pull request reflects real
+progress rather than arriving as one large drop.
+
+Where a step leaves tests failing or the build broken, say so in the commit message.
+
 ## Phase 0 — ship independently of the rewrite
 
 Small, high-value, and benefits visitors whether or not the rewrite ever completes. These
