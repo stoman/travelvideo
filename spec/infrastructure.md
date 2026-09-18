@@ -102,8 +102,9 @@ browsable. Turn it off.
 
 ## Video file storage — in the repo
 
-Decided: the ~160 MB video archive is **committed to git** at `public/assets/videos/`.
-Remove `public/assets/videos` from `.gitignore`.
+Decided: the video archive is **committed to git** at `public/assets/videos/` — normalised
+first, which takes it from 194.8 MB to an expected 80–110 MB. Remove `public/assets/videos`
+from `.gitignore`.
 
 Vite copies `public/` to `dist/` verbatim, and the Dockerfile already copies `dist/` into the
 image — so the videos travel with the image and no volume mount, rsync or separate sync step
@@ -111,9 +112,9 @@ is needed. The deployed container is fully self-contained.
 
 Two consequences worth planning for:
 
-- **The image grows by ~160 MB.** Layer caching means this only re-pushes when the videos
-  actually change (roughly once a year, when a trip is added), so routine code deploys stay
-  cheap. First pull on a fresh server will be slower.
+- **The image grows by the archive size.** Layer caching means this only re-pushes when the
+  videos actually change (roughly once a year, when a trip is added), so routine code deploys
+  stay cheap. First pull on a fresh server will be slower.
 - **Committing binaries is irreversible.** Any future re-encode permanently adds its full size
   to history. See [video.md](video.md).
 

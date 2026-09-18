@@ -10,29 +10,30 @@ lands early and the project can be paused without leaving anything broken.
 
 Two things are missing from the working copy and will block Phase 1 if not handled first.
 
-**Node is not installed locally.** There is no `node`, `npm`, `python` or `ffmpeg` on the
-machine — the current app is built entirely inside Docker (`danlynn/ember-cli`) and on CI
-runners. Nothing in this plan can be run locally until that is resolved. Either install Node
-24 (matching CI) or run the toolchain in a container. Decide before starting; a lot of the
-work is iterative and a container round-trip per test run is painful.
+**No local toolchain.** There is no `node`, `npm`, `python`, `ffmpeg` or `docker` on the
+machine — the current app is built entirely on CI runners and in images. Nothing in this plan
+can be run locally until that is resolved. Install **Node 24** (matching CI) and **ffmpeg**
+(needed once, in Phase 1). `winget` is available. Decide before starting; the work is
+iterative and a container round-trip per test run is painful.
 
-**The video files are not in the repo or the working copy.** `public/assets/videos` does not
-exist locally and is gitignored. Phase 1 commits ~160 MB of video, so they have to be
-retrieved first. Production is the authoritative copy — the files served there are exactly the
-ones that should be committed:
+**The videos are downloaded but not in place.** They sit at `videos/max/` in the repo root —
+outside `.gitignore`, which only covers `public/assets/videos`, so `videos/` has been added to
+`.git/info/exclude` to prevent an accidental 200 MB commit. Remove that line once the files
+have moved to their final location.
+
+The directory holds **182 files**. All 177 referenced by the fixtures are present; the other
+five are orphans that must **not** be committed:
 
 ```
-source:      https://travel.stoman.de/assets/videos/max/<filename>
-destination: public/assets/videos/<filename>
+bartolome_lang.mp4   hobbinton.mp4   peking2.mp4   test.mp4   zhangjiajie.mp4
 ```
 
-The `max` segment is correct on the source URL and deliberately absent at the destination —
-production kept it for renditions that were never built, and the rewrite drops it. See
-[video.md](video.md).
+`hobbinton.mp4` is a typo duplicate of `hobbiton.mp4`, which also exists and is the referenced
+one. The rest are superseded alternates and a test file, 4.7 MB in total.
 
-Every `filename` is listed in the `FIXTURES` array in `app/models/video.js`, so extract the
-177 names and fetch them. Check for a local archive first in case originals exist elsewhere,
-but the production files are correct as-is and need no processing.
+Build the list to keep from the `filename` values in the `FIXTURES` array in
+`app/models/video.js` rather than from the directory listing, and the orphans drop out
+naturally.
 
 ## Commit discipline
 
@@ -62,18 +63,29 @@ belong on `main`, not on the rewrite branch.
 Nothing renders yet; this is the layer everything else reads.
 
 1. Scaffold Vite + TypeScript. Confirm `npm run build` emits static files to `dist/`.
-2. **Bring the videos into the repo.** Remove `public/assets/videos` from `.gitignore` and
-   commit the ~160 MB archive to `public/assets/videos/`. Doing this first makes the
-   "every filename exists" invariant enforceable from the start. This commit is irreversible —
-   see [video.md](video.md).
-3. Write the one-time migration script: `app/models/{video,trip}.js` FIXTURES →
+2. **Normalise the videos.** Run the ffmpeg pass from [video.md](video.md) over the 177
+   referenced files in `videos/max/`, writing to `public/assets/videos/`. Skip the five
+   orphans. Verify every output opens, matches its source duration and is smaller before
+   going further; keep the originals until you have.
+3. **Commit the normalised archive.** Remove `public/assets/videos` from `.gitignore`, drop
+   the `videos/` line from `.git/info/exclude`, and commit. Doing this before the data work
+   makes the "every filename exists" invariant enforceable from the start. **This commit is
+   irreversible** — see [video.md](video.md).
+4. **Write `docs/adding-videos.md`** — human-facing, for the next time a trip is added, while
+   the process is fresh. It must cover: the exact ffmpeg invocation and what each flag does;
+   the file naming convention; where files go; how to add entries to `videos.json` and
+   `trips.json`; how to find coordinates and choose a `preferredZoom`; the people-chaining
+   rule that `peopleEnd` of one clip must equal `peopleStart` of the next; running the
+   invariant tests before committing; and a warning that committing video is permanent, so
+   files should be normalised once and correctly rather than fixed up later.
+5. Write the one-time migration script: `app/models/{video,trip}.js` FIXTURES →
    `src/data/{videos,trips}.json`. Drop the `all` trip; it becomes derived.
-4. Define types, load the data, derive the `all` trip, and build the derived indices
+6. Define types, load the data, derive the `all` trip, and build the derived indices
    (`videoToTrips`, `videosByCountry`, day gaps, counts).
-5. Write the content-invariant tests and run them against the migrated data. Expect
+7. Write the content-invariant tests and run them against the migrated data. Expect
    people-chain violations in the historical data; report them as warnings for review rather
    than failing the build on day one.
-6. Wire `npm test` to `node --test` and add `tsc --noEmit`.
+8. Wire `npm test` to `node --test` and add `tsc --noEmit`.
 
 **Exit criteria:** `node --test` passes against all 177 videos and 16 trips.
 
@@ -124,7 +136,8 @@ during trip playback.
 ## Phase 6 — design
 
 1. Base stylesheet: custom properties, paper texture, typography.
-2. Stamp navigation — try the SVG-mask approach, fall back to the existing PNGs.
+2. Stamp navigation in pure CSS — perforated silhouette via composited radial-gradient masks,
+   colour and rotation cycled with `:nth-child`. Delete `stamp1.png`–`stamp5.png`.
 3. Mobile layout: stacked video → details → map, bottom stamp bar, `100dvh` flex column.
 4. Desktop layout: full-bleed map, floating paper box, scattered stamps.
 5. Focus states, contrast check, `prefers-reduced-motion`.
@@ -138,9 +151,28 @@ during trip playback.
 3. Delete the Ember app: `app/`, `config/`, `tests/`, `ember-cli-build.js`, `testem.js`,
    `.ember-cli`, `.template-lintrc.js`, and the Ember dependencies.
 4. Delete the dead Disqus config.
-5. **Verify every preserved URL resolves**, ideally by crawling the live site's link graph
+5. **Write `CLAUDE.md`** — agent-facing instructions for whoever works on this repo next,
+   reflecting the finished structure rather than the rewrite. It must cover:
+   - **Constraints that are easy to violate by habit:** no UI framework, no router library, no
+     test framework, no CSS framework, no state library. One runtime dependency (MapLibre),
+     two build dependencies (Vite, TypeScript). Adding any dependency needs a reason.
+   - **Conventions:** views are pure `(data) => string` functions with DOM mutation confined
+     to the router; vanilla CSS with custom properties; one commit per logical change.
+   - **Where things live:** `src/data/` for content, `public/assets/videos/` for media,
+     `spec/` for the original design rationale.
+   - **Adding content:** point at `docs/adding-videos.md` rather than duplicating it.
+   - **Inspecting and repairing media**, which is the procedure most likely to be needed and
+     least likely to be guessed: how to read an MP4's resolution, duration and audio presence
+     by parsing container boxes (`tkhd` for display dimensions at offset +80/+84, `mvhd` for
+     timescale and duration, absence of `mp4a` for silence) when ffmpeg is not installed; the
+     normalisation command from [video.md](video.md); and how to diff the files on disk
+     against the `filename` values in `src/data/videos.json` to find missing files and
+     orphans. Note that sampling one file is not enough — this archive ranges from 320×240 to
+     1920×1080 and a single sample misled the original analysis.
+   - **Validation:** `npm test` runs the content invariants; run it before committing data.
+6. **Verify every preserved URL resolves**, ideally by crawling the live site's link graph
    before cutover and checking each path against the new build.
-6. Merge to `main` and let the existing pipeline deploy.
+7. Merge to `main` and let the existing pipeline deploy.
 
 **Rollback:** revert the merge commit; CI rebuilds and redeploys the Ember app. Keep the
 pre-cutover commit tagged so this stays a one-step operation.

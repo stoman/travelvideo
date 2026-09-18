@@ -81,7 +81,7 @@ src/
 index.html              the shell
 public/
   assets/
-    videos/             ~160 MB, committed to the repo (see video.md)
+    videos/             177 clips, normalised then committed (see video.md)
 ```
 
 ## Rendering model
