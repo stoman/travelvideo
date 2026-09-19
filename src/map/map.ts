@@ -143,7 +143,11 @@ export function flyToVideo(
  */
 const MAX_FIT_PADDING_FRACTION = 0.5;
 
-function clampAxisPadding(a: number, b: number, size: number): [number, number] {
+function clampAxisPadding(
+  a: number,
+  b: number,
+  size: number,
+): [number, number] {
   const max = size * MAX_FIT_PADDING_FRACTION;
   if (a + b <= max) return [a, b];
   const scale = max / (a + b);
