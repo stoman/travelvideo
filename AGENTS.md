@@ -1,8 +1,30 @@
-# CLAUDE.md
+# AGENTS.md
 
-Agent-facing instructions for working on travel.stoman.de. The full design rationale behind
-the choices below lives in `spec/` (written for the Ember → vanilla TypeScript rewrite); this
-file is about the finished structure, not how it got here.
+Agent-facing instructions for working on travel.stoman.de — a personal travel log by Stefan
+Toman and Anna. At most places they visit they film a short clip holding a sign with the place
+name, edited so each video starts with the same people visible that the previous one ended
+with; the site presents these on a world map, grouped into trips, with routes drawn between
+them. This file is about the finished structure, not how it got here — the rewrite from Ember
+to this vanilla TypeScript SPA is done, and its planning documents (once in `spec/`) have been
+retired; what's still actionable from them is folded in below and into README.md.
+
+## Why an SPA, and why MapLibre
+
+The site is one `index.html` for every route (`public/.htaccess`'s `FallbackResource`), not a
+set of static pages, because of the map: a single MapLibre instance, created once and never
+torn down, can animate the camera between video locations as the visitor moves through a trip.
+A multi-page site would re-initialise the map on every navigation and lose exactly the
+animation that makes the site distinctive. Everything else an SPA costs (no SEO, no social link
+previews, JS required) is accepted deliberately — this site has no content anyone needs to
+reach via a search result, and every visitor already has a modern browser.
+
+MapLibre GL JS is the one runtime dependency because it renders 177 markers and trip routes on
+the GPU from a single GeoJSON source, rather than one absolutely-positioned DOM element per
+marker (the previous OpenLayers implementation's approach, and the main reason it felt
+sluggish). Tiles come from OpenFreeMap — free, no API key, no usage limits; self-hosting was
+rejected because a usable planet extract is several GB and the server's disk is shared with the
+video archive. Switching tile providers is a one-line change to the style's source URL; don't
+build abstractions to "support multiple providers" pre-emptively.
 
 ## Constraints — easy to violate by habit
 
@@ -21,6 +43,10 @@ This is a dependency-minimal site on purpose. Before reaching for a library, re-
   (derived from `location.pathname`), the persistent MapLibre instance, and the currently
   playing `<video>` element. If state seems to be growing, that's a signal to stop and
   reconsider, not to reach for a store.
+- **Deliberately out of scope** — don't let a reasonable-sounding request quietly expand into
+  one of these; flag it instead: server-side rendering or prerendering, a comment system,
+  multi-language support, a PWA/offline mode, video transcoding as a build step (normalisation
+  is a one-off manual command, see below), self-hosted map tiles, poster frames/thumbnails.
 
 **Dependency inventory:**
 
@@ -35,8 +61,7 @@ This is a dependency-minimal site on purpose. Before reaching for a library, re-
   the same reason `node:fs`/GeoJSON literals type-check in editors and `tsc`.
 
 Adding any new dependency needs a real reason, not convenience. If something seems to need a
-library, that's usually a sign the design has drifted — check `spec/architecture.md` before
-adding one.
+library, that's usually a sign the design has drifted — re-read this section before adding one.
 
 ## Conventions
 
@@ -57,6 +82,12 @@ adding one.
   layout/paper-box rules, and splitting further would mean repeating them.
 - **One commit per logical change.** Prefer a sequence of small, reviewable commits over one
   large one, especially for anything touching `public/assets/videos/` — see below.
+- **Accessibility baseline.** Real `<a href>` elements for navigation, not click handlers on
+  non-interactive elements. Visible focus states (`:focus-visible`, see `--focus-ring` in
+  `base.css` — deliberately not one of the pastel stamp colors, which don't have enough contrast
+  against the paper background to work as an outline). Check contrast for black text whenever a
+  stamp/background color changes. Respect `prefers-reduced-motion`: the map jumps instead of
+  flying, per `src/map/map.ts`'s `prefersReducedMotion()`.
 
 ## Where things live
 
@@ -65,9 +96,6 @@ adding one.
   views: `videoToTrips`, `videosByCountry`, day gaps, counts).
 - **`public/assets/videos/`** — the 177 normalised clips, committed to git. Adding one is
   **permanent** — see below.
-- **`spec/`** — the original design rationale for the rewrite: why each decision was made, not
-  just what it is. Worth reading before changing something that looks arbitrary; it usually
-  isn't.
 - **`docs/adding-videos.md`** — the human procedure for adding a trip or video. Don't duplicate
   it here; point people at it.
 
@@ -141,10 +169,10 @@ and prefer the coded-box math above (or `ffprobe`, when available) over assumpti
 
 If a clip genuinely needs re-encoding (rare — only ever a deliberate, one-off decision, never
 routine maintenance), the command and the reasoning behind each flag are in
-[`spec/video.md`](spec/video.md) and [`docs/adding-videos.md`](docs/adding-videos.md). Don't
-re-derive it from scratch; both explain exactly why the filter is two `scale` stages rather
-than one (anamorphic sources need their pixel aspect ratio corrected before the resolution cap,
-or the result is silently the wrong aspect ratio).
+[`docs/adding-videos.md`](docs/adding-videos.md). Don't re-derive it from scratch; it explains
+exactly why the filter is two `scale` stages rather than one (anamorphic sources need their
+pixel aspect ratio corrected before the resolution cap, or the result is silently the wrong
+aspect ratio).
 
 ### Finding missing files and orphans
 
@@ -179,3 +207,10 @@ existing filenames, and the people-chain rule. Run it before committing any chan
 instead of 404ing there. A handful of pre-existing data issues are tracked as known exceptions
 (reported as warnings, not failures) inside that file — grep it for `KNOWN_` before assuming a
 new failure is one of them.
+
+**What's deliberately not covered by `node:test`: whether MapLibre visually draws anything.**
+That needs a real browser with WebGL, i.e. Playwright — a browser-automation dependency for
+essentially one assertion, not worth it by this project's standards. Everything that _feeds_
+the map (GeoJSON construction, coordinate validity, cluster config, `flyTo` parameters) is
+tested without a browser; whether it actually renders correctly is verified by looking at the
+site, on a real phone, not just a narrow desktop window.
