@@ -21,7 +21,7 @@ ffmpeg -i <source> \
   -c:v libx264 -preset slow -crf 21 \
   -pix_fmt yuv420p -profile:v high \
   -an -movflags +faststart \
-  public/assets/videos/<slug>.mp4
+  "public/assets/videos/<slug>.mp4"
 ```
 
 What each flag does:
