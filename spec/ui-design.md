@@ -181,13 +181,16 @@ layout today.
 | `/random/:videoId` | Video, chained by people matching |
 | `/about` | Intro text and the photo (`/assets/us.jpg`) |
 
-## About page — must be rewritten
+## About page — rewrite the framework mention, copy is otherwise fine
 
-The current copy invites visitors to "write comments for trips and videos here at this
-website". **No comment system has ever existed** — Disqus was configured but never rendered,
-and comments are explicitly not wanted. Remove that sentence.
+Checked `app/templates/about.hbs` directly rather than assuming: it does **not** currently
+invite comments (the only "comment" text is "Stars, comments, or even contributions to the
+code", about the GitHub repo, not the site) and has no Facebook link. That cleanup must have
+already happened upstream before this spec was written — same pattern as the other
+already-fixed findings. Nothing to remove there.
 
-Also update: the Ember.js reference, and check the Facebook link is still wanted. Keep the
+What does need changing: the Ember.js mention in the technical-details paragraph, since that's
+no longer accurate, and the `LinkTo` internal links become plain `<a href>`s. Keep the
 description of the people-chaining conceit — it explains the whole project and is the most
 interesting thing on the page.
 
