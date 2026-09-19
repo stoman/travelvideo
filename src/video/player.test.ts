@@ -1,6 +1,10 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { nextVideoIdInTrip, pickChainedVideo, pickRandomVideo } from './player.ts';
+import {
+  nextVideoIdInTrip,
+  pickChainedVideo,
+  pickRandomVideo,
+} from './player.ts';
 import { getTrip, videos, getVideo } from '../data/index.ts';
 import type { Video } from '../data/types.ts';
 
@@ -31,7 +35,10 @@ test('pickRandomVideo throws on an empty list rather than returning undefined', 
 test('pickChainedVideo only returns videos whose peopleStart matches the current peopleEnd, when matches exist', () => {
   const current = getVideo('hobbiton')!; // peopleEnd: 'Anna'
   const candidates = videos.filter((v) => v.peopleStart === current.peopleEnd);
-  assert.ok(candidates.length > 0, 'test assumes at least one real match exists in the data');
+  assert.ok(
+    candidates.length > 0,
+    'test assumes at least one real match exists in the data',
+  );
   for (let i = 0; i < 20; i++) {
     const picked = pickChainedVideo(current, videos);
     assert.equal(picked.peopleStart, current.peopleEnd);
@@ -39,7 +46,10 @@ test('pickChainedVideo only returns videos whose peopleStart matches the current
 });
 
 test('pickChainedVideo falls back to any video when nothing matches', () => {
-  const noMatchTarget: Video = { ...getVideo('hobbiton')!, peopleEnd: 'Nobody Ever Named This' };
+  const noMatchTarget: Video = {
+    ...getVideo('hobbiton')!,
+    peopleEnd: 'Nobody Ever Named This',
+  };
   const picked = pickChainedVideo(noMatchTarget, videos);
   assert.ok(videos.includes(picked));
 });

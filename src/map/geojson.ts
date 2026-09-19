@@ -21,7 +21,9 @@ interface FeatureCollection<F> {
 }
 
 /** Every video as a point feature, for the clustered marker source. */
-export function videosGeoJSON(videos: { id: string; name: string; longitude: number; latitude: number }[]): FeatureCollection<PointFeature> {
+export function videosGeoJSON(
+  videos: { id: string; name: string; longitude: number; latitude: number }[],
+): FeatureCollection<PointFeature> {
   return {
     type: 'FeatureCollection',
     features: videos.map((v) => ({
@@ -40,7 +42,9 @@ export const HOME: [number, number] = [11.500945, 48.144391];
  * `finished`. The `all` pseudo-trip is excluded -- its line would connect every video on earth
  * into one meaningless polyline.
  */
-export function tripRoutesGeoJSON(trips: Trip[]): FeatureCollection<LineFeature> {
+export function tripRoutesGeoJSON(
+  trips: Trip[],
+): FeatureCollection<LineFeature> {
   const realTrips = trips.filter((t) => t.id !== 'all');
   const features: LineFeature[] = realTrips.map((trip) => {
     const coordinates: [number, number][] = [HOME];

@@ -10,10 +10,17 @@ import { videoElementHtml } from '../video/player.ts';
 export function renderTripDisplay(trip: Trip, video: Video): string {
   const index = trip.videos.indexOf(video.id);
   const prevId = index > 0 ? trip.videos[index - 1] : undefined;
-  const nextId = index >= 0 && index < trip.videos.length - 1 ? trip.videos[index + 1] : undefined;
+  const nextId =
+    index >= 0 && index < trip.videos.length - 1
+      ? trip.videos[index + 1]
+      : undefined;
 
-  const prevLink = prevId ? `<a href="/trip/${trip.id}/${prevId}">Previous video</a>` : '';
-  const nextLink = nextId ? `<a href="/trip/${trip.id}/${nextId}">Next video</a>` : '';
+  const prevLink = prevId
+    ? `<a href="/trip/${trip.id}/${prevId}">Previous video</a>`
+    : '';
+  const nextLink = nextId
+    ? `<a href="/trip/${trip.id}/${nextId}">Next video</a>`
+    : '';
 
   return `
     <div class="trip-display">

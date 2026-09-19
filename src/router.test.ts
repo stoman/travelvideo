@@ -15,7 +15,10 @@ test('/trip -> trips', () => {
 });
 
 test('/trip/:tripId -> trip-overview', () => {
-  assert.deepEqual(parseRoute('/trip/china'), { name: 'trip-overview', tripId: 'china' });
+  assert.deepEqual(parseRoute('/trip/china'), {
+    name: 'trip-overview',
+    tripId: 'china',
+  });
 });
 
 test('/trip/start/:tripId -> trip-start-redirect (not trip-overview)', () => {
@@ -36,7 +39,10 @@ test('/trip/:tripId/:videoId -> trip-display (not trip-overview)', () => {
 test('a trip literally named "start" is unambiguous by segment count alone', () => {
   // No real trip is named "start", but the matcher must not rely on that: 2 segments is always
   // trip-overview, 3 with a literal "start" second segment is always the redirect.
-  assert.deepEqual(parseRoute('/trip/start'), { name: 'trip-overview', tripId: 'start' });
+  assert.deepEqual(parseRoute('/trip/start'), {
+    name: 'trip-overview',
+    tripId: 'start',
+  });
 });
 
 test('/video -> videos', () => {
@@ -44,7 +50,10 @@ test('/video -> videos', () => {
 });
 
 test('/video/:videoId -> video-display', () => {
-  assert.deepEqual(parseRoute('/video/hobbiton'), { name: 'video-display', videoId: 'hobbiton' });
+  assert.deepEqual(parseRoute('/video/hobbiton'), {
+    name: 'video-display',
+    videoId: 'hobbiton',
+  });
 });
 
 test('/map -> map', () => {
@@ -72,6 +81,12 @@ test('unknown paths resolve to not-found', () => {
 
 test('trailing slashes and double slashes are tolerated', () => {
   assert.deepEqual(parseRoute('/trip/'), { name: 'trips' });
-  assert.deepEqual(parseRoute('/trip/china/'), { name: 'trip-overview', tripId: 'china' });
-  assert.deepEqual(parseRoute('//trip//china//'), { name: 'trip-overview', tripId: 'china' });
+  assert.deepEqual(parseRoute('/trip/china/'), {
+    name: 'trip-overview',
+    tripId: 'china',
+  });
+  assert.deepEqual(parseRoute('//trip//china//'), {
+    name: 'trip-overview',
+    tripId: 'china',
+  });
 });

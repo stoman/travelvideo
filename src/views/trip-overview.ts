@@ -16,7 +16,9 @@ export function renderTripOverview(trip: Trip): string {
       const video = getVideo(id)!;
       const gap = i > 0 ? gaps[i - 1]! : 0;
       const gapItem =
-        gap > 0 ? `<li class="day-gap">${gap} day${gap === 1 ? '' : 's'} without video</li>` : '';
+        gap > 0
+          ? `<li class="day-gap">${gap} day${gap === 1 ? '' : 's'} without video</li>`
+          : '';
       return `${gapItem}<li><a href="/trip/${trip.id}/${id}">${video.name}</a> — ${video.date}</li>`;
     })
     .join('');

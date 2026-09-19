@@ -12,7 +12,10 @@ test('videosGeoJSON: one point feature per video with matching coordinates and i
 
 test('tripRoutesGeoJSON: excludes the derived all trip', () => {
   const fc = tripRoutesGeoJSON(trips);
-  assert.equal(fc.features.some((f) => f.properties.id === 'all'), false);
+  assert.equal(
+    fc.features.some((f) => f.properties.id === 'all'),
+    false,
+  );
   assert.equal(fc.features.length, trips.length - 1);
 });
 
@@ -34,7 +37,13 @@ test('tripRoutesGeoJSON: a finished trip loops back to home', () => {
 test('tripRoutesGeoJSON: an unfinished trip does not loop back to home', () => {
   // No real trip is currently unfinished, so construct one to exercise this path directly
   // rather than depending on the data staying that way.
-  const unfinishedTrip = { id: 'synthetic', name: 'Synthetic', year: '2099', videos: ['hobbiton'], finished: false };
+  const unfinishedTrip = {
+    id: 'synthetic',
+    name: 'Synthetic',
+    year: '2099',
+    videos: ['hobbiton'],
+    finished: false,
+  };
   const fc = tripRoutesGeoJSON([unfinishedTrip]);
   const feature = fc.features[0]!;
   assert.notDeepEqual(feature.geometry.coordinates.at(-1), HOME);

@@ -28,14 +28,14 @@ What each flag does:
 
 - **The two-stage `scale` filter.** Stage one, `scale=iw*sar:ih`, corrects for anamorphic
   source footage (pixels that aren't square — common from some cameras/editors) by resizing to
-  the actual *display* width using the sample aspect ratio, then `setsar=1` marks the pixels as
+  the actual _display_ width using the sample aspect ratio, then `setsar=1` marks the pixels as
   square so nothing downstream re-applies the correction. Stage two,
   `scale='trunc(min(1280,iw)/2)*2':-2`, caps the result at 720p and **never upscales** — a
   source narrower than 1280px stays as-is, since there's no detail to invent. `trunc(.../2)*2`
   forces the width to an even number, which 4:2:0 chroma subsampling requires; `-2` computes the
   height to match, also rounded to even. Don't collapse this to a single-stage
   `scale='min(1280,iw*sar)':-2` — for anamorphic sources that can compute an odd target width
-  and silently produce the wrong aspect ratio. Camera output is usually *not* anamorphic (SAR
+  and silently produce the wrong aspect ratio. Camera output is usually _not_ anamorphic (SAR
   1:1), in which case stage one is a no-op and this behaves like a plain resize-and-cap.
 - `-crf 21`: conservative — these are re-encodes of already-lossy footage, and 21 keeps the
   extra generation loss invisible while still cutting bitrate substantially.

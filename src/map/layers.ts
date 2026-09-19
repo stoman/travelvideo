@@ -66,7 +66,10 @@ export function addMarkerLayers(map: maplibregl.Map): void {
 }
 
 /** Tap an individual marker to navigate; tap a cluster to zoom into its bounds. */
-export function wireMarkerInteractions(map: maplibregl.Map, navigate: (path: string) => void): void {
+export function wireMarkerInteractions(
+  map: maplibregl.Map,
+  navigate: (path: string) => void,
+): void {
   map.on('click', UNCLUSTERED_LAYER_ID, (e: MapLayerMouseEvent) => {
     const id = e.features?.[0]?.properties?.['id'] as string | undefined;
     if (id) navigate(`/video/${id}`);
@@ -78,7 +81,10 @@ export function wireMarkerInteractions(map: maplibregl.Map, navigate: (path: str
     if (clusterId === undefined || !feature) return;
     const source = map.getSource(MARKERS_SOURCE_ID) as maplibregl.GeoJSONSource;
     source.getClusterExpansionZoom(clusterId).then((zoom: number) => {
-      const [lon, lat] = (feature.geometry as GeoJSON.Point).coordinates as [number, number];
+      const [lon, lat] = (feature.geometry as GeoJSON.Point).coordinates as [
+        number,
+        number,
+      ];
       map.easeTo({ center: [lon, lat], zoom });
     });
   });
@@ -117,6 +123,9 @@ export function addRouteLayer(map: maplibregl.Map): void {
 }
 
 /** Shows only the given trip's route (used when a single trip's overview is on screen). */
-export function setVisibleTrip(map: maplibregl.Map, tripId: string | null): void {
+export function setVisibleTrip(
+  map: maplibregl.Map,
+  tripId: string | null,
+): void {
   map.setFilter(ROUTES_LAYER_ID, tripId ? ['==', ['get', 'id'], tripId] : null);
 }

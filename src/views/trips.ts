@@ -5,7 +5,9 @@ import type { Trip } from '../data/types.ts';
 export function renderTrips(trips: Trip[]): string {
   const items = trips
     .map((trip) => {
-      const videoNames = trip.videos.map((id) => getVideo(id)?.name ?? id).join(', ');
+      const videoNames = trip.videos
+        .map((id) => getVideo(id)?.name ?? id)
+        .join(', ');
       return `
         <li>
           <a href="/trip/${trip.id}">${trip.name}</a> (${trip.year})

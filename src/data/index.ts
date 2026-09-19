@@ -17,7 +17,9 @@ const allTrip: Trip = {
   id: ALL_TRIP_ID,
   name: 'All Videos',
   year: '2013 - today',
-  videos: [...videos].sort((a, b) => a.date.localeCompare(b.date)).map((v) => v.id),
+  videos: [...videos]
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .map((v) => v.id),
   finished: false,
 };
 

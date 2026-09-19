@@ -7,7 +7,12 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 // before any Map is constructed.
 import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import { buildStyle } from './style.ts';
-import { addMarkerLayers, wireMarkerInteractions, addRouteLayer, setVisibleTrip } from './layers.ts';
+import {
+  addMarkerLayers,
+  wireMarkerInteractions,
+  addRouteLayer,
+  setVisibleTrip,
+} from './layers.ts';
 import { tripRoutesGeoJSON } from './geojson.ts';
 import { trips } from '../data/index.ts';
 
@@ -27,7 +32,10 @@ let readyPromise: Promise<maplibregl.Map> | null = null;
  * single-page app. Views ask this module to fly somewhere; they never create or own the map.
  * Loads asynchronously so it never blocks first paint; call without awaiting at boot.
  */
-export function initMap(container: HTMLElement, navigate: (path: string) => void): Promise<maplibregl.Map> {
+export function initMap(
+  container: HTMLElement,
+  navigate: (path: string) => void,
+): Promise<maplibregl.Map> {
   if (readyPromise) return readyPromise;
   readyPromise = (async () => {
     const style = await buildStyle();
@@ -89,7 +97,9 @@ export function showTripFittedToBounds(tripId: string): void {
   withMap((map) => {
     setVisibleTrip(map, tripId);
 
-    const feature = tripRoutesGeoJSON(trips).features.find((f) => f.properties.id === tripId);
+    const feature = tripRoutesGeoJSON(trips).features.find(
+      (f) => f.properties.id === tripId,
+    );
     const coordinates = feature?.geometry.coordinates ?? [];
     if (coordinates.length === 0) return;
 
@@ -98,7 +108,10 @@ export function showTripFittedToBounds(tripId: string): void {
       (b, c) => b.extend(c),
       new maplibregl.LngLatBounds(first, first),
     );
-    map.fitBounds(bounds, { padding: 48, duration: prefersReducedMotion() ? 0 : undefined });
+    map.fitBounds(bounds, {
+      padding: 48,
+      duration: prefersReducedMotion() ? 0 : undefined,
+    });
   });
 }
 

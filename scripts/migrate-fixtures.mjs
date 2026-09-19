@@ -43,7 +43,9 @@ function extractFixtures(relativePath) {
 const videoFixtures = extractFixtures('app/models/video.js');
 const tripFixtures = extractFixtures('app/models/trip.js');
 
-console.log(`Read ${videoFixtures.length} video fixtures, ${tripFixtures.length} trip fixtures.`);
+console.log(
+  `Read ${videoFixtures.length} video fixtures, ${tripFixtures.length} trip fixtures.`,
+);
 
 // --- Drop the `all` trip, but verify it was consistent with the video list first ---
 
@@ -75,23 +77,43 @@ for (const id of fixtureAllSet) {
     throw new Error(`Fixture "all" trip references unknown video "${id}"`);
   }
 }
-console.log('Derived "all" trip video set matches the fixture "all" trip exactly (order may differ by tie-breaking; set contents identical).');
+console.log(
+  'Derived "all" trip video set matches the fixture "all" trip exactly (order may differ by tie-breaking; set contents identical).',
+);
 
 const realTrips = tripFixtures.filter((t) => t.id !== 'all');
-console.log(`Dropping the "all" trip fixture; writing ${realTrips.length} real trips.`);
+console.log(
+  `Dropping the "all" trip fixture; writing ${realTrips.length} real trips.`,
+);
 
 // --- Field order / shape checks (fail fast on the migration itself, not silently) ---
 
 const videoKeys = [
-  'id', 'name', 'description', 'country', 'filename', 'date', 'latitude', 'longitude',
-  'peopleIn', 'peopleOut', 'peopleStart', 'peopleEnd', 'guests', 'camera', 'preferredZoom',
+  'id',
+  'name',
+  'description',
+  'country',
+  'filename',
+  'date',
+  'latitude',
+  'longitude',
+  'peopleIn',
+  'peopleOut',
+  'peopleStart',
+  'peopleEnd',
+  'guests',
+  'camera',
+  'preferredZoom',
 ];
 const tripKeys = ['id', 'name', 'year', 'videos', 'finished'];
 
 function checkKeys(records, expectedKeys, label) {
   for (const record of records) {
     const actualKeys = Object.keys(record);
-    if (actualKeys.length !== expectedKeys.length || actualKeys.some((k, i) => k !== expectedKeys[i])) {
+    if (
+      actualKeys.length !== expectedKeys.length ||
+      actualKeys.some((k, i) => k !== expectedKeys[i])
+    ) {
       throw new Error(
         `${label} "${record.id}" has unexpected shape: [${actualKeys.join(', ')}], expected [${expectedKeys.join(', ')}]`,
       );

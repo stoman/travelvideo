@@ -1,6 +1,13 @@
 import { initRouter, navigate } from './router.ts';
 import type { Route } from './data/types.ts';
-import { trips, videos, videosByCountry, counts, getTrip, getVideo } from './data/index.ts';
+import {
+  trips,
+  videos,
+  videosByCountry,
+  counts,
+  getTrip,
+  getVideo,
+} from './data/index.ts';
 import { renderAbout } from './views/about.ts';
 import { renderTrips } from './views/trips.ts';
 import { renderVideos } from './views/videos.ts';

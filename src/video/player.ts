@@ -6,13 +6,19 @@ import type { Video, Trip } from '../data/types.ts';
  * autoplay works unconditionally with no permission prompt, and iOS needs playsinline or it
  * takes the video fullscreen.
  */
-export function videoElementHtml(video: Video, options: { controls: boolean } = { controls: false }): string {
+export function videoElementHtml(
+  video: Video,
+  options: { controls: boolean } = { controls: false },
+): string {
   const controlsAttr = options.controls ? ' controls' : '';
   return `<video id="player" src="/assets/videos/${video.filename}" muted playsinline autoplay preload="metadata" aria-label="${video.name}"${controlsAttr}></video>`;
 }
 
 /** Next video id in the trip's order, or null if `currentVideoId` is last (or not in the trip). */
-export function nextVideoIdInTrip(trip: Trip, currentVideoId: string): string | null {
+export function nextVideoIdInTrip(
+  trip: Trip,
+  currentVideoId: string,
+): string | null {
   const index = trip.videos.indexOf(currentVideoId);
   if (index === -1 || index === trip.videos.length - 1) return null;
   return trip.videos[index + 1]!;
@@ -30,11 +36,16 @@ export function pickRandomVideo(videos: Video[]): Video {
  * rather than dead-ending. Matching is an exact string comparison, per data-model.md.
  */
 export function pickChainedVideo(current: Video, allVideos: Video[]): Video {
-  const candidates = allVideos.filter((v) => v.peopleStart === current.peopleEnd);
+  const candidates = allVideos.filter(
+    (v) => v.peopleStart === current.peopleEnd,
+  );
   return pickRandomVideo(candidates.length > 0 ? candidates : allVideos);
 }
 
-export function attachEndedHandler(videoEl: HTMLVideoElement, onEnded: () => void): void {
+export function attachEndedHandler(
+  videoEl: HTMLVideoElement,
+  onEnded: () => void,
+): void {
   videoEl.addEventListener('ended', onEnded, { once: true });
 }
 

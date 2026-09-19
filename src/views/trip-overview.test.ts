@@ -11,7 +11,11 @@ test('lists videos in itinerary order with links and dates', () => {
   const taorminaIndex = html.indexOf('Taormina');
   const siracusaIndex = html.indexOf('Siracusa', taorminaIndex);
   const etnaIndex = html.indexOf('Etna', siracusaIndex);
-  assert.ok(taorminaIndex >= 0 && siracusaIndex > taorminaIndex && etnaIndex > siracusaIndex);
+  assert.ok(
+    taorminaIndex >= 0 &&
+      siracusaIndex > taorminaIndex &&
+      etnaIndex > siracusaIndex,
+  );
   assert.match(html, /href="\/trip\/sicily\/taormina"/);
 });
 
@@ -23,7 +27,10 @@ test('a positive day gap renders, in the right place', () => {
   const gapIndex = html.indexOf('3 days without video');
   const taorminaIndex = html.indexOf('Taormina');
   const siracusaIndex = html.indexOf('Siracusa');
-  assert.ok(gapIndex > taorminaIndex && gapIndex < siracusaIndex, 'gap should sit between the two videos it separates');
+  assert.ok(
+    gapIndex > taorminaIndex && gapIndex < siracusaIndex,
+    'gap should sit between the two videos it separates',
+  );
 });
 
 test('zero or negative gaps render nothing', () => {
@@ -37,5 +44,8 @@ test('the call to action links to the first video', () => {
   const trip = getTrip('sicily')!;
   const html = renderTripOverview(trip);
   assert.match(html, /Watch all the videos of this trip/);
-  assert.match(html, /href="\/trip\/sicily\/taormina">Watch all the videos of this trip/);
+  assert.match(
+    html,
+    /href="\/trip\/sicily\/taormina">Watch all the videos of this trip/,
+  );
 });

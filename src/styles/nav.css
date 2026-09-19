@@ -15,10 +15,14 @@
 
   background: var(--stamp-color);
   mask:
-    radial-gradient(circle var(--perf-r) at 50% 0, #0000 99%, #000) 0 0 / var(--perf-gap) 100%,
-    radial-gradient(circle var(--perf-r) at 50% 100%, #0000 99%, #000) 0 0 / var(--perf-gap) 100%,
-    radial-gradient(circle var(--perf-r) at 0 50%, #0000 99%, #000) 0 0 / 100% var(--perf-gap),
-    radial-gradient(circle var(--perf-r) at 100% 50%, #0000 99%, #000) 0 0 / 100% var(--perf-gap);
+    radial-gradient(circle var(--perf-r) at 50% 0, #0000 99%, #000) 0 0 /
+      var(--perf-gap) 100%,
+    radial-gradient(circle var(--perf-r) at 50% 100%, #0000 99%, #000) 0 0 /
+      var(--perf-gap) 100%,
+    radial-gradient(circle var(--perf-r) at 0 50%, #0000 99%, #000) 0 0 / 100%
+      var(--perf-gap),
+    radial-gradient(circle var(--perf-r) at 100% 50%, #0000 99%, #000) 0 0 /
+      100% var(--perf-gap);
   mask-composite: intersect;
 
   display: flex;

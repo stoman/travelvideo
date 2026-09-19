@@ -5,7 +5,10 @@ import { videosByCountry, counts, getVideo } from '../data/index.ts';
 
 test('heading shows the real counts', () => {
   const html = renderVideos(videosByCountry, counts);
-  assert.match(html, new RegExp(`${counts.videos} Videos from ${counts.countries} Countries`));
+  assert.match(
+    html,
+    new RegExp(`${counts.videos} Videos from ${counts.countries} Countries`),
+  );
 });
 
 test('every video appears under its country with a link and date', () => {

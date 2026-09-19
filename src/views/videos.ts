@@ -10,7 +10,9 @@ export function renderVideos(groups: CountryGroup[], counts: Counts): string {
   const sections = groups
     .map((group) => {
       const items = group.videos
-        .map((v) => `<li><a href="/video/${v.id}">${v.name}</a> — ${v.date}</li>`)
+        .map(
+          (v) => `<li><a href="/video/${v.id}">${v.name}</a> — ${v.date}</li>`,
+        )
         .join('');
       return `
         <section>

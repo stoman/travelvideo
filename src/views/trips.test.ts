@@ -12,7 +12,10 @@ test('every trip appears with a link and its video names, in order', () => {
   // videos in itinerary order, not alphabetical
   const dubaiIndex = html.indexOf('Dubai');
   const pekingIndex = html.indexOf('Peking', dubaiIndex);
-  assert.ok(dubaiIndex >= 0 && pekingIndex > dubaiIndex, 'video names should appear in trip order');
+  assert.ok(
+    dubaiIndex >= 0 && pekingIndex > dubaiIndex,
+    'video names should appear in trip order',
+  );
   assert.equal(china.videos.length, 13);
 });
 

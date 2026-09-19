@@ -52,11 +52,7 @@
     "id": "sicily",
     "name": "Sicily",
     "year": "2015",
-    "videos": [
-      "taormina",
-      "siracusa",
-      "etna"
-    ],
+    "videos": ["taormina", "siracusa", "etna"],
     "finished": true
   },
   {
@@ -188,23 +184,14 @@
     "id": "portugal",
     "name": "Portugal",
     "year": "2019",
-    "videos": [
-      "porto",
-      "favaios",
-      "alvao",
-      "carreco"
-    ],
+    "videos": ["porto", "favaios", "alvao", "carreco"],
     "finished": true
   },
   {
     "id": "harz",
     "name": "Harzer Wandernadel",
     "year": "2021",
-    "videos": [
-      "thale",
-      "zorge",
-      "brocken"
-    ],
+    "videos": ["thale", "zorge", "brocken"],
     "finished": true
   },
   {
@@ -229,14 +216,7 @@
     "id": "romania",
     "name": "Romania",
     "year": "2023",
-    "videos": [
-      "sulina",
-      "obretin",
-      "bucuresti",
-      "bran",
-      "rasnov",
-      "ploiesti"
-    ],
+    "videos": ["sulina", "obretin", "bucuresti", "bran", "rasnov", "ploiesti"],
     "finished": true
   },
   {
@@ -276,20 +256,14 @@
     "id": "spitzingsee",
     "name": "Spitzingsee",
     "year": "2025",
-    "videos": [
-      "stuempfling",
-      "spitzingsee"
-    ],
+    "videos": ["stuempfling", "spitzingsee"],
     "finished": true
   },
   {
     "id": "mallorca",
     "name": "Mallorca",
     "year": "2025",
-    "videos": [
-      "porto_cristo",
-      "sa_coma"
-    ],
+    "videos": ["porto_cristo", "sa_coma"],
     "finished": true
   }
 ]

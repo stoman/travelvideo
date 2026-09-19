@@ -30,7 +30,9 @@ const KNOWN_UNREFERENCED_VIDEOS = new Set([
   'koenigssee',
   'timisoara',
 ]);
-const KNOWN_DATE_ORDER_BREAKS = new Set(['oscars:kings_canyon->purisima_creek']);
+const KNOWN_DATE_ORDER_BREAKS = new Set([
+  'oscars:kings_canyon->purisima_creek',
+]);
 
 test('video ids are unique', () => {
   const ids = videos.map((v) => v.id);
@@ -45,7 +47,10 @@ test('trip ids are unique', () => {
 test('every video id referenced by a trip exists', () => {
   for (const trip of realTrips) {
     for (const videoId of trip.videos) {
-      assert.ok(getVideo(videoId), `trip "${trip.id}" references unknown video "${videoId}"`);
+      assert.ok(
+        getVideo(videoId),
+        `trip "${trip.id}" references unknown video "${videoId}"`,
+      );
     }
   }
 });
@@ -65,9 +70,15 @@ test('every video is referenced by at least one real trip', () => {
   }
 
   if (knownSeen.size > 0) {
-    console.warn(`${knownSeen.size} known unreferenced video(s), reported as a warning pending review: ${[...knownSeen].join(', ')}`);
+    console.warn(
+      `${knownSeen.size} known unreferenced video(s), reported as a warning pending review: ${[...knownSeen].join(', ')}`,
+    );
   }
-  assert.deepEqual(unexpected, [], `unexpected unreferenced video(s): ${unexpected.join(', ')}`);
+  assert.deepEqual(
+    unexpected,
+    [],
+    `unexpected unreferenced video(s): ${unexpected.join(', ')}`,
+  );
   assert.equal(
     knownSeen.size,
     KNOWN_UNREFERENCED_VIDEOS.size,
@@ -108,8 +119,15 @@ test('preferredZoom is an integer within the map zoom range', () => {
 
 test('dates parse as valid ISO dates', () => {
   for (const video of videos) {
-    assert.match(video.date, /^\d{4}-\d{2}-\d{2}$/, `video "${video.id}" has non-ISO date`);
-    assert.ok(!Number.isNaN(Date.parse(video.date)), `video "${video.id}" date does not parse`);
+    assert.match(
+      video.date,
+      /^\d{4}-\d{2}-\d{2}$/,
+      `video "${video.id}" has non-ISO date`,
+    );
+    assert.ok(
+      !Number.isNaN(Date.parse(video.date)),
+      `video "${video.id}" date does not parse`,
+    );
   }
 });
 
@@ -133,9 +151,15 @@ test('dates are non-decreasing within each trip', () => {
   }
 
   if (knownSeen.size > 0) {
-    console.warn(`${knownSeen.size} known date-order break(s), reported as a warning pending review: ${[...knownSeen].join(', ')}`);
+    console.warn(
+      `${knownSeen.size} known date-order break(s), reported as a warning pending review: ${[...knownSeen].join(', ')}`,
+    );
   }
-  assert.deepEqual(unexpected, [], `unexpected date-order break(s): ${unexpected.join('; ')}`);
+  assert.deepEqual(
+    unexpected,
+    [],
+    `unexpected date-order break(s): ${unexpected.join('; ')}`,
+  );
   assert.equal(
     knownSeen.size,
     KNOWN_DATE_ORDER_BREAKS.size,
@@ -158,7 +182,7 @@ test('every filename resolves to a file in public/assets/videos', () => {
   }
 });
 
-test('people chain: peopleEnd matches the next video\'s peopleStart (known breaks reported, not failed)', () => {
+test("people chain: peopleEnd matches the next video's peopleStart (known breaks reported, not failed)", () => {
   const unexpectedBreaks: string[] = [];
   const knownBreaksSeen = new Set<string>();
 
@@ -180,11 +204,15 @@ test('people chain: peopleEnd matches the next video\'s peopleStart (known break
   }
 
   if (knownBreaksSeen.size > 0) {
-    console.warn(`${knownBreaksSeen.size} known people-chain break(s), reported as warnings per spec/data-model.md (may be intentional -- a travel day or change of companions):`);
+    console.warn(
+      `${knownBreaksSeen.size} known people-chain break(s), reported as warnings per spec/data-model.md (may be intentional -- a travel day or change of companions):`,
+    );
     for (const key of knownBreaksSeen) console.warn(`  ${key}`);
   }
   if (unexpectedBreaks.length > 0) {
-    console.warn('Unexpected people-chain breaks (review before promoting this check to a hard failure):');
+    console.warn(
+      'Unexpected people-chain breaks (review before promoting this check to a hard failure):',
+    );
     for (const line of unexpectedBreaks) console.warn(`  ${line}`);
   }
   assert.equal(

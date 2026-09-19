@@ -7,7 +7,8 @@
  * different base style.
  */
 
-export const OPENFREEMAP_STYLE_URL = 'https://tiles.openfreemap.org/styles/liberty';
+export const OPENFREEMAP_STYLE_URL =
+  'https://tiles.openfreemap.org/styles/liberty';
 
 /** Amber, matching the warm palette used by the stamp nav (ui-design.md). */
 const WARM_HUE = 38;
@@ -49,8 +50,10 @@ function rgbToHsl(r: number, g: number, b: number, a: number): Hsla {
 }
 
 const HEX_RE = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
-const RGB_RE = /^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/i;
-const HSL_RE = /^hsla?\(\s*([\d.]+)\s*,\s*([\d.]+)%\s*,\s*([\d.]+)%\s*(?:,\s*([\d.]+)\s*)?\)$/i;
+const RGB_RE =
+  /^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/i;
+const HSL_RE =
+  /^hsla?\(\s*([\d.]+)\s*,\s*([\d.]+)%\s*,\s*([\d.]+)%\s*(?:,\s*([\d.]+)\s*)?\)$/i;
 
 /** Parses a color string in the forms MapLibre style specs use. Returns null for anything else
  * (expression keywords like "linear", property names like "zoom", etc. -- callers leave those
@@ -113,7 +116,9 @@ export async function buildStyle(): Promise<Record<string, unknown>> {
   const layers = (style.layers as Record<string, unknown>[]).map((layer) => {
     if (!layer['paint']) return layer;
     const paint: Record<string, unknown> = {};
-    for (const [key, value] of Object.entries(layer['paint'] as Record<string, unknown>)) {
+    for (const [key, value] of Object.entries(
+      layer['paint'] as Record<string, unknown>,
+    )) {
       paint[key] = warmify(value);
     }
     return { ...layer, paint };

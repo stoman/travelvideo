@@ -42,15 +42,15 @@
   --paper-texture:
     radial-gradient(circle at 20% 30%, rgb(0 0 0 / 3%) 0%, transparent 60%),
     radial-gradient(circle at 70% 65%, rgb(0 0 0 / 2.5%) 0%, transparent 55%),
-    radial-gradient(circle at 40% 80%, rgb(255 255 255 / 40%) 0%, transparent 50%),
+    radial-gradient(
+      circle at 40% 80%,
+      rgb(255 255 255 / 40%) 0%,
+      transparent 50%
+    ),
     radial-gradient(circle at 1px 1px, rgb(0 0 0 / 4%) 1px, transparent 1.5px),
     radial-gradient(circle at 1px 1px, rgb(0 0 0 / 3%) 1px, transparent 1.5px);
   --paper-texture-size:
-    173px 173px,
-    211px 211px,
-    149px 149px,
-    37px 37px,
-    53px 53px;
+    173px 173px, 211px 211px, 149px 149px, 37px 37px, 53px 53px;
 }
 
 *,
