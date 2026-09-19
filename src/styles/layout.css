@@ -1,0 +1,350 @@
+/*
+ * Mobile-first layout. #map (base.css) is already a fixed full-viewport background; the trick
+ * on both breakpoints is that #content only paints an opaque .paper box where a view actually
+ * needs one, leaving the rest transparent so the fixed map shows through.
+ */
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh; /* not vh: mobile browser chrome must not clip the nav bar. A fixed height,
+    not min-height, is what makes #content's flex:1 + min-height:0 actually constrain it to the
+    remaining space instead of growing to fit tall list content. */
+  overflow: hidden; /* #content scrolls internally instead */
+}
+
+#content {
+  flex: 1;
+  min-height: 0; /* required for a flex child's own overflow to work */
+  overflow: hidden;
+  padding: var(--space-2);
+}
+
+#nav {
+  flex-shrink: 0;
+  justify-content: center;
+  padding: var(--space-2);
+  /* MapLibre's attribution control sits at the very bottom of the fixed, full-viewport #map
+     behind this bar -- flush with the viewport edge, the stamps' perforated silhouette lets it
+     show through and collide with the stamp labels. 32px is the control's own height plus its
+     bottom offset (measured, not a themed spacing value), just enough to clear it. */
+  margin-bottom: 32px;
+}
+
+.nav-stamp {
+  width: 78px;
+  min-height: 44px; /* real touch target even though the stamp graphic reads shorter */
+  padding: var(--space-1);
+  font-size: 0.7rem;
+}
+
+/*
+ * Video/detail views: sized to their own content (video strip + metadata), not stretched --
+ * the map fills whatever space is left below, down to the nav bar.
+ */
+.video-display,
+.trip-display,
+.random-display {
+  padding: var(--space-3);
+}
+
+.video-display video,
+.trip-display video,
+.random-display video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: block;
+  border-radius: var(--radius);
+}
+
+/* Mobile: video and info stack (no flex row yet, see the desktop block below), so without this
+   the title sits flush against the video's bottom edge. Desktop resets it to 0 -- the flex gap
+   on .video-display/.trip-display/.random-display already spaces the two columns apart there. */
+.display-media {
+  margin-bottom: var(--space-3);
+}
+
+/*
+ * List/text views: fill the available height and scroll internally. Per ui-design.md, the map
+ * is reduced or omitted on these on mobile -- giving them the opaque .paper background (below)
+ * at full height accomplishes that naturally, without a separate visibility rule.
+ */
+.trips,
+.videos,
+.about,
+.not-found {
+  height: 100%;
+  overflow-y: auto;
+  padding: var(--space-3);
+}
+
+/* Trip/country overviews are a detail page with a short-ish list, not an index -- like the
+   single-video views, they should size to their own content and leave the map visible below
+   rather than claiming the whole screen. Capped at half the height (rather than left fully
+   auto) since a long trip/country's list could otherwise still push the map off-screen. */
+.trip-overview,
+.country-overview {
+  max-height: 50%;
+  overflow-y: auto;
+  padding: var(--space-3);
+}
+
+.trips,
+.videos,
+.trip-overview,
+.country-overview,
+.about,
+.not-found,
+.video-display,
+.trip-display,
+.random-display {
+  background-color: var(--paper);
+  background-image: var(--paper-texture);
+  background-size: var(--paper-texture-size);
+  border-radius: var(--radius);
+}
+
+/* The about-page photo: floated so the text flows around it rather than stacking full-width
+   above the copy, which otherwise buries several paragraphs below one big image. */
+.about .us {
+  float: right;
+  width: 40%;
+  max-width: 280px;
+  margin: 0 0 var(--space-3) var(--space-3);
+  border-radius: var(--radius);
+}
+
+/* Trip overview's main call to action, "watch all the videos of this trip" -- styled as a big
+   perforated stamp (same mask technique as #nav's stamps, see nav.css) rather than a plain
+   link, so it reads as the thing to click rather than one more line in the page. */
+.cta {
+  margin: var(--space-2) 0 var(--space-4);
+  text-align: center;
+}
+
+.cta-stamp {
+  --perf-r: 6px;
+  --perf-gap: 15px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-5);
+  background: var(--stamp-color, var(--stamp-amber));
+  mask:
+    radial-gradient(circle var(--perf-r) at 50% 0, #0000 99%, #000) 0 0 /
+      var(--perf-gap) 100%,
+    radial-gradient(circle var(--perf-r) at 50% 100%, #0000 99%, #000) 0 0 /
+      var(--perf-gap) 100%,
+    radial-gradient(circle var(--perf-r) at 0 50%, #0000 99%, #000) 0 0 / 100%
+      var(--perf-gap),
+    radial-gradient(circle var(--perf-r) at 100% 50%, #0000 99%, #000) 0 0 /
+      100% var(--perf-gap);
+  mask-composite: intersect;
+  font-weight: bold;
+  font-size: 1.15rem;
+  color: #000;
+  text-decoration: none;
+  transform: rotate(-1deg);
+}
+
+.cta-stamp:hover {
+  transform: rotate(-1deg) scale(1.04);
+}
+
+/* Same stamp, sized for one-per-row in the /trip list, floated right so the trip name/year and
+   video list flow around it rather than sitting in a separate column. flow-root on the <li>
+   (below) contains the float instead of letting a tall stamp spill into the next trip's row. */
+.cta-stamp--small {
+  --perf-r: 4px;
+  --perf-gap: 11px;
+
+  float: right;
+  margin: 0 0 var(--space-2) var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  font-size: 0.85rem;
+}
+
+.trips li {
+  display: flow-root;
+}
+
+/* Cycle the same 5-color palette as #nav's stamps across each trip's watch-stamp (nav.css has
+   the identical 5n+1..5n+5 cycle for the same reason: a 6th/11th/16th item just picks the 1st
+   color again rather than going uncolored). */
+.trips li:nth-child(5n + 1) .cta-stamp {
+  --stamp-color: var(--stamp-amber);
+}
+.trips li:nth-child(5n + 2) .cta-stamp {
+  --stamp-color: var(--stamp-coral);
+}
+.trips li:nth-child(5n + 3) .cta-stamp {
+  --stamp-color: var(--stamp-salmon);
+}
+.trips li:nth-child(5n + 4) .cta-stamp {
+  --stamp-color: var(--stamp-terracotta);
+}
+.trips li:nth-child(5n + 5) .cta-stamp {
+  --stamp-color: var(--stamp-gold);
+}
+
+/* A small centered rule between trips -- list markers alone don't give enough separation once
+   each row can run to several lines of video names plus a floated stamp. */
+.trips li:not(:last-child) {
+  margin-bottom: var(--space-4);
+}
+
+.trips li:not(:last-child)::after {
+  content: '';
+  display: block;
+  width: 60%;
+  margin: var(--space-3) auto 0;
+  border-bottom: 1px solid var(--ink-muted);
+  opacity: 0.35;
+}
+
+/* /map has no content box of its own -- a small label, transparent everywhere else so the
+   full-screen map is genuinely full-screen. */
+.map-view {
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  background: rgb(255 255 255 / 75%);
+  border-radius: var(--radius);
+}
+
+.map-view p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+}
+
+/* Country/itinerary lists: newspaper-style columns so a long list fits the box's height instead
+   of turning into one long single-column scroll. break-inside keeps a country's heading glued
+   to its own list, and a trip's day-gap marker glued to the entries it separates. */
+.videos-list {
+  column-width: 280px;
+  column-gap: var(--space-4);
+}
+
+.videos-list section {
+  break-inside: avoid;
+  margin-bottom: var(--space-3);
+}
+
+/* Country names as stamps too -- same small size as /trip's watch-stamps, but not floated
+   (this is a heading, not a button sitting beside flowing text). */
+.country-stamp {
+  float: none;
+  margin: 0;
+}
+
+/* Cycle the same 5-color palette as #nav's stamps across each country heading. */
+.videos-list section:nth-of-type(5n + 1) .country-stamp {
+  --stamp-color: var(--stamp-amber);
+}
+.videos-list section:nth-of-type(5n + 2) .country-stamp {
+  --stamp-color: var(--stamp-coral);
+}
+.videos-list section:nth-of-type(5n + 3) .country-stamp {
+  --stamp-color: var(--stamp-salmon);
+}
+.videos-list section:nth-of-type(5n + 4) .country-stamp {
+  --stamp-color: var(--stamp-terracotta);
+}
+.videos-list section:nth-of-type(5n + 5) .country-stamp {
+  --stamp-color: var(--stamp-gold);
+}
+
+/* Columns are opt-in here (unlike .videos-list, which is always long): a short trip's itinerary
+   reads fine as one list, and only earns the "itinerary--columns" class (trip-overview.ts) once
+   it's long enough that columns actually save scrolling instead of just splitting up a short
+   page. */
+.itinerary--columns {
+  column-width: 280px;
+  column-gap: var(--space-4);
+}
+
+.itinerary li {
+  break-inside: avoid;
+}
+
+@media (min-width: 768px) {
+  body {
+    display: block;
+    height: 100dvh;
+  }
+
+  #content {
+    position: absolute;
+    left: 50px;
+    right: 50px;
+    top: 30px;
+    bottom: 75px;
+    padding: 0;
+  }
+
+  .trips,
+  .videos,
+  .trip-overview,
+  .country-overview,
+  .about,
+  .not-found,
+  .video-display,
+  .trip-display,
+  .random-display {
+    height: auto;
+    max-height: 100%;
+    overflow-y: auto;
+    max-width: 1000px;
+    padding: var(--space-4);
+  }
+
+  /* Every single-video view (video-display/trip-display/random-display) shares the same shell
+     markup (video-info.ts) and, here, the same layout: media and info side by side rather than a
+     narrow video stacked above a long column of text -- the box is wide enough (1000px) to give
+     each real room. */
+  .video-display,
+  .trip-display,
+  .random-display {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  .display-media {
+    flex: 3 1 320px;
+    margin-bottom: 0; /* the mobile video-to-title gap above; the flex gap covers it here */
+  }
+
+  .display-media video {
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .display-info {
+    flex: 2 1 280px;
+    min-width: 0;
+  }
+
+  #nav {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    width: auto;
+    padding: 0;
+    margin-bottom: 0; /* the attribution-collision fix above is mobile-only */
+  }
+
+  .nav-stamp {
+    width: 150px;
+    min-height: 59px;
+    font-size: 1rem;
+  }
+
+  .map-view {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-2);
+  }
+}
