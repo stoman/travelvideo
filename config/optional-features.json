@@ -1,7 +1,0 @@
-{
-  "application-template-wrapper": false,
-  "default-async-observers": true,
-  "jquery-integration": false,
-  "template-only-glimmer-components": false,
-  "no-implicit-route-model": false
-}

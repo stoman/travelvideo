@@ -7,7 +7,6 @@ yarn-error.log*
 # Build outputs
 dist/
 tmp/
-.ember-build/
 
 # Version control
 .git/
@@ -40,5 +39,3 @@ docs/
 
 # CI/CD
 .github/
-.gitlab-ci.yml
-.travis.yml
