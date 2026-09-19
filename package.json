@@ -9,7 +9,9 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "ember build --environment=production",
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview",
     "format": "prettier . --cache --write",
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\" --prefixColors auto",
     "lint:css": "stylelint \"**/*.css\" --allow-empty-input",
@@ -73,7 +75,9 @@
     "qunit-dom": "^3.5.0",
     "sass": "^1.94.0",
     "stylelint": "^16.23.1",
-    "stylelint-config-standard": "^39.0.0"
+    "stylelint-config-standard": "^39.0.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.3.0"
   },
   "engines": {
     "node": ">= 20.11"
