@@ -1,9 +1,11 @@
 import { initRouter } from './router.ts';
 import type { Route } from './data/types.ts';
-import { trips, videosByCountry, counts } from './data/index.ts';
+import { trips, videosByCountry, counts, getTrip } from './data/index.ts';
 import { renderAbout } from './views/about.ts';
 import { renderTrips } from './views/trips.ts';
 import { renderVideos } from './views/videos.ts';
+import { renderTripOverview } from './views/trip-overview.ts';
+import { renderNotFound } from './views/not-found.ts';
 
 const content = document.getElementById('content')!;
 
@@ -16,9 +18,6 @@ const content = document.getElementById('content')!;
 function renderPlaceholder(route: Route): void {
   const h1 = document.createElement('h1');
   switch (route.name) {
-    case 'trip-overview':
-      h1.textContent = `Trip: ${route.tripId}`;
-      break;
     case 'trip-display':
       h1.textContent = `Trip ${route.tripId} / Video ${route.videoId}`;
       break;
@@ -31,12 +30,11 @@ function renderPlaceholder(route: Route): void {
     case 'random-display':
       h1.textContent = `Random: ${route.videoId}`;
       break;
-    case 'not-found':
-      h1.textContent = 'Not found';
-      break;
     case 'about':
     case 'trips':
     case 'videos':
+    case 'trip-overview':
+    case 'not-found':
       // handled in render() before reaching here
       break;
     // home-redirect, trip-start-redirect and random-redirect never reach here -- the router
@@ -55,6 +53,14 @@ function render(route: Route): void {
       return;
     case 'videos':
       content.innerHTML = renderVideos(videosByCountry, counts);
+      return;
+    case 'trip-overview': {
+      const trip = getTrip(route.tripId);
+      content.innerHTML = trip ? renderTripOverview(trip) : renderNotFound();
+      return;
+    }
+    case 'not-found':
+      content.innerHTML = renderNotFound();
       return;
     default:
       renderPlaceholder(route);
