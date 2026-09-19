@@ -1,10 +1,117 @@
 /*
- * Minimal structural CSS for Phase 5: gives the persistent #map element real dimensions to
- * render into (architecture.md: "The map lives in a fixed container behind the content").
- * Decorative styling -- palette, typography, paper texture, stamp nav, mobile layout -- is
- * Phase 6's addition on top of this.
+ * Custom properties, typography, reset, and the CSS paper texture. The #map/#content
+ * positioning added in Phase 5 stays here; mobile/desktop layout composition lives in
+ * layout.css, since it needs to react to viewport width and this file shouldn't.
  */
 
+:root {
+  /* Warm stamp palette (ui-design.md): amber, coral, salmon, terracotta, gold -- cycled across
+     nav items with :nth-child so a 6th item picks the 1st color rather than going untextured. */
+  --stamp-amber: #e8a33d;
+  --stamp-coral: #e2725b;
+  --stamp-salmon: #f0977d;
+  --stamp-terracotta: #c05f39;
+  --stamp-gold: #d4a72c;
+
+  /* Existing site red, also used for the map's trip route lines -- must stay legible against
+     the warm map palette, so it's kept separate from the stamp family rather than blended in. */
+  --route-red: #e74c3c;
+
+  --paper: #f1ece1;
+  --ink: #2b2420;
+  --ink-muted: #5a4f45;
+  --link: #6b3410;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+
+  --radius: 10px;
+  --focus-ring: 3px solid var(--stamp-terracotta);
+
+  --font-heading: Georgia, 'Times New Roman', serif;
+  --font-body:
+    system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  /* Paper texture: warm cream base with uneven low-alpha mottling and sparse flecks, layered
+     radial-gradients on mutually coprime tile sizes so the combined pattern only repeats after
+     their product -- far larger than any content box, so the eye never catches the tiling.
+     Contrast is kept low deliberately; this should read as paper, not pattern. */
+  --paper-texture:
+    radial-gradient(circle at 20% 30%, rgb(0 0 0 / 3%) 0%, transparent 60%),
+    radial-gradient(circle at 70% 65%, rgb(0 0 0 / 2.5%) 0%, transparent 55%),
+    radial-gradient(circle at 40% 80%, rgb(255 255 255 / 40%) 0%, transparent 50%),
+    radial-gradient(circle at 1px 1px, rgb(0 0 0 / 4%) 1px, transparent 1.5px),
+    radial-gradient(circle at 1px 1px, rgb(0 0 0 / 3%) 1px, transparent 1.5px);
+  --paper-texture-size:
+    173px 173px,
+    211px 211px,
+    149px 149px,
+    37px 37px,
+    53px 53px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  line-height: 1.5;
+  /* The current app hides overflow on body, which is why it has no mobile scrolling. Content
+     needs to scroll on a phone, so this is deliberately not carried forward. */
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+  margin: 0 0 var(--space-2);
+}
+
+h1 {
+  font-size: 1.75rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+}
+
+p {
+  margin: 0 0 var(--space-3);
+}
+
+a {
+  color: var(--link);
+}
+
+a:not(.nav-stamp) {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+ul,
+ol {
+  padding-left: var(--space-4);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Persistent map background (Phase 5) */
 #map {
   position: fixed;
   inset: 0;
@@ -14,4 +121,30 @@
 
 #content {
   position: relative;
+}
+
+/* Reusable paper box -- see the --paper-texture custom property above for the technique. */
+.paper {
+  background-color: var(--paper);
+  background-image: var(--paper-texture);
+  background-size: var(--paper-texture-size);
+  background-repeat: repeat;
+  border-radius: var(--radius);
+  border: 4px solid #fff;
+}
+
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
