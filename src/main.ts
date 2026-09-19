@@ -1,10 +1,11 @@
 import { initRouter } from './router.ts';
 import type { Route } from './data/types.ts';
-import { trips, videosByCountry, counts, getTrip } from './data/index.ts';
+import { trips, videosByCountry, counts, getTrip, getVideo } from './data/index.ts';
 import { renderAbout } from './views/about.ts';
 import { renderTrips } from './views/trips.ts';
 import { renderVideos } from './views/videos.ts';
 import { renderTripOverview } from './views/trip-overview.ts';
+import { renderVideoDisplay } from './views/video-display.ts';
 import { renderNotFound } from './views/not-found.ts';
 
 const content = document.getElementById('content')!;
@@ -21,9 +22,6 @@ function renderPlaceholder(route: Route): void {
     case 'trip-display':
       h1.textContent = `Trip ${route.tripId} / Video ${route.videoId}`;
       break;
-    case 'video-display':
-      h1.textContent = `Video: ${route.videoId}`;
-      break;
     case 'map':
       h1.textContent = 'Map';
       break;
@@ -34,6 +32,7 @@ function renderPlaceholder(route: Route): void {
     case 'trips':
     case 'videos':
     case 'trip-overview':
+    case 'video-display':
     case 'not-found':
       // handled in render() before reaching here
       break;
@@ -57,6 +56,11 @@ function render(route: Route): void {
     case 'trip-overview': {
       const trip = getTrip(route.tripId);
       content.innerHTML = trip ? renderTripOverview(trip) : renderNotFound();
+      return;
+    }
+    case 'video-display': {
+      const video = getVideo(route.videoId);
+      content.innerHTML = video ? renderVideoDisplay(video) : renderNotFound();
       return;
     }
     case 'not-found':
