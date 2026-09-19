@@ -1,0 +1,17 @@
+/*
+ * Minimal structural CSS for Phase 5: gives the persistent #map element real dimensions to
+ * render into (architecture.md: "The map lives in a fixed container behind the content").
+ * Decorative styling -- palette, typography, paper texture, stamp nav, mobile layout -- is
+ * Phase 6's addition on top of this.
+ */
+
+#map {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#content {
+  position: relative;
+}

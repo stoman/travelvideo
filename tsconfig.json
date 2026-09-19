@@ -11,7 +11,7 @@
     "allowImportingTsExtensions": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "types": ["node"]
+    "types": ["node", "geojson"]
   },
   "include": ["src"]
 }
