@@ -124,7 +124,36 @@ export function flyToVideo(
   });
 }
 
-/** Shared by showTripFittedToBounds and showCountryFittedToBounds below. */
+/**
+ * flyTo/jumpTo's own `padding` option doesn't just steer that one move -- it's stored as the
+ * map's persistent padding (`map.getPadding()`), still in effect for whatever comes next.
+ * fitBounds treats the padding it's given as *additional* to that persistent padding rather than
+ * replacing it, so calling it right after a flyToVideo (every trip-display frame does one) added
+ * the two together -- easily exceeding the canvas size for a geographically wide trip, which
+ * silently fails the fit (MapLibre warns and leaves the camera wherever flyTo last put it, e.g.
+ * still zoomed into the trip's last video instead of showing the whole route). Since every padding
+ * passed here already describes the *complete* occlusion, clearing the persistent padding first
+ * keeps fitBounds' own math from double-counting it.
+ *
+ * Even with that fixed, a box that occludes most of the canvas (a wide trip like a
+ * round-the-world route combined with a wide overview card) can demand a zoom below the map's own
+ * minZoom to fit everything in the sliver that's left -- MapLibre just clamps to minZoom then,
+ * silently leaving far points outside the frame. Capping how much of each axis the padding may
+ * claim keeps enough room that the fit stays achievable within minZoom for any trip this site has.
+ */
+const MAX_FIT_PADDING_FRACTION = 0.5;
+
+function clampAxisPadding(
+  a: number,
+  b: number,
+  size: number,
+): [number, number] {
+  const max = size * MAX_FIT_PADDING_FRACTION;
+  if (a + b <= max) return [a, b];
+  const scale = max / (a + b);
+  return [a * scale, b * scale];
+}
+
 function fitToCoordinates(
   map: maplibregl.Map,
   coordinates: [number, number][],
@@ -137,14 +166,20 @@ function fitToCoordinates(
     (b, c) => b.extend(c),
     new maplibregl.LngLatBounds(first, first),
   );
-  const fitPadding = {
-    top: padding.top + 48,
-    right: padding.right + 48,
-    bottom: padding.bottom + 48,
-    left: padding.left + 48,
-  };
+  const canvas = map.getCanvas();
+  const [left, right] = clampAxisPadding(
+    padding.left + 48,
+    padding.right + 48,
+    canvas.clientWidth,
+  );
+  const [top, bottom] = clampAxisPadding(
+    padding.top + 48,
+    padding.bottom + 48,
+    canvas.clientHeight,
+  );
+  map.setPadding(NO_PADDING);
   map.fitBounds(bounds, {
-    padding: fitPadding,
+    padding: { top, right, bottom, left },
     duration: prefersReducedMotion() ? 0 : undefined,
   });
 }
