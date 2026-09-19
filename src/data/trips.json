@@ -270,7 +270,14 @@
     "id": "iceland_highlands",
     "name": "Iceland Highlands",
     "year": "2026",
-    "videos": ["gjallandi", "askja", "kverkjoekull", "joekulsarlon2", "sveinstindur", "sundhnuksgigar"],
+    "videos": [
+      "gjallandi",
+      "askja",
+      "kverkjoekull",
+      "joekulsarlon2",
+      "sveinstindur",
+      "sundhnuksgigar"
+    ],
     "finished": true
   }
 ]

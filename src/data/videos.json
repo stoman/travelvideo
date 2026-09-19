@@ -3015,15 +3015,15 @@
     "country": "Iceland",
     "filename": "gjallandi.mp4",
     "date": "2026-08-19",
-    "latitude": 0.0,
-    "longitude": 0.0,
+    "latitude": 64.820286,
+    "longitude": -17.628789,
     "peopleIn": "Stefan",
     "peopleOut": "Anna",
     "peopleStart": "Anna",
     "peopleEnd": "Stefan",
     "guests": "",
     "camera": "Pixel 9a",
-    "preferredZoom": 11
+    "preferredZoom": 8
   },
   {
     "id": "askja",
@@ -3032,15 +3032,15 @@
     "country": "Iceland",
     "filename": "askja.mp4",
     "date": "2026-08-20",
-    "latitude": 0.0,
-    "longitude": 0.0,
+    "latitude": 65.044185,
+    "longitude": -16.723924,
     "peopleIn": "Anna",
     "peopleOut": "Stefan",
     "peopleStart": "Stefan",
     "peopleEnd": "Anna",
     "guests": "",
     "camera": "Pixel 9a",
-    "preferredZoom": 11
+    "preferredZoom": 8
   },
   {
     "id": "kverkjoekull",
@@ -3049,15 +3049,15 @@
     "country": "Iceland",
     "filename": "kverkjoekull.mp4",
     "date": "2026-08-21",
-    "latitude": 0.0,
-    "longitude": 0.0,
+    "latitude": 64.705848,
+    "longitude": -16.65314,
     "peopleIn": "Stefan",
     "peopleOut": "Anna",
     "peopleStart": "Anna",
     "peopleEnd": "Stefan",
     "guests": "",
     "camera": "Pixel 9a",
-    "preferredZoom": 11
+    "preferredZoom": 8
   },
   {
     "id": "joekulsarlon2",
@@ -3066,15 +3066,15 @@
     "country": "Iceland",
     "filename": "joekulsarlon2.mp4",
     "date": "2026-08-23",
-    "latitude": 0.0,
-    "longitude": 0.0,
+    "latitude": 64.050051,
+    "longitude": -16.180459,
     "peopleIn": "Anna",
     "peopleOut": "Stefan",
     "peopleStart": "Stefan",
     "peopleEnd": "Anna",
     "guests": "",
     "camera": "Pixel 9a",
-    "preferredZoom": 11
+    "preferredZoom": 7
   },
   {
     "id": "sveinstindur",
@@ -3083,15 +3083,15 @@
     "country": "Iceland",
     "filename": "sveinstindur.mp4",
     "date": "2026-08-25",
-    "latitude": 0.0,
-    "longitude": 0.0,
+    "latitude": 64.105908,
+    "longitude": -18.417212,
     "peopleIn": "Stefan",
     "peopleOut": "Anna",
     "peopleStart": "Anna",
     "peopleEnd": "Stefan",
     "guests": "",
     "camera": "Pixel 9a",
-    "preferredZoom": 11
+    "preferredZoom": 8
   },
   {
     "id": "sundhnuksgigar",
@@ -3100,14 +3100,14 @@
     "country": "Iceland",
     "filename": "sundhnuksgigar.mp4",
     "date": "2026-08-27",
-    "latitude": 0.0,
-    "longitude": 0.0,
+    "latitude": 63.90298,
+    "longitude": -22.421823,
     "peopleIn": "Anna",
     "peopleOut": "Stefan",
     "peopleStart": "Stefan",
     "peopleEnd": "Anna",
     "guests": "",
     "camera": "Pixel 9a",
-    "preferredZoom": 11
+    "preferredZoom": 8
   }
 ]
