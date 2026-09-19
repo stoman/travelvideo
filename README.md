@@ -1,6 +1,6 @@
 # travelvideo
 
-This is the code for the website located at [https://travel.stoman.de](https://travel.stoman.de). This repository contains all the code, but due to file sizes not the actual videos. You can view the website at the URL given above or build the website yourself as described below.
+This is the code for the website located at [https://travel.stoman.de](https://travel.stoman.de). This repository is the complete site, videos included — clone it, build it, and it's ready to deploy. You can view the website at the URL given above or build the website yourself as described below.
 
 The website is a log of some of the places we visited together. In most of those places we created a short video holding a sign with the name of the city. The videos are concatenated in a way such that each video starts with the same people visible as the last one ended with.
 
@@ -10,8 +10,6 @@ You will need the following things properly installed on your computer.
 
 - [Git](https://git-scm.com/)
 - [Node.js](https://nodejs.org/) (with npm)
-- [Ember CLI](https://cli.emberjs.com/release/)
-- [Google Chrome](https://google.com/chrome/)
 
 ## Setup
 
@@ -21,21 +19,23 @@ You will need the following things properly installed on your computer.
 
 ## Running
 
-- `npm run start`
-- Visit your app at [http://localhost:4200](http://localhost:4200).
-- Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
+- `npm run dev`
+- Visit your app at [http://localhost:5173](http://localhost:5173).
 
 ### Running with Docker Locally
 
+The video archive is committed to the repo and baked into the image, so no separate volume is
+needed:
+
 - `docker build -f Dockerfile -t travelvideo .`
-- `docker run -p 8080:80 -v <absolute_path_to_videos_local>:/usr/local/apache2/htdocs/assets/videos:ro travelvideo`
+- `docker run -p 8080:80 travelvideo`
+- Visit [http://localhost:8080](http://localhost:8080).
 
 ## Testing / Linting
 
 ### Running Tests Locally
 
 - `npm run test`
-- `npm run test:ember -- --server`
 - `npm run lint`
 - `npm run lint:fix`
 
@@ -44,20 +44,17 @@ You will need the following things properly installed on your computer.
 Using Docker Compose with volume mounting for faster iteration:
 
 ```bash
-# Run all tests (linting + tests)
+# Run all tests (tsc --noEmit + node --test)
 docker compose -f docker-compose.test.yml run --rm test
 
 # Fix formatting issues with Prettier
 docker compose -f docker-compose.test.yml run --rm test npm run lint:fix
 
-# Run only linting (no tests)
+# Run only linting
 docker compose -f docker-compose.test.yml run --rm test npm run lint
 
-# Run only Ember tests (skip linting)
-docker compose -f docker-compose.test.yml run --rm test npm run test:ember
-
 # Interactive shell in container
-docker compose -f docker-compose.test.yml run --rm test bash
+docker compose -f docker-compose.test.yml run --rm test sh
 
 # Build/rebuild the test image
 docker compose -f docker-compose.test.yml build
@@ -76,7 +73,10 @@ docker run --rm travelvideo-test npm test
 
 ## Deploying
 
-Deployments are run automatically by GitHub Actions. The workflow is defined in `.github/workflows/deploy.yml`.
+Deployments are run automatically by GitHub Actions on every push to `main`. The workflow is
+defined in `.github/workflows/deploy.yml`: it runs the test suite, then (only if that passes and
+the push is to `main`) builds the Docker image, pushes it to `registry.stoman.de`, and SSHes into
+the server to pull and restart it via `docker compose`.
 
 ### Manual Deployment
 
@@ -84,14 +84,14 @@ Build the Docker container and push it to the registry:
 
 ```bash
 docker build -t registry.stoman.de/travel:latest .
+docker push registry.stoman.de/travel:latest
 ```
 
-Then connect to the server and pull the container. Videos are not part of the container, so you need to upload them to the server if changed or added.
-
-### Development Build
-
-- `npm exec ember build`
+Then connect to the server and run `docker compose pull && docker compose up -d` in the deploy
+directory. The video archive is committed to the repo and built into the image — there is
+nothing separate to upload.
 
 ### Production Build
 
 - `npm run build`
+- Emits static files to `dist/`, which the Dockerfile copies into the image verbatim.

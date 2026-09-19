@@ -13,17 +13,6 @@ export default tseslint.config(
     },
   },
   {
-    ignores: [
-      'dist/',
-      'node_modules/',
-      'coverage/',
-      // Ember app being replaced by this rewrite -- deleted in a later step, not worth
-      // reconfiguring Ember/decorator-aware linting for code on its way out.
-      'app/',
-      'config/',
-      'tests/',
-      'ember-cli-build.js',
-      'testem.js',
-    ],
+    ignores: ['dist/', 'node_modules/', 'coverage/'],
   },
 );
