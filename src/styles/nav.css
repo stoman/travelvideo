@@ -1,0 +1,70 @@
+/*
+ * Postage-stamp navigation, pure CSS: flat color with a perforated silhouette via composited
+ * radial-gradient masks -- no images, no SVG, nothing to download. A 6th nav item picks up the
+ * 1st stamp color automatically (:nth-child(5n+N) cycling) rather than rendering untextured.
+ */
+
+#nav {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.nav-stamp {
+  --perf-r: 4px;
+  --perf-gap: 11px;
+
+  background: var(--stamp-color);
+  mask:
+    radial-gradient(circle var(--perf-r) at 50% 0, #0000 99%, #000) 0 0 / var(--perf-gap) 100%,
+    radial-gradient(circle var(--perf-r) at 50% 100%, #0000 99%, #000) 0 0 / var(--perf-gap) 100%,
+    radial-gradient(circle var(--perf-r) at 0 50%, #0000 99%, #000) 0 0 / 100% var(--perf-gap),
+    radial-gradient(circle var(--perf-r) at 100% 50%, #0000 99%, #000) 0 0 / 100% var(--perf-gap);
+  mask-composite: intersect;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  color: #000;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+#nav a:nth-child(5n + 1) {
+  --stamp-color: var(--stamp-amber);
+}
+#nav a:nth-child(5n + 2) {
+  --stamp-color: var(--stamp-coral);
+}
+#nav a:nth-child(5n + 3) {
+  --stamp-color: var(--stamp-salmon);
+}
+#nav a:nth-child(5n + 4) {
+  --stamp-color: var(--stamp-terracotta);
+}
+#nav a:nth-child(5n + 5) {
+  --stamp-color: var(--stamp-gold);
+}
+
+/* Rotation cycles independently of color so a 6th item still looks "scattered". */
+#nav a:nth-child(5n + 1) {
+  transform: rotate(1deg);
+}
+#nav a:nth-child(5n + 2) {
+  transform: rotate(-3deg);
+}
+#nav a:nth-child(5n + 3) {
+  transform: rotate(0deg);
+}
+#nav a:nth-child(5n + 4) {
+  transform: rotate(2deg);
+}
+#nav a:nth-child(5n + 5) {
+  transform: rotate(-1deg);
+}
+
+#nav a:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 3px;
+}
