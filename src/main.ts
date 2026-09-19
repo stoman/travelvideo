@@ -31,6 +31,7 @@ import {
   showTripFittedToBounds,
   showCountryFittedToBounds,
   showAllRoutes,
+  showOnlyTripRoute,
   setFullGestureControl,
   type MapPadding,
 } from './map/map.ts';
@@ -84,7 +85,8 @@ function currentMapPadding(): MapPadding {
 /**
  * Camera position and gesture mode for the given route. The map loads asynchronously and is
  * very unlikely to be ready in time for the first route on a fresh page load; every function
- * this calls (flyToVideo, showTripFittedToBounds, showAllRoutes, setFullGestureControl) queues
+ * this calls (flyToVideo, showTripFittedToBounds, showAllRoutes, showOnlyTripRoute,
+ * setFullGestureControl) queues
  * itself against map readiness internally, so calling them here unconditionally is safe -- each
  * call takes effect once the map exists, in the order it was made.
  */
@@ -121,8 +123,8 @@ function syncMap(route: Route): void {
     case 'trip-display': {
       const trip = getTrip(route.tripId);
       const video = trip && getVideo(route.videoId);
-      if (video) {
-        showAllRoutes();
+      if (trip && video) {
+        showOnlyTripRoute(trip.id);
         flyToVideo(
           video.longitude,
           video.latitude,
