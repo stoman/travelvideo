@@ -103,8 +103,9 @@ browsable. Turn it off.
 ## Video file storage — in the repo
 
 Decided: the video archive is **committed to git** at `public/assets/videos/` — normalised
-first, which takes it from 194.8 MB to an expected 80–110 MB. Remove `public/assets/videos`
-from `.gitignore`.
+first, which takes it from 194.8 MB to 141 MB (see [video.md](video.md) for why this landed
+higher than the original 80–110 MB estimate). Remove `public/assets/videos` from
+`.gitignore`.
 
 Vite copies `public/` to `dist/` verbatim, and the Dockerfile already copies `dist/` into the
 image — so the videos travel with the image and no volume mount, rsync or separate sync step

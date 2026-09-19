@@ -36,8 +36,13 @@ the anamorphic bulk sits around 2,300 kbps where roughly 1,000 would look identi
 
 ### Normalise before committing, not after
 
-**Run one ffmpeg pass over the archive and commit the output**, not the originals. Target is
-roughly 80–110 MB, down from 195 MB, with no visible quality loss.
+**Run one ffmpeg pass over the archive and commit the output**, not the originals. Actual
+result: **141 MB**, down from 194.8 MB, with no visible quality loss — a smaller reduction than
+first estimated. The original 80–110 MB target assumed only one file needed the anamorphic
+pixel-count correction; correcting it on the real 131 means encoding 33% more pixels for 74% of
+the archive, which claws back a good part of the CRF21 saving. 141 MB is still a 28% cut and
+comfortably inside both GitHub's limits and the 22 GB disk budget, so this was not worth chasing
+further with a more aggressive CRF.
 
 This is the only cheap moment to do it. The files are going into git permanently, and
 re-encoding later does not replace those bytes — it adds the new ones on top, forever.
@@ -81,14 +86,28 @@ Why each flag:
 - `+faststart` moves the moov atom to the front so playback begins before the file finishes
   downloading. The originals do not all have this.
 
-Verified against one sample from each bucket: correct display aspect ratio, matching source
-duration exactly, and a smaller file in every case (e.g. the 640×480 anamorphic
-`agra.mp4` → 852×480 at DAR 853:480, 879 KB → 587 KB; the 1920×1080 `bryce_canyon.mp4` →
-1280×720, 8.1 MB → 1.6 MB).
+Verified over all 177 files: every output opens, and duration matches its source to within
+1 ms. 135 of 177 (76%) also come out smaller, e.g. the 1920×1080 `bryce_canyon.mp4` → 1280×720,
+8.1 MB → 1.6 MB.
 
-**Verify before committing and keep the originals until you have:** every output must open,
-match its source duration, and be smaller. Spot-check the five 1080p clips and a handful of
-320×240 ones by eye, since those are the two extremes.
+**42 anamorphic files come out *larger* than their source, and that is expected, not a bug.**
+These are the low-bitrate end of the 131 anamorphic files — originals that were already encoded
+efficiently at their squeezed 640×480 coded size. Correcting the aspect ratio to the real
+852×480 display size means encoding 33% more pixels; at a fixed CRF that costs more bits than
+the original spent on fewer, squeezed pixels. Confirmed on `arezzo.mp4`: 640×480 source
+(924 kbps) → 852×480 output (1,196 kbps), 636 KB → 822 KB — same duration, correct proportions,
+no visible quality loss, just an unavoidably larger file because it is honestly representing
+more pixels than the original did. Chasing "smaller" on these specific files would mean
+either re-squeezing them (reintroducing the bug) or dropping resolution below what the source
+actually contains.
+
+**Verify before committing and keep the originals until you have:** every output must open and
+match its source duration; treat "not smaller" as expected only for anamorphic files where the
+corrected pixel count exceeds the squeezed original, and investigate any other file that grows.
+Spot-check by eye: extract a frame from source and output with `ffmpeg -ss 1 -i <file> -frames:v
+1 out.png` and compare — confirms proportions and quality without needing a video player. Cover
+at least one file from each bucket (853×480 anamorphic, 1920×1080, 320×240) plus one from the
+NOT_SMALLER group.
 
 ### Do not reintroduce
 
@@ -164,8 +183,9 @@ remaining reason to need it.
 Decided: the video files **live in the repo**, at `public/assets/videos/`. Remove
 `public/assets/videos` from `.gitignore`.
 
-Expected 80–110 MB after normalisation, down from 194.8 MB, with the largest source file
-8.5 MB — well within GitHub's limits either way. The benefit is that the repo becomes the
+**141 MB** after normalisation, down from 194.8 MB (see above for why this landed higher than
+the original 80–110 MB estimate), with the largest source file 8.5 MB — well within GitHub's
+limits either way. The benefit is that the repo becomes the
 complete site: clone, build, deploy, with nothing external to sync and no separate backup to
 maintain.
 

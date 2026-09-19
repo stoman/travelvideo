@@ -60,7 +60,7 @@ Settled. Do not relitigate without a concrete reason.
 | MapLibre GL JS | The one runtime dependency; standards-based, framework-agnostic |
 | OpenFreeMap hosted tiles | Self-hosting needs 4–15 GB; the server has 22 GB free and the videos live there too |
 | Client-rendered SPA, one `index.html` | Keeps the map instance alive so it can animate between videos |
-| One rendition, normalised once before the first commit | Sources range 320×240–1080p at wasteful bitrates; a single ffmpeg pass roughly halves permanent repo weight. A ladder still solves nothing |
+| One rendition, normalised once before the first commit | Sources range 320×240–1080p at wasteful bitrates; a single ffmpeg pass cuts permanent repo weight by 28% (194.8→141 MB). A ladder still solves nothing |
 | Video files committed to git | Makes the repo the complete site — clone, build, deploy |
 | The `all` trip is derived, not stored | Removes 177 duplicated ids and cannot drift out of sync |
 | No poster frames | No thumbnail grid in the design; avoids an ffmpeg dependency |
