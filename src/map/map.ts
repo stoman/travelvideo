@@ -228,6 +228,16 @@ export function showAllRoutes(): void {
   withMap((map) => setVisibleTrip(map, null));
 }
 
+/**
+ * Shows only the given trip's route without moving the camera -- used during chained playback
+ * within a trip (/trip/:id/:video), where flyToVideo already handles the camera and the other
+ * trips' lines would otherwise be a distraction. Random and singleton video playback stay on
+ * showAllRoutes since they aren't scoped to one trip.
+ */
+export function showOnlyTripRoute(tripId: string): void {
+  withMap((map) => setVisibleTrip(map, tripId));
+}
+
 /** Full gesture control on /map; cooperative (two-finger pan) everywhere the map is a background. */
 export function setFullGestureControl(enabled: boolean): void {
   withMap((map) => {
