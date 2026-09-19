@@ -139,12 +139,21 @@ which is a typo while adding a trip. See [testing.md](testing.md).
 - **Every video is referenced by at least one real trip.** Now that `all` is derived rather
   than stored, this is a genuinely useful check: it catches a video added to `videos.json`
   that was never assigned to a trip, which would otherwise be reachable only by direct URL.
+  It immediately found **four pre-existing orphans**, referenced only by the old synthetic
+  `all` fixture and by no real trip: `oberschleissheim`, `weissenfels`, `koenigssee`,
+  `timisoara`. Not documented before this check existed. Treat these the same way as the
+  people-chain breaks below — known exceptions, reported as warnings, not a hard failure —
+  until Stefan confirms which trip each belongs to (or that it should stay unassigned).
 - `latitude` ∈ [-90, 90], `longitude` ∈ [-180, 180], and neither is `0.0`. The current data is
   clean on all three — placeholder `0.0, 0.0` coordinates have reached `main` before, so this
   is a guard against recurrence rather than a known problem.
 - `preferredZoom` is an integer within the map's configured min/max zoom.
 - `date` parses as a valid ISO date.
-- Dates are non-decreasing within each trip's `videos` order.
+- Dates are non-decreasing within each trip's `videos` order. One pre-existing violation:
+  in `oscars`, `kings_canyon` (2025-03-09) is ordered before `purisima_creek` (2025-02-15).
+  Not documented before this check existed. Same treatment as the people-chain breaks:
+  reported as a warning pending review — it's not clear yet whether the date or the order
+  is the mistake.
 - `filename` is non-empty and unique.
 - **People chain integrity:** for consecutive videos in a trip, `peopleEnd[n]` equals
   `peopleStart[n+1]`. The current data has **exactly five violations**, all in two trips:
