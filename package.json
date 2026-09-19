@@ -18,7 +18,7 @@
   },
   "repository": "",
   "devDependencies": {
-    "@eslint/js": "^9.35.0",
+    "@eslint/js": "^10.0.0",
     "@types/geojson": "^7946.0.16",
     "@types/node": "^26.6.2",
     "concurrently": "^9.2.1",
