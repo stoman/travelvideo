@@ -95,17 +95,3 @@ nothing separate to upload.
 
 - `npm run build`
 - Emits static files to `dist/`, which the Dockerfile copies into the image verbatim.
-
-### Known gaps in the Apache config
-
-Not yet done, independent of the app itself — `docker-httpd.conf` still has `mod_deflate`,
-`mod_brotli` and `mod_expires` commented out (so responses aren't compressed and carry no
-`Cache-Control`), and `Options Indexes` is still enabled (directory listings are publicly
-browsable). Fixing all four is small and safe:
-
-- Uncomment the three `LoadModule` lines and add an `AddOutputFilterByType` block for
-  compression.
-- Add a `Cache-Control` block to `public/.htaccess` (immutable, long-lived for hashed
-  JS/CSS/video assets; `no-cache` for `index.html`) — `mod_headers` is already loaded, so this
-  works without touching `docker-httpd.conf` further.
-- Change `Options Indexes FollowSymLinks` to `Options FollowSymLinks`.
