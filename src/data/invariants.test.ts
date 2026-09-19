@@ -20,18 +20,18 @@ const KNOWN_PEOPLE_CHAIN_BREAKS = new Set([
   'world:miami->quito',
 ]);
 
-// Found by this test suite, not documented in spec/data-model.md -- genuinely new, unreviewed
-// data issues in the pre-existing fixtures (not something this migration introduced; confirmed
-// against app/models/trip.js directly). Reported as warnings, same treatment as the people-chain
-// breaks above, until Stefan confirms whether each is intentional or a fix is needed.
+// Found by this test suite, not documented in spec/data-model.md -- genuinely new data issues
+// in the pre-existing fixtures (not something the migration introduced; confirmed against
+// app/models/trip.js directly), since confirmed with Stefan.
+//
+// Confirmed intentional: these four are standalone -- shown on the map and in the all-videos
+// list, but deliberately not part of any specific trip. Reported as a warning, same treatment
+// as the people-chain breaks above, so a *new* unreferenced video still fails loudly.
 const KNOWN_UNREFERENCED_VIDEOS = new Set([
   'oberschleissheim',
   'weissenfels',
   'koenigssee',
   'timisoara',
-]);
-const KNOWN_DATE_ORDER_BREAKS = new Set([
-  'oscars:kings_canyon->purisima_creek',
 ]);
 
 test('video ids are unique', () => {
@@ -71,7 +71,7 @@ test('every video is referenced by at least one real trip', () => {
 
   if (knownSeen.size > 0) {
     console.warn(
-      `${knownSeen.size} known unreferenced video(s), reported as a warning pending review: ${[...knownSeen].join(', ')}`,
+      `${knownSeen.size} known standalone video(s) (confirmed intentional, not part of any trip): ${[...knownSeen].join(', ')}`,
     );
   }
   assert.deepEqual(
@@ -132,39 +132,19 @@ test('dates parse as valid ISO dates', () => {
 });
 
 test('dates are non-decreasing within each trip', () => {
-  const unexpected: string[] = [];
-  const knownSeen = new Set<string>();
-
+  // No known exceptions -- the one found while writing this suite (oscars:
+  // kings_canyon->purisima_creek) was a genuine data error (purisima_creek's date, not its
+  // order), fixed directly rather than carried as an exception.
   for (const trip of realTrips) {
     for (let i = 1; i < trip.videos.length; i++) {
       const prev = getVideo(trip.videos[i - 1]!)!;
       const curr = getVideo(trip.videos[i]!)!;
-      if (prev.date <= curr.date) continue;
-      const key = `${trip.id}:${prev.id}->${curr.id}`;
-      const detail = `${key}: ${prev.date} then ${curr.date}`;
-      if (KNOWN_DATE_ORDER_BREAKS.has(key)) {
-        knownSeen.add(key);
-      } else {
-        unexpected.push(detail);
-      }
+      assert.ok(
+        prev.date <= curr.date,
+        `trip "${trip.id}": "${prev.id}" (${prev.date}) comes before "${curr.id}" (${curr.date}) out of order`,
+      );
     }
   }
-
-  if (knownSeen.size > 0) {
-    console.warn(
-      `${knownSeen.size} known date-order break(s), reported as a warning pending review: ${[...knownSeen].join(', ')}`,
-    );
-  }
-  assert.deepEqual(
-    unexpected,
-    [],
-    `unexpected date-order break(s): ${unexpected.join('; ')}`,
-  );
-  assert.equal(
-    knownSeen.size,
-    KNOWN_DATE_ORDER_BREAKS.size,
-    'a previously-known date-order break is now in order -- update KNOWN_DATE_ORDER_BREAKS',
-  );
 });
 
 test('filenames are non-empty and unique', () => {
