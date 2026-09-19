@@ -1,45 +1,61 @@
-import { initRouter } from './router.ts';
+import { initRouter, navigate } from './router.ts';
 import type { Route } from './data/types.ts';
-import { trips, videosByCountry, counts, getTrip, getVideo } from './data/index.ts';
+import { trips, videos, videosByCountry, counts, getTrip, getVideo } from './data/index.ts';
 import { renderAbout } from './views/about.ts';
 import { renderTrips } from './views/trips.ts';
 import { renderVideos } from './views/videos.ts';
 import { renderTripOverview } from './views/trip-overview.ts';
 import { renderVideoDisplay } from './views/video-display.ts';
+import { renderTripDisplay } from './views/trip-display.ts';
+import { renderRandomDisplay } from './views/random-display.ts';
 import { renderNotFound } from './views/not-found.ts';
+import {
+  nextVideoIdInTrip,
+  pickChainedVideo,
+  attachEndedHandler,
+  prefetchVideo,
+} from './video/player.ts';
 
 const content = document.getElementById('content')!;
 
-/**
- * Placeholder rendering for routes not yet built out (Phase 3 in progress) -- distinguishable
- * per route so navigation can be verified end to end before the real view lands. Route params
- * come from the URL, so they're set via textContent on the heading, never interpolated into an
- * HTML string.
- */
-function renderPlaceholder(route: Route): void {
+/** Map view lands in Phase 5; everything else is built. */
+function renderMapPlaceholder(): void {
   const h1 = document.createElement('h1');
-  switch (route.name) {
-    case 'trip-display':
-      h1.textContent = `Trip ${route.tripId} / Video ${route.videoId}`;
-      break;
-    case 'map':
-      h1.textContent = 'Map';
-      break;
-    case 'random-display':
-      h1.textContent = `Random: ${route.videoId}`;
-      break;
-    case 'about':
-    case 'trips':
-    case 'videos':
-    case 'trip-overview':
-    case 'video-display':
-    case 'not-found':
-      // handled in render() before reaching here
-      break;
-    // home-redirect, trip-start-redirect and random-redirect never reach here -- the router
-    // resolves them to a concrete route (or not-found) before notifying this listener.
-  }
+  h1.textContent = 'Map';
   content.replaceChildren(h1);
+}
+
+function renderTripDisplayRoute(tripId: string, videoId: string): void {
+  const trip = getTrip(tripId);
+  const video = trip && getVideo(videoId);
+  if (!trip || !video) {
+    content.innerHTML = renderNotFound();
+    return;
+  }
+  content.innerHTML = renderTripDisplay(trip, video);
+  const videoEl = content.querySelector('video')!;
+  const nextId = nextVideoIdInTrip(trip, video.id);
+  if (nextId) {
+    prefetchVideo(getVideo(nextId)!.filename);
+    attachEndedHandler(videoEl, () => navigate(`/trip/${trip.id}/${nextId}`));
+  } else {
+    // Last video in the trip: end at the overview, not a dead frame.
+    attachEndedHandler(videoEl, () => navigate(`/trip/${trip.id}`));
+  }
+}
+
+function renderRandomDisplayRoute(videoId: string): void {
+  const video = getVideo(videoId);
+  if (!video) {
+    content.innerHTML = renderNotFound();
+    return;
+  }
+  content.innerHTML = renderRandomDisplay(video);
+  const videoEl = content.querySelector('video')!;
+  // Chosen once, ahead of time, so the prefetched clip is the one actually played next.
+  const next = pickChainedVideo(video, videos);
+  prefetchVideo(next.filename);
+  attachEndedHandler(videoEl, () => navigate(`/random/${next.id}`));
 }
 
 function render(route: Route): void {
@@ -63,11 +79,20 @@ function render(route: Route): void {
       content.innerHTML = video ? renderVideoDisplay(video) : renderNotFound();
       return;
     }
+    case 'trip-display':
+      renderTripDisplayRoute(route.tripId, route.videoId);
+      return;
+    case 'random-display':
+      renderRandomDisplayRoute(route.videoId);
+      return;
+    case 'map':
+      renderMapPlaceholder();
+      return;
     case 'not-found':
       content.innerHTML = renderNotFound();
       return;
-    default:
-      renderPlaceholder(route);
+    // home-redirect, trip-start-redirect and random-redirect never reach here -- the router
+    // resolves them to a concrete route (or not-found) before notifying this listener.
   }
 }
 

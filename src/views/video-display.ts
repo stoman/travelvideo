@@ -1,12 +1,12 @@
 import { getTripsForVideo } from '../data/index.ts';
 import type { Video } from '../data/types.ts';
+import { videoElementHtml } from '../video/player.ts';
 
 /**
- * /video/:videoId: full metadata and trip membership. Trusted content. Mirrors the fields the
- * current video-listing component shows (name, description, country, date, coordinates,
- * guests, camera) -- peopleIn/Out/Start/End aren't shown today either, so this doesn't add them.
- *
- * The video element itself (with controls, per ui-design.md) is Phase 4's addition to this view.
+ * /video/:videoId: video with controls, full metadata, and trip membership. Trusted content.
+ * Metadata mirrors the fields the current video-listing component shows (name, description,
+ * country, date, coordinates, guests, camera) -- peopleIn/Out/Start/End aren't shown today
+ * either, so this doesn't add them.
  */
 export function renderVideoDisplay(video: Video): string {
   const trips = getTripsForVideo(video.id);
@@ -30,6 +30,7 @@ export function renderVideoDisplay(video: Video): string {
 
   return `
     <div class="video-display">
+      ${videoElementHtml(video, { controls: true })}
       <h1>${video.name}</h1>
       ${video.description ? `<p>${video.description}</p>` : ''}
       <p>Country: ${video.country}</p>
