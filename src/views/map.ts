@@ -3,5 +3,5 @@
  * here -- this just gives the route a landmark heading. Full-screen layout is Phase 6's CSS.
  */
 export function renderMap(): string {
-  return '<h1>Map</h1>';
+  return '<h1 class="map-view">Map</h1>';
 }
