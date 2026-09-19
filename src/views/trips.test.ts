@@ -39,6 +39,7 @@ test('all trip is pinned first, then real trips newest-first', () => {
   assert.equal(trips[0]!.id, 'all');
   const realTripIds = trips.slice(1).map((t) => t.id);
   assert.deepEqual(realTripIds, [
+    'iceland_highlands',
     'mallorca',
     'spitzingsee',
     'oscars',
@@ -49,7 +50,7 @@ test('all trip is pinned first, then real trips newest-first', () => {
     'portugal',
     'westcoast_usa',
     'world',
-    'iceland',
+    'iceland_ring_road',
     'aida_canary_islands',
     'sicily',
     'china',

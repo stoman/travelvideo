@@ -69,8 +69,8 @@
     "finished": true
   },
   {
-    "id": "iceland",
-    "name": "Iceland",
+    "id": "iceland_ring_road",
+    "name": "Iceland Ring Road",
     "year": "2016",
     "videos": [
       "reykjavik",
@@ -264,6 +264,13 @@
     "name": "Mallorca",
     "year": "2025",
     "videos": ["porto_cristo", "sa_coma"],
+    "finished": true
+  },
+  {
+    "id": "iceland_highlands",
+    "name": "Iceland Highlands",
+    "year": "2026",
+    "videos": ["gjallandi", "askja", "kverkjoekull", "joekulsarlon2", "sveinstindur", "sundhnuksgigar"],
     "finished": true
   }
 ]
