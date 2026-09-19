@@ -1,11 +1,11 @@
 import type { Trip, Video } from '../data/types.ts';
-import { videoElementHtml } from '../video/player.ts';
+import { renderVideoDisplayShell } from './video-info.ts';
 
 /**
  * /trip/:tripId/:videoId: playback within a trip, lean-back and chained (no controls, per
  * video.md). Offers explicit previous/next links and a "stop at this video" escape to
  * /video/:videoId. Chaining itself (advancing on `ended`) is wired in main.ts, since it needs
- * DOM access to the rendered <video> element.
+ * DOM access to the rendered <video> element. See video-info.ts for the shared metadata block.
  */
 export function renderTripDisplay(trip: Trip, video: Video): string {
   const index = trip.videos.indexOf(video.id);
@@ -22,16 +22,16 @@ export function renderTripDisplay(trip: Trip, video: Video): string {
     ? `<a href="/trip/${trip.id}/${nextId}">Next video</a>`
     : '';
 
-  return `
-    <div class="trip-display">
-      ${videoElementHtml(video)}
-      <h1>${video.name}</h1>
-      <p><a href="/trip/${trip.id}">${trip.name}</a></p>
-      <nav>
-        ${prevLink}
-        ${nextLink}
-        <a href="/video/${video.id}">Stop at this video</a>
-      </nav>
-    </div>
+  // No link back to the trip here -- the "This video is part of the trips" list from
+  // video-info.ts already links to it (and, unlike a plain link, offers "start full trip"/
+  // "start at this video" too), so a second plain link would just duplicate it.
+  const nav = `
+    <nav>
+      ${prevLink}
+      ${nextLink}
+      <a href="/video/${video.id}">Stop at this video</a>
+    </nav>
   `;
+
+  return renderVideoDisplayShell('trip-display', video, { nav });
 }

@@ -50,6 +50,13 @@ export function parseRoute(pathname: string): Route {
     return { name: 'map' };
   }
 
+  if (first === 'country') {
+    if (segments.length === 2) {
+      return { name: 'country-overview', slug: second! };
+    }
+    return { name: 'not-found' };
+  }
+
   if (first === 'random') {
     if (segments.length === 1) {
       return { name: 'random-redirect' };

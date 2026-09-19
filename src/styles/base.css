@@ -5,13 +5,17 @@
  */
 
 :root {
-  /* Warm stamp palette (ui-design.md): amber, coral, salmon, terracotta, gold -- cycled across
-     nav items with :nth-child so a 6th item picks the 1st color rather than going untextured. */
-  --stamp-amber: #e8a33d;
-  --stamp-coral: #e2725b;
-  --stamp-salmon: #f0977d;
-  --stamp-terracotta: #c05f39;
-  --stamp-gold: #d4a72c;
+  /* Stamp palette, cycled across nav items with :nth-child so a 6th item picks the 1st color
+     rather than going untextured. Pastel (high lightness, moderate saturation), spread across
+     the full hue wheel rather than confined to ui-design.md's original warm-only amber/coral/
+     salmon set -- five same-family tones read as one beige, not as "colorful". Variable names
+     are historical/positional (which nav slot each cycles into, see nav.css), not literal --
+     --stamp-salmon and --stamp-terracotta are green and blue here. */
+  --stamp-amber: hsl(32deg 75% 78%);
+  --stamp-coral: hsl(350deg 70% 82%);
+  --stamp-salmon: hsl(145deg 42% 72%);
+  --stamp-terracotta: hsl(205deg 55% 78%);
+  --stamp-gold: hsl(270deg 40% 82%);
 
   /* Existing site red, also used for the map's trip route lines -- must stay legible against
      the warm map palette, so it's kept separate from the stamp family rather than blended in. */
@@ -28,8 +32,11 @@
   --space-4: 1.5rem;
   --space-5: 2.5rem;
 
-  --radius: 10px;
-  --focus-ring: 3px solid var(--stamp-terracotta);
+  --radius: 16px;
+  /* Deliberately not a stamp color: those are pastel now, too low-contrast against the cream
+     paper background to make a reliably visible focus outline. --link is already dark enough to
+     read against both the paper and the stamps themselves. */
+  --focus-ring: 3px solid var(--link);
 
   --font-heading: Georgia, 'Times New Roman', serif;
   --font-body:
@@ -38,19 +45,21 @@
   /* Paper texture: warm cream base with uneven low-alpha mottling and sparse flecks, layered
      radial-gradients on mutually coprime tile sizes so the combined pattern only repeats after
      their product -- far larger than any content box, so the eye never catches the tiling.
-     Contrast is kept low deliberately; this should read as paper, not pattern. */
+     Contrast is kept low deliberately; this should read as paper, not pattern. Tiles are large
+     and every stop fades out well short of its tile edge (mottling) or over several pixels
+     (flecks) rather than cutting off abruptly, so a repeat never reads as a hard edge. */
   --paper-texture:
-    radial-gradient(circle at 20% 30%, rgb(0 0 0 / 3%) 0%, transparent 60%),
-    radial-gradient(circle at 70% 65%, rgb(0 0 0 / 2.5%) 0%, transparent 55%),
+    radial-gradient(circle at 20% 30%, rgb(0 0 0 / 3%) 0%, transparent 70%),
+    radial-gradient(circle at 70% 65%, rgb(0 0 0 / 2.5%) 0%, transparent 65%),
     radial-gradient(
       circle at 40% 80%,
-      rgb(255 255 255 / 40%) 0%,
-      transparent 50%
+      rgb(255 255 255 / 35%) 0%,
+      transparent 60%
     ),
-    radial-gradient(circle at 1px 1px, rgb(0 0 0 / 4%) 1px, transparent 1.5px),
-    radial-gradient(circle at 1px 1px, rgb(0 0 0 / 3%) 1px, transparent 1.5px);
+    radial-gradient(circle at 3px 3px, rgb(0 0 0 / 3%) 0, transparent 5px),
+    radial-gradient(circle at 3px 3px, rgb(0 0 0 / 2%) 0, transparent 6px);
   --paper-texture-size:
-    173px 173px, 211px 211px, 149px 149px, 37px 37px, 53px 53px;
+    337px 337px, 401px 401px, 293px 293px, 71px 71px, 97px 97px;
 }
 
 *,
@@ -119,8 +128,17 @@ img {
   height: 100%;
 }
 
+/* #content spans nearly the whole viewport on every route so it can host any view's box, but
+   most of that area is empty on routes like /map -- pointer-events:none here (restored on the
+   actual rendered view element below) lets clicks/drags/scroll reach the persistent map instead
+   of being swallowed by an invisible box over it. */
 #content {
   position: relative;
+  pointer-events: none;
+}
+
+#content > * {
+  pointer-events: auto;
 }
 
 /* Reusable paper box -- see the --paper-texture custom property above for the technique. */

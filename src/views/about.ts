@@ -5,8 +5,8 @@
 export function renderAbout(): string {
   return `
     <div class="about">
-      <img src="/assets/us.jpg" alt="Anna and Stefan" class="us" />
       <h1>Welcome to our Travel Map</h1>
+      <img src="/assets/us.jpg" alt="Anna and Stefan" class="us" />
       <p>We are Anna and Stefan. At this website we keep a log of some of the places we
       visited together. In most of those places we created a short video holding a sign with
       the name of the city. The videos are concatenated in a way such that each video starts

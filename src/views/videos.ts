@@ -1,4 +1,5 @@
-import type { CountryGroup } from '../data/index.ts';
+import { countrySlug, type CountryGroup } from '../data/index.ts';
+import { formatDate } from '../format.ts';
 
 interface Counts {
   videos: number;
@@ -11,12 +12,13 @@ export function renderVideos(groups: CountryGroup[], counts: Counts): string {
     .map((group) => {
       const items = group.videos
         .map(
-          (v) => `<li><a href="/video/${v.id}">${v.name}</a> — ${v.date}</li>`,
+          (v) =>
+            `<li><a href="/video/${v.id}">${v.name}</a> — ${formatDate(v.date)}</li>`,
         )
         .join('');
       return `
         <section>
-          <h2>${group.country}</h2>
+          <h2><a class="cta-stamp cta-stamp--small country-stamp" href="/country/${countrySlug(group.country)}">${group.country}</a></h2>
           <ul>${items}</ul>
         </section>
       `;
@@ -26,7 +28,7 @@ export function renderVideos(groups: CountryGroup[], counts: Counts): string {
   return `
     <div class="videos">
       <h1>${counts.videos} Videos from ${counts.countries} Countries</h1>
-      ${sections}
+      <div class="videos-list">${sections}</div>
     </div>
   `;
 }

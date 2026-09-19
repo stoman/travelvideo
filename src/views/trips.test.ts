@@ -23,3 +23,36 @@ test('the derived all trip is included and rendered', () => {
   const html = renderTrips(trips);
   assert.match(html, /href="\/trip\/all"/);
 });
+
+test('every trip gets its own watch-stamp linking to its first video, named after the trip', () => {
+  const html = renderTrips(trips);
+  const china = getTrip('china')!;
+  assert.match(
+    html,
+    new RegExp(
+      `<a class="cta-stamp cta-stamp--small" href="/trip/china/${china.videos[0]}">Watch ${china.name}</a>`,
+    ),
+  );
+});
+
+test('all trip is pinned first, then real trips newest-first', () => {
+  assert.equal(trips[0]!.id, 'all');
+  const realTripIds = trips.slice(1).map((t) => t.id);
+  assert.deepEqual(realTripIds, [
+    'mallorca',
+    'spitzingsee',
+    'oscars',
+    'olympia_toskana',
+    'romania',
+    'caribbean',
+    'harz',
+    'portugal',
+    'westcoast_usa',
+    'world',
+    'iceland',
+    'aida_canary_islands',
+    'sicily',
+    'china',
+    'interrail',
+  ]);
+});

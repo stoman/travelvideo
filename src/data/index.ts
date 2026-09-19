@@ -9,9 +9,11 @@ export const realTrips: Trip[] = rawTrips as Trip[];
 
 export const ALL_TRIP_ID = 'all';
 
+const videoById = new Map(videos.map((v) => [v.id, v]));
+
 /**
  * The `all` trip is derived, never stored -- storing it would duplicate every video id
- * and let it drift out of sync. See spec/data-model.md.
+ * and let it drift out of sync.
  */
 const allTrip: Trip = {
   id: ALL_TRIP_ID,
@@ -23,10 +25,20 @@ const allTrip: Trip = {
   finished: false,
 };
 
-/** Real trips plus the derived `all` trip -- this is the list shown at /trip. */
-export const trips: Trip[] = [...realTrips, allTrip];
+/**
+ * Real trips plus the derived `all` trip -- this is the list shown at /trip. Newest first (by
+ * each trip's first video's date), with `all` pinned at the top rather than sorted by its own
+ * meaningless, everything-spanning year.
+ */
+export const trips: Trip[] = [
+  allTrip,
+  ...[...realTrips].sort((a, b) => {
+    const aDate = videoById.get(a.videos[0]!)?.date ?? '';
+    const bDate = videoById.get(b.videos[0]!)?.date ?? '';
+    return bDate.localeCompare(aDate);
+  }),
+];
 
-const videoById = new Map(videos.map((v) => [v.id, v]));
 const tripById = new Map(trips.map((t) => [t.id, t]));
 
 export function getVideo(id: string): Video | undefined {
@@ -78,6 +90,28 @@ export const videosByCountry: CountryGroup[] = (() => {
   groups.sort((a, b) => a.country.localeCompare(b.country));
   return groups;
 })();
+
+/**
+ * URL-safe id for a country name (`New Zealand` -> `new-zealand`), used for /country/:slug.
+ * Country names are authored data, not user input -- a collision would be a data-quality bug
+ * (caught by the invariant test below, see invariants.test.ts), not a security concern.
+ */
+export function countrySlug(country: string): string {
+  return country
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[̀-ͯ]/g, '') // strip diacritics, e.g. an accented character
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+const countryGroupBySlug = new Map(
+  videosByCountry.map((g) => [countrySlug(g.country), g]),
+);
+
+export function getCountryGroup(slug: string): CountryGroup | undefined {
+  return countryGroupBySlug.get(slug);
+}
 
 const MS_PER_DAY = 86_400_000;
 

@@ -60,6 +60,13 @@ test('/map -> map', () => {
   assert.deepEqual(parseRoute('/map'), { name: 'map' });
 });
 
+test('/country/:slug -> country-overview', () => {
+  assert.deepEqual(parseRoute('/country/new-zealand'), {
+    name: 'country-overview',
+    slug: 'new-zealand',
+  });
+});
+
 test('/random -> random-redirect', () => {
   assert.deepEqual(parseRoute('/random'), { name: 'random-redirect' });
 });
@@ -77,6 +84,8 @@ test('unknown paths resolve to not-found', () => {
   assert.deepEqual(parseRoute('/video/a/b'), { name: 'not-found' });
   assert.deepEqual(parseRoute('/random/a/b'), { name: 'not-found' });
   assert.deepEqual(parseRoute('/about/extra'), { name: 'not-found' });
+  assert.deepEqual(parseRoute('/country'), { name: 'not-found' });
+  assert.deepEqual(parseRoute('/country/a/b'), { name: 'not-found' });
 });
 
 test('trailing slashes and double slashes are tolerated', () => {

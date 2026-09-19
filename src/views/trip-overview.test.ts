@@ -49,3 +49,16 @@ test('the call to action links to the first video', () => {
     /href="\/trip\/sicily\/taormina">Watch all the videos of this trip/,
   );
 });
+
+test('a short trip (at most 10 videos) renders a single-column list', () => {
+  const trip = getTrip('sicily')!; // 3 videos
+  const html = renderTripOverview(trip);
+  assert.match(html, /<ul class="itinerary">/);
+  assert.doesNotMatch(html, /itinerary--columns/);
+});
+
+test('a long trip (more than 10 videos) opts into columns', () => {
+  const trip = getTrip('china')!; // 13 videos
+  const html = renderTripOverview(trip);
+  assert.match(html, /<ul class="itinerary itinerary--columns">/);
+});

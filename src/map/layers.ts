@@ -32,7 +32,7 @@ export function addMarkerLayers(map: maplibregl.Map): void {
     filter: ['has', 'point_count'],
     paint: {
       'circle-color': '#c0533a',
-      'circle-radius': ['step', ['get', 'point_count'], 14, 10, 18, 50, 24],
+      'circle-radius': ['step', ['get', 'point_count'], 18, 10, 22, 50, 28],
       'circle-stroke-width': 2,
       'circle-stroke-color': '#fff7ec',
     },
@@ -58,7 +58,7 @@ export function addMarkerLayers(map: maplibregl.Map): void {
     filter: ['!', ['has', 'point_count']],
     paint: {
       'circle-color': '#e8a33d',
-      'circle-radius': 6,
+      'circle-radius': 10,
       'circle-stroke-width': 2,
       'circle-stroke-color': '#fff7ec',
     },

@@ -3,15 +3,22 @@ import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { videos, realTrips, getVideo, dayGap } from './index.ts';
+import {
+  videos,
+  realTrips,
+  videosByCountry,
+  getVideo,
+  dayGap,
+  countrySlug,
+} from './index.ts';
 
 const videosDir = path.join(
   path.dirname(path.dirname(path.dirname(fileURLToPath(import.meta.url)))),
   'public/assets/videos',
 );
 
-// Real, pre-existing exceptions to the people-chain rule -- confirmed, not to be "fixed".
-// See spec/data-model.md.
+// Real, pre-existing exceptions to the people-chain rule -- confirmed with Stefan, not to be
+// "fixed"; may be intentional (a travel day or a change of companions breaks the chain).
 const KNOWN_PEOPLE_CHAIN_BREAKS = new Set([
   'china:peking->peking_olympic_park',
   'china:tiantouzhai->tiantouzhai2',
@@ -20,10 +27,6 @@ const KNOWN_PEOPLE_CHAIN_BREAKS = new Set([
   'world:miami->quito',
 ]);
 
-// Found by this test suite, not documented in spec/data-model.md -- genuinely new data issues
-// in the pre-existing fixtures (not something the migration introduced; confirmed against
-// app/models/trip.js directly), since confirmed with Stefan.
-//
 // Confirmed intentional: these four are standalone -- shown on the map and in the all-videos
 // list, but deliberately not part of any specific trip. Reported as a warning, same treatment
 // as the people-chain breaks above, so a *new* unreferenced video still fails loudly.
@@ -104,7 +107,7 @@ test('coordinates are within valid, non-placeholder ranges', () => {
 });
 
 test('preferredZoom is an integer within the map zoom range', () => {
-  // Zoom limits from spec/map.md: min 2, max 12.
+  // Zoom limits match src/map/map.ts's MIN_ZOOM/MAX_ZOOM: 2 and 12.
   for (const video of videos) {
     assert.ok(
       Number.isInteger(video.preferredZoom),
@@ -147,6 +150,21 @@ test('dates are non-decreasing within each trip', () => {
   }
 });
 
+test('countrySlug lowercases and hyphenates', () => {
+  assert.equal(countrySlug('New Zealand'), 'new-zealand');
+  assert.equal(countrySlug('Bosnia and Herzegovina'), 'bosnia-and-herzegovina');
+  assert.equal(countrySlug('US Virgin Islands'), 'us-virgin-islands');
+});
+
+test('country slugs (used for /country/:slug) are unique', () => {
+  const slugs = videosByCountry.map((g) => countrySlug(g.country));
+  assert.equal(
+    new Set(slugs).size,
+    slugs.length,
+    'two different country names produced the same slug',
+  );
+});
+
 test('filenames are non-empty and unique', () => {
   const filenames = videos.map((v) => v.filename);
   assert.ok(filenames.every((f) => f.length > 0));
@@ -185,7 +203,7 @@ test("people chain: peopleEnd matches the next video's peopleStart (known breaks
 
   if (knownBreaksSeen.size > 0) {
     console.warn(
-      `${knownBreaksSeen.size} known people-chain break(s), reported as warnings per spec/data-model.md (may be intentional -- a travel day or change of companions):`,
+      `${knownBreaksSeen.size} known people-chain break(s), reported as warnings, not failures (may be intentional -- a travel day or change of companions):`,
     );
     for (const key of knownBreaksSeen) console.warn(`  ${key}`);
   }

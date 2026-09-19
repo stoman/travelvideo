@@ -40,6 +40,7 @@ export type Route =
   | { name: 'trip-display'; tripId: string; videoId: string } // '/trip/:tripId/:videoId'
   | { name: 'videos' } // '/video'
   | { name: 'video-display'; videoId: string } // '/video/:videoId'
+  | { name: 'country-overview'; slug: string } // '/country/:slug'
   | { name: 'map' } // '/map'
   | { name: 'random-redirect' } // '/random'
   | { name: 'random-display'; videoId: string } // '/random/:videoId'

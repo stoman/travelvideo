@@ -14,6 +14,14 @@ test('middle video gets both previous and next links, plus stop-at', () => {
   assert.doesNotMatch(html, /<video[^>]* controls/);
 });
 
+test('shows the same metadata as /video/:id, per video-info.ts', () => {
+  const trip = getTrip('sicily')!;
+  const video = getVideo('siracusa')!;
+  const html = renderTripDisplay(trip, video);
+  assert.match(html, /Country: <a href="\/country\/italy">Italy<\/a>/);
+  assert.match(html, /Date: 30\.07\.2015/);
+});
+
 test('first video has no previous link', () => {
   const trip = getTrip('sicily')!;
   const video = getVideo('taormina')!;
