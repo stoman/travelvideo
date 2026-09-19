@@ -37,6 +37,7 @@
     "@eslint/js": "^9.35.0",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
+    "@types/node": "^26.6.2",
     "@warp-drive/build-config": "^5.8.0",
     "@warp-drive/ember": "^5.8.0",
     "broccoli-asset-rev": "^3.0.0",
