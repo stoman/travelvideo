@@ -1,0 +1,23 @@
+/**
+ * Static content, authored and committed by Stefan -- trusted, interpolated directly.
+ * Route params are never involved here, so there's nothing from the URL to escape.
+ */
+export function renderAbout(): string {
+  return `
+    <div class="about">
+      <img src="/assets/us.jpg" alt="Anna and Stefan" class="us" />
+      <h1>Welcome to our Travel Map</h1>
+      <p>We are Anna and Stefan. At this website we keep a log of some of the places we
+      visited together. In most of those places we created a short video holding a sign with
+      the name of the city. The videos are concatenated in a way such that each video starts
+      with the same people visible as the last one ended with.</p>
+      <p>Explore the <a href="/trip">list of our trips</a>, check the
+      <a href="/map">map of locations we visited</a>, or just watch some
+      <a href="/random">videos in random order</a>.</p>
+      <p>If you are interested in the technical details of this website, check our
+      <a href="https://github.com/stoman/travelvideo" target="_blank" rel="noopener noreferrer">public GitHub repository</a>.
+      Stars, comments, or even contributions to the code are always welcome.</p>
+      <p>See you on the road!</p>
+    </div>
+  `;
+}
