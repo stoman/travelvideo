@@ -3,12 +3,21 @@ import assert from 'node:assert/strict';
 import { renderMap } from './map.ts';
 
 test('renders a map-view labelled heading', () => {
-  const html = renderMap();
+  const html = renderMap('en');
   assert.match(html, /class="map-view"/);
   assert.match(html, />Map<\/h1>/);
 });
 
 test('explains that the map can be panned and zoomed here', () => {
-  const html = renderMap();
+  const html = renderMap('en');
   assert.match(html, /Drag to move around, scroll or pinch to zoom\./);
+});
+
+test('German translation', () => {
+  const html = renderMap('de');
+  assert.match(html, />Karte<\/h1>/);
+  assert.match(
+    html,
+    /Zum Bewegen ziehen, zum Zoomen scrollen oder mit zwei Fingern zoomen\./,
+  );
 });
