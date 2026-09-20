@@ -1,8 +1,11 @@
 import { getVideo } from '../data/index.ts';
 import type { Trip } from '../data/types.ts';
+import type { Locale } from '../i18n/locale.ts';
+import { translations } from '../i18n/translations.ts';
 
-/** /trip: list of trips -- name, year, and the video names within each. Trusted content. */
-export function renderTrips(trips: Trip[]): string {
+/** /:locale/trip: list of trips -- name, year, and the video names within each. Trusted content. */
+export function renderTrips(trips: Trip[], locale: Locale): string {
+  const t = translations[locale];
   const items = trips
     .map((trip) => {
       const videoNames = trip.videos
@@ -12,12 +15,12 @@ export function renderTrips(trips: Trip[]): string {
       // floated right -- one stamp per row here rather than the single big one there.
       const firstVideoId = trip.videos[0];
       const watchButton = firstVideoId
-        ? `<a class="cta-stamp cta-stamp--small" href="/trip/${trip.id}/${firstVideoId}">Watch ${trip.name}</a>`
+        ? `<a class="cta-stamp cta-stamp--small" href="/${locale}/trip/${trip.id}/${firstVideoId}">${t.trips.watchTrip(trip.name)}</a>`
         : '';
       return `
         <li>
           ${watchButton}
-          <a href="/trip/${trip.id}">${trip.name}</a> (${trip.year})
+          <a href="/${locale}/trip/${trip.id}">${trip.name}</a> (${trip.year})
           <p>${videoNames}</p>
         </li>
       `;
@@ -26,7 +29,7 @@ export function renderTrips(trips: Trip[]): string {
 
   return `
     <div class="trips">
-      <h1>Trips</h1>
+      <h1>${t.trips.heading}</h1>
       <ul>${items}</ul>
     </div>
   `;

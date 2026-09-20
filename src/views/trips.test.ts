@@ -4,9 +4,9 @@ import { renderTrips } from './trips.ts';
 import { trips, getTrip } from '../data/index.ts';
 
 test('every trip appears with a link and its video names, in order', () => {
-  const html = renderTrips(trips);
+  const html = renderTrips(trips, 'en');
   const china = getTrip('china')!;
-  assert.match(html, /href="\/trip\/china"/);
+  assert.match(html, /href="\/en\/trip\/china"/);
   assert.match(html, />China<\/a>/);
   assert.match(html, /\(2014\)/);
   // videos in itinerary order, not alphabetical
@@ -20,17 +20,17 @@ test('every trip appears with a link and its video names, in order', () => {
 });
 
 test('the derived all trip is included and rendered', () => {
-  const html = renderTrips(trips);
-  assert.match(html, /href="\/trip\/all"/);
+  const html = renderTrips(trips, 'en');
+  assert.match(html, /href="\/en\/trip\/all"/);
 });
 
 test('every trip gets its own watch-stamp linking to its first video, named after the trip', () => {
-  const html = renderTrips(trips);
+  const html = renderTrips(trips, 'en');
   const china = getTrip('china')!;
   assert.match(
     html,
     new RegExp(
-      `<a class="cta-stamp cta-stamp--small" href="/trip/china/${china.videos[0]}">Watch ${china.name}</a>`,
+      `<a class="cta-stamp cta-stamp--small" href="/en/trip/china/${china.videos[0]}">Watch ${china.name}</a>`,
     ),
   );
 });
@@ -56,4 +56,17 @@ test('all trip is pinned first, then real trips newest-first', () => {
     'china',
     'interrail',
   ]);
+});
+
+test('renders locale-prefixed hrefs and translated heading in German', () => {
+  const html = renderTrips(trips, 'de');
+  assert.match(html, /<h1>Reisen<\/h1>/);
+  assert.match(html, /href="\/de\/trip\/china"/);
+  const china = getTrip('china')!;
+  assert.match(
+    html,
+    new RegExp(
+      `<a class="cta-stamp cta-stamp--small" href="/de/trip/china/${china.videos[0]}">China ansehen</a>`,
+    ),
+  );
 });
