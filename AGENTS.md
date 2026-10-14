@@ -44,9 +44,9 @@ This is a dependency-minimal site on purpose. Before reaching for a library, re-
   playing `<video>` element. If state seems to be growing, that's a signal to stop and
   reconsider, not to reach for a store.
 - **Deliberately out of scope** — don't let a reasonable-sounding request quietly expand into
-  one of these; flag it instead: server-side rendering or prerendering, a comment system,
-  multi-language support, a PWA/offline mode, video transcoding as a build step (normalisation
-  is a one-off manual command, see below), self-hosted map tiles, poster frames/thumbnails.
+  one of these; flag it instead: server-side rendering or prerendering, a comment system, a
+  PWA/offline mode, video transcoding as a build step (normalisation is a one-off manual
+  command, see below), self-hosted map tiles, poster frames/thumbnails.
 
 **Dependency inventory:**
 
@@ -88,12 +88,26 @@ library, that's usually a sign the design has drifted — re-read this section b
   against the paper background to work as an outline). Check contrast for black text whenever a
   stamp/background color changes. Respect `prefers-reduced-motion`: the map jumps instead of
   flying, per `src/map/map.ts`'s `prefersReducedMotion()`.
+- **English/German i18n.** Every route lives under a `/en` or `/de` prefix (`src/router.ts`
+  parses and strips it before matching the rest of the path; a URL with no valid prefix, bare
+  `/` included, redirects to one). `src/i18n/locale.ts` picks the initial locale from a stored
+  choice, else `navigator.languages`; `src/i18n/translations.ts` holds every UI string per
+  locale. Views take a `locale` parameter and prefix their own hrefs with it — there's no
+  central path-rewriting layer, so a new href in a view needs the prefix added by hand, the same
+  way existing views do it. Trip/video names and descriptions are Stefan's authored content and
+  are **not** translated, only interface chrome — country names are the one piece of data that
+  _is_ translated (`src/data/country-names.ts`), keyed by the same raw `country` string that
+  `countrySlug()` uses, so `/country/:slug` stays on one (English-based) identifier regardless
+  of the current locale.
 
 ## Where things live
 
 - **`src/data/`** — `videos.json`/`trips.json` (content), `types.ts` (the `Video`/`Trip`/`Route`
   shapes), `index.ts` (loads the JSON, derives the `all` trip and the indices used across
-  views: `videoToTrips`, `videosByCountry`, day gaps, counts).
+  views: `videoToTrips`, `videosByCountry`, day gaps, counts), `country-names.ts` (English/German
+  display names for `/video.country`, keyed by the same raw string `countrySlug()` uses).
+- **`src/i18n/`** — `locale.ts` (supported locales, browser/stored-locale detection),
+  `translations.ts` (all UI copy, per locale).
 - **`public/assets/videos/`** — the 177 normalised clips, committed to git. Adding one is
   **permanent** — see below.
 - **`docs/adding-videos.md`** — the human procedure for adding a trip or video. Don't duplicate

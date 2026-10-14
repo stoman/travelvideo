@@ -11,6 +11,7 @@ import {
   dayGap,
   countrySlug,
 } from './index.ts';
+import { countryNames } from './country-names.ts';
 
 const videosDir = path.join(
   path.dirname(path.dirname(path.dirname(fileURLToPath(import.meta.url)))),
@@ -162,6 +163,19 @@ test('country slugs (used for /country/:slug) are unique', () => {
     new Set(slugs).size,
     slugs.length,
     'two different country names produced the same slug',
+  );
+});
+
+test('every country has an English and German display name', () => {
+  const missing: string[] = [];
+  for (const group of videosByCountry) {
+    const entry = countryNames[group.country];
+    if (!entry || !entry.en || !entry.de) missing.push(group.country);
+  }
+  assert.deepEqual(
+    missing,
+    [],
+    `country-names.ts is missing a translation for: ${missing.join(', ')}`,
   );
 });
 

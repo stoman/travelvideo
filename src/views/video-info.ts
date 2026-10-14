@@ -1,42 +1,45 @@
 import { countrySlug, getTripsForVideo } from '../data/index.ts';
+import { getCountryName } from '../data/country-names.ts';
 import type { Video } from '../data/types.ts';
 import { formatDate } from '../format.ts';
+import type { Locale } from '../i18n/locale.ts';
+import { translations } from '../i18n/translations.ts';
 import { videoElementHtml } from '../video/player.ts';
 
 /**
- * The metadata block shared by every view that shows a single video --  /video/:id,
- * /trip/:tripId/:videoId and /random/:videoId. These views differ only in which controls/nav
- * make sense around it (full player controls vs. none, trip prev/next, a "stop" link); the video
- * itself and everything said about it stays identical, so it lives here once. Trusted content,
- * except tripId/videoId in hrefs -- those come from Trip/Video ids, simple slugs, not raw input.
+ * The metadata block shared by every view that shows a single video --  /:locale/video/:id,
+ * /:locale/trip/:tripId/:videoId and /:locale/random/:videoId. These views differ only in which
+ * controls/nav make sense around it (full player controls vs. none, trip prev/next, a "stop"
+ * link); the video itself and everything said about it stays identical, so it lives here once.
+ * Trusted content, except tripId/videoId in hrefs -- those come from Trip/Video ids, simple
+ * slugs, not raw input.
  */
-export function renderVideoInfo(video: Video): string {
+export function renderVideoInfo(video: Video, locale: Locale): string {
+  const t = translations[locale].videoInfo;
   const trips = getTripsForVideo(video.id);
 
   const tripItems = trips
     .map(
       (trip) => `
         <li>
-          <a href="/trip/${trip.id}">${trip.name} ${trip.year}</a>
-          (<a href="/trip/start/${trip.id}">start full trip</a>,
-          <a href="/trip/${trip.id}/${video.id}">start at ${video.name}</a>)
+          <a href="/${locale}/trip/${trip.id}">${t.tripLine(trip.name, trip.year)}</a>
+          (<a href="/${locale}/trip/start/${trip.id}">${t.startFullTrip}</a>,
+          <a href="/${locale}/trip/${trip.id}/${video.id}">${t.startAt(video.name)}</a>)
         </li>
       `,
     )
     .join('');
 
   const tripsSection =
-    trips.length > 0
-      ? `<p>This video is part of the trips:</p><ul>${tripItems}</ul>`
-      : '';
+    trips.length > 0 ? `<p>${t.partOfTrips}</p><ul>${tripItems}</ul>` : '';
 
   return `
     <h1>${video.name}</h1>
     ${video.description ? `<p>${video.description}</p>` : ''}
-    <p>Country: <a href="/country/${countrySlug(video.country)}">${video.country}</a></p>
-    <p>Date: ${formatDate(video.date)}</p>
-    ${video.guests ? `<p>Guests: ${video.guests}</p>` : ''}
-    ${video.camera ? `<p>Camera: ${video.camera}</p>` : ''}
+    <p>${t.country}: <a href="/${locale}/country/${countrySlug(video.country)}">${getCountryName(video.country, locale)}</a></p>
+    <p>${t.date}: ${formatDate(video.date)}</p>
+    ${video.guests ? `<p>${t.guests}: ${video.guests}</p>` : ''}
+    ${video.camera ? `<p>${t.camera}: ${video.camera}</p>` : ''}
     ${tripsSection}
   `;
 }
@@ -50,6 +53,7 @@ export function renderVideoInfo(video: Video): string {
 export function renderVideoDisplayShell(
   className: string,
   video: Video,
+  locale: Locale,
   options: { controls?: boolean; nav?: string } = {},
 ): string {
   return `
@@ -58,7 +62,7 @@ export function renderVideoDisplayShell(
         ${videoElementHtml(video, { controls: options.controls ?? false })}
       </div>
       <div class="display-info">
-        ${renderVideoInfo(video)}
+        ${renderVideoInfo(video, locale)}
         ${options.nav ?? ''}
       </div>
     </div>

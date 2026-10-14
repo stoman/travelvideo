@@ -1,13 +1,21 @@
 import type { Trip, Video } from '../data/types.ts';
+import type { Locale } from '../i18n/locale.ts';
+import { translations } from '../i18n/translations.ts';
 import { renderVideoDisplayShell } from './video-info.ts';
 
 /**
- * /trip/:tripId/:videoId: playback within a trip, lean-back and chained (no controls, per
- * video.md). Offers explicit previous/next links and a "stop at this video" escape to
- * /video/:videoId. Chaining itself (advancing on `ended`) is wired in main.ts, since it needs
- * DOM access to the rendered <video> element. See video-info.ts for the shared metadata block.
+ * /:locale/trip/:tripId/:videoId: playback within a trip, lean-back and chained (no controls,
+ * per video.md). Offers explicit previous/next links and a "stop at this video" escape to
+ * /:locale/video/:videoId. Chaining itself (advancing on `ended`) is wired in main.ts, since it
+ * needs DOM access to the rendered <video> element. See video-info.ts for the shared metadata
+ * block.
  */
-export function renderTripDisplay(trip: Trip, video: Video): string {
+export function renderTripDisplay(
+  trip: Trip,
+  video: Video,
+  locale: Locale,
+): string {
+  const t = translations[locale].playback;
   const index = trip.videos.indexOf(video.id);
   const prevId = index > 0 ? trip.videos[index - 1] : undefined;
   const nextId =
@@ -16,10 +24,10 @@ export function renderTripDisplay(trip: Trip, video: Video): string {
       : undefined;
 
   const prevLink = prevId
-    ? `<a href="/trip/${trip.id}/${prevId}">Previous video</a>`
+    ? `<a href="/${locale}/trip/${trip.id}/${prevId}">${t.previousVideo}</a>`
     : '';
   const nextLink = nextId
-    ? `<a href="/trip/${trip.id}/${nextId}">Next video</a>`
+    ? `<a href="/${locale}/trip/${trip.id}/${nextId}">${t.nextVideo}</a>`
     : '';
 
   // No link back to the trip here -- the "This video is part of the trips" list from
@@ -29,9 +37,9 @@ export function renderTripDisplay(trip: Trip, video: Video): string {
     <nav>
       ${prevLink}
       ${nextLink}
-      <a href="/video/${video.id}">Stop at this video</a>
+      <a href="/${locale}/video/${video.id}">${t.stopAtThisVideo}</a>
     </nav>
   `;
 
-  return renderVideoDisplayShell('trip-display', video, { nav });
+  return renderVideoDisplayShell('trip-display', video, locale, { nav });
 }

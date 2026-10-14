@@ -1,15 +1,18 @@
 import { getVideo, dayGapsForTrip } from '../data/index.ts';
 import type { Trip } from '../data/types.ts';
 import { formatDate } from '../format.ts';
+import type { Locale } from '../i18n/locale.ts';
+import { translations } from '../i18n/translations.ts';
 
 /**
- * /trip/:tripId: itinerary with day gaps. Trusted content, except tripId/videoId in hrefs --
- * those come from Trip/Video ids, which are simple slugs, not raw URL input.
+ * /:locale/trip/:tripId: itinerary with day gaps. Trusted content, except tripId/videoId in
+ * hrefs -- those come from Trip/Video ids, which are simple slugs, not raw URL input.
  *
  * The route map fitted to this trip's bounds is added in Phase 5; this view covers everything
  * else.
  */
-export function renderTripOverview(trip: Trip): string {
+export function renderTripOverview(trip: Trip, locale: Locale): string {
+  const t = translations[locale];
   const gaps = dayGapsForTrip(trip);
 
   const items = trip.videos
@@ -17,10 +20,8 @@ export function renderTripOverview(trip: Trip): string {
       const video = getVideo(id)!;
       const gap = i > 0 ? gaps[i - 1]! : 0;
       const gapItem =
-        gap > 0
-          ? `<li class="day-gap">${gap} day${gap === 1 ? '' : 's'} without video</li>`
-          : '';
-      return `${gapItem}<li><a href="/trip/${trip.id}/${id}">${video.name}</a> — ${formatDate(video.date)}</li>`;
+        gap > 0 ? `<li class="day-gap">${t.tripOverview.dayGap(gap)}</li>` : '';
+      return `${gapItem}<li><a href="/${locale}/trip/${trip.id}/${id}">${video.name}</a> — ${formatDate(video.date)}</li>`;
     })
     .join('');
 
@@ -29,7 +30,7 @@ export function renderTripOverview(trip: Trip): string {
   // by someone who doesn't scroll all the way down a long trip.
   const firstVideoId = trip.videos[0];
   const cta = firstVideoId
-    ? `<p class="cta"><a class="cta-stamp" href="/trip/${trip.id}/${firstVideoId}">Watch all the videos of this trip</a></p>`
+    ? `<p class="cta"><a class="cta-stamp" href="/${locale}/trip/${trip.id}/${firstVideoId}">${t.tripOverview.watchAll}</a></p>`
     : '';
 
   // Short trips read fine as a single list; columns only earn their keep once there's enough

@@ -5,7 +5,7 @@ import { getTrip } from '../data/index.ts';
 
 test('lists videos in itinerary order with links and dates', () => {
   const trip = getTrip('sicily')!;
-  const html = renderTripOverview(trip);
+  const html = renderTripOverview(trip, 'en');
   assert.match(html, /<h1>Sicily<\/h1>/);
   assert.match(html, /<p>2015<\/p>/);
   const taorminaIndex = html.indexOf('Taormina');
@@ -16,13 +16,13 @@ test('lists videos in itinerary order with links and dates', () => {
       siracusaIndex > taorminaIndex &&
       etnaIndex > siracusaIndex,
   );
-  assert.match(html, /href="\/trip\/sicily\/taormina"/);
+  assert.match(html, /href="\/en\/trip\/sicily\/taormina"/);
 });
 
 test('a positive day gap renders, in the right place', () => {
   // sicily: taormina (2015-xx-xx) -> siracusa has a 3-day gap; siracusa -> etna does not.
   const trip = getTrip('sicily')!;
-  const html = renderTripOverview(trip);
+  const html = renderTripOverview(trip, 'en');
   assert.match(html, /3 days without video/);
   const gapIndex = html.indexOf('3 days without video');
   const taorminaIndex = html.indexOf('Taormina');
@@ -35,30 +35,38 @@ test('a positive day gap renders, in the right place', () => {
 
 test('zero or negative gaps render nothing', () => {
   const trip = getTrip('interrail')!;
-  const html = renderTripOverview(trip);
+  const html = renderTripOverview(trip, 'en');
   // munich_airport -> stockholm_arlanda is a same/next-day hop, no gap text for it
   assert.doesNotMatch(html, /0 days without video/);
 });
 
 test('the call to action links to the first video', () => {
   const trip = getTrip('sicily')!;
-  const html = renderTripOverview(trip);
+  const html = renderTripOverview(trip, 'en');
   assert.match(html, /Watch all the videos of this trip/);
   assert.match(
     html,
-    /href="\/trip\/sicily\/taormina">Watch all the videos of this trip/,
+    /href="\/en\/trip\/sicily\/taormina">Watch all the videos of this trip/,
   );
 });
 
 test('a short trip (at most 10 videos) renders a single-column list', () => {
   const trip = getTrip('sicily')!; // 3 videos
-  const html = renderTripOverview(trip);
+  const html = renderTripOverview(trip, 'en');
   assert.match(html, /<ul class="itinerary">/);
   assert.doesNotMatch(html, /itinerary--columns/);
 });
 
 test('a long trip (more than 10 videos) opts into columns', () => {
   const trip = getTrip('china')!; // 13 videos
-  const html = renderTripOverview(trip);
+  const html = renderTripOverview(trip, 'en');
   assert.match(html, /<ul class="itinerary itinerary--columns">/);
+});
+
+test('renders locale-prefixed hrefs and translated strings in German', () => {
+  const trip = getTrip('sicily')!;
+  const html = renderTripOverview(trip, 'de');
+  assert.match(html, /href="\/de\/trip\/sicily\/taormina"/);
+  assert.match(html, /3 Tage ohne Video/);
+  assert.match(html, /Alle Videos dieser Reise ansehen/);
 });

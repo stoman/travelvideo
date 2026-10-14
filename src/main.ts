@@ -1,5 +1,10 @@
-import { initRouter, navigate } from './router.ts';
-import type { Route } from './data/types.ts';
+import { initRouter, navigate, switchLocalePath } from './router.ts';
+import type { RenderableRoute } from './data/types.ts';
+import {
+  detectPreferredLocale,
+  setStoredLocale,
+  type Locale,
+} from './i18n/locale.ts';
 import {
   trips,
   videos,
@@ -19,6 +24,7 @@ import { renderTripDisplay } from './views/trip-display.ts';
 import { renderRandomDisplay } from './views/random-display.ts';
 import { renderMap } from './views/map.ts';
 import { renderNotFound } from './views/not-found.ts';
+import { renderNav } from './views/nav.ts';
 import {
   nextVideoIdInTrip,
   pickChainedVideo,
@@ -39,6 +45,15 @@ import {
 const content = document.getElementById('content')!;
 const mapContainer = document.getElementById('map')!;
 const navEl = document.getElementById('nav')!;
+
+// Kept in sync at the top of every render() -- the map's click-to-navigate callback is wired
+// once at startup (see initMap below), independent of any single route, so it needs a live
+// value rather than one captured at boot.
+let currentLocale: Locale = detectPreferredLocale();
+
+function otherLocale(locale: Locale): Locale {
+  return locale === 'en' ? 'de' : 'en';
+}
 
 /**
  * The persistent map sits behind #content, but the current view's own box (paper card on
@@ -90,7 +105,7 @@ function currentMapPadding(): MapPadding {
  * itself against map readiness internally, so calling them here unconditionally is safe -- each
  * call takes effect once the map exists, in the order it was made.
  */
-function syncMap(route: Route): void {
+function syncMap(route: RenderableRoute): void {
   setFullGestureControl(route.name === 'map');
 
   switch (route.name) {
@@ -159,89 +174,109 @@ function syncMap(route: Route): void {
   }
 }
 
-// Loads asynchronously; never blocks first content paint.
-void initMap(mapContainer, navigate);
+// Loads asynchronously; never blocks first content paint. The callback always prefixes with the
+// *current* locale (read live, not captured here) since this is wired once at startup.
+void initMap(mapContainer, (path) => navigate(`/${currentLocale}${path}`));
 
-function renderTripDisplayRoute(tripId: string, videoId: string): void {
+function renderTripDisplayRoute(
+  tripId: string,
+  videoId: string,
+  locale: Locale,
+): void {
   const trip = getTrip(tripId);
   const video = trip && getVideo(videoId);
   if (!trip || !video) {
-    content.innerHTML = renderNotFound();
+    content.innerHTML = renderNotFound(locale);
     return;
   }
-  content.innerHTML = renderTripDisplay(trip, video);
+  content.innerHTML = renderTripDisplay(trip, video, locale);
 
   const videoEl = content.querySelector('video')!;
   const nextId = nextVideoIdInTrip(trip, video.id);
   if (nextId) {
     prefetchVideo(getVideo(nextId)!.filename);
-    attachEndedHandler(videoEl, () => navigate(`/trip/${trip.id}/${nextId}`));
+    attachEndedHandler(videoEl, () =>
+      navigate(`/${locale}/trip/${trip.id}/${nextId}`),
+    );
   } else {
     // Last video in the trip: end at the overview, not a dead frame.
-    attachEndedHandler(videoEl, () => navigate(`/trip/${trip.id}`));
+    attachEndedHandler(videoEl, () => navigate(`/${locale}/trip/${trip.id}`));
   }
 }
 
-function renderRandomDisplayRoute(videoId: string): void {
+function renderRandomDisplayRoute(videoId: string, locale: Locale): void {
   const video = getVideo(videoId);
   if (!video) {
-    content.innerHTML = renderNotFound();
+    content.innerHTML = renderNotFound(locale);
     return;
   }
-  content.innerHTML = renderRandomDisplay(video);
+  content.innerHTML = renderRandomDisplay(video, locale);
 
   const videoEl = content.querySelector('video')!;
   // Chosen once, ahead of time, so the prefetched clip is the one actually played next.
   const next = pickChainedVideo(video, videos);
   prefetchVideo(next.filename);
-  attachEndedHandler(videoEl, () => navigate(`/random/${next.id}`));
+  attachEndedHandler(videoEl, () => navigate(`/${locale}/random/${next.id}`));
 }
 
-function render(route: Route): void {
+function render(route: RenderableRoute): void {
+  currentLocale = route.locale;
+  setStoredLocale(route.locale);
+  document.documentElement.lang = route.locale;
+  navEl.innerHTML = renderNav(
+    route.locale,
+    switchLocalePath(location.pathname, otherLocale(route.locale)),
+  );
+
   switch (route.name) {
     case 'about':
-      content.innerHTML = renderAbout();
+      content.innerHTML = renderAbout(route.locale);
       break;
     case 'trips':
-      content.innerHTML = renderTrips(trips);
+      content.innerHTML = renderTrips(trips, route.locale);
       break;
     case 'videos':
-      content.innerHTML = renderVideos(videosByCountry, counts);
+      content.innerHTML = renderVideos(videosByCountry, counts, route.locale);
       break;
     case 'trip-overview': {
       const trip = getTrip(route.tripId);
-      content.innerHTML = trip ? renderTripOverview(trip) : renderNotFound();
+      content.innerHTML = trip
+        ? renderTripOverview(trip, route.locale)
+        : renderNotFound(route.locale);
       break;
     }
     case 'country-overview': {
       const group = getCountryGroup(route.slug);
       content.innerHTML = group
-        ? renderCountryOverview(group)
-        : renderNotFound();
+        ? renderCountryOverview(group, route.locale)
+        : renderNotFound(route.locale);
       break;
     }
     case 'video-display': {
       const video = getVideo(route.videoId);
-      content.innerHTML = video ? renderVideoDisplay(video) : renderNotFound();
+      content.innerHTML = video
+        ? renderVideoDisplay(video, route.locale)
+        : renderNotFound(route.locale);
       break;
     }
     case 'trip-display':
-      renderTripDisplayRoute(route.tripId, route.videoId);
+      renderTripDisplayRoute(route.tripId, route.videoId, route.locale);
       break;
     case 'random-display':
-      renderRandomDisplayRoute(route.videoId);
+      renderRandomDisplayRoute(route.videoId, route.locale);
       break;
     case 'map':
-      content.innerHTML = renderMap();
+      content.innerHTML = renderMap(route.locale);
       break;
     case 'not-found':
-      content.innerHTML = renderNotFound();
+      content.innerHTML = renderNotFound(route.locale);
       break;
-    // home-redirect, trip-start-redirect and random-redirect never reach here -- the router
-    // resolves them to a concrete route (or not-found) before notifying this listener.
+    // home-redirect, locale-redirect, trip-start-redirect and random-redirect never reach here
+    // -- the router resolves them to a concrete route (or not-found) before notifying this
+    // listener.
   }
 
   syncMap(route);
 }
 
-initRouter(render);
+initRouter(render, detectPreferredLocale);
